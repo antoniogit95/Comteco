@@ -1,0 +1,64 @@
+.stylesLoginContainer {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .stylesH2Login{
+    text-align: center;
+    color: black;
+    padding: auto;
+  }
+
+  .stylesInput {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+
+  .stylesContenedorButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stylesButoon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: darkgreen;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: .3s;
+  }
+
+  .stylesButoon:hover {
+    width: 90%;
+  }
+
+  .styleLinks {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .styleLinksA {
+    color: #007bff;
+    display: block;
+    padding: 3px;
+  }
+  
+  .styleLinksA:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }

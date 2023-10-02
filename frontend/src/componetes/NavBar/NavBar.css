@@ -1,0 +1,29 @@
+.stylesNavBar{
+    background-color: #333;
+    padding: .4rem;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stylesH2{
+    color: red;
+}
+
+.stylesA{
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    padding: .4rem;
+    border-style: 30%;
+}
+
+.stylesActive{
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    margin-right: 1rem;
+    padding: .4rem;
+    border-radius: 20% 15% 15% 20%;
+}
