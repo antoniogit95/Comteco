@@ -1,11 +1,18 @@
 import React from "react";
+import "./Button.css"
+import { useNavigate } from "react-router-dom";
 
-export const Button = (props) => {
+export const Button = ({name, link}) => {
 
-    const { nombre }= props;
-    console.log(nombre+" -");
+    const navigate = useNavigate();
 
-    return (<Button>
-        {nombre}
-    </Button>);
+    function handleClick(){
+        navigate(link);
+    }
+
+    return (<>
+        <div className="stylesContentButton">
+            <button className="stylesButtonBig" onClick={handleClick}>{name}</button>
+        </div>
+    </>);
 }
