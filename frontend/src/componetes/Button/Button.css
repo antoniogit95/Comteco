@@ -1,0 +1,25 @@
+.stylesContentButton{
+    width: 305px;
+    height: 305px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stylesButtonBig{
+    width: 300px;
+    height: 300px;
+    background-color: #CC0000;
+    color: white;
+    border-radius: 30px;
+    font-size: xx-large;
+    border: none;
+    transition: .3s;
+}
+
+.stylesButtonBig:hover{
+    width: 270px;
+    height: 270px;
+    cursor: pointer;
+}

@@ -4,17 +4,23 @@ import { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { URL_API_public } from '../../../providerContext/EndPoint';
+import { useNavigate } from 'react-router-dom';
 
 export const RegistrarPersonal = () => {
 
     const [personas, setPersonas] = useState( [] );
-    const endPoint = URL_API_public+"/register"
+    const endPoint = URL_API_public+"/register";
+    const navigate = useNavigate();
 
     function handleClick (){
         console.log("presionaste boton cancelar");
     }
 
     function ciExistente(dato){
+        return false;
+    }
+
+    function numInterExistente(dato){
         return false;
     }
 
@@ -31,11 +37,15 @@ export const RegistrarPersonal = () => {
             <Formik
                 initialValues={{
                     ci: '',
+                    numero_interno: '',
                     nombre: '',
                     apellidos: '',
                     telefono: '',
-                    nombre_cargo:'soporte tecnico',
-                    email: '',        
+                    nombre_cargo:'SOPORTE',
+                    fecha_nacimiento: '',
+                    email: '',
+                    password: '',
+                    confirmar_password: '',  
                 }}
 
                 validate={(valores) => {
@@ -50,6 +60,14 @@ export const RegistrarPersonal = () => {
                         errores.ci = 'el numero de carnet ya fue registrado';
                     }
 
+                    //validacion de numero_interno
+                    if(!valores.numero_interno){
+                        errores.numero_interno = 'el campo numero de interno es requerido obligatoriamente';
+                    }else if(!/^[0-9\s]{1,9}$/.test(valores.numero_interno)){
+                        errores.numero_interno = 'no es un numero';
+                    }else if(numInterExistente(valores.numero_interno)){
+                        errores.numero_interno = 'el numero de interno ya fue registrado';
+                    }
 
                     //validacion para el nombre
                     if(!valores.nombre){
@@ -61,7 +79,7 @@ export const RegistrarPersonal = () => {
                     //validacion apellidos
                     if(!valores.apellidos){
                         errores.apellidos = 'el campo Apellido Paterno es requerido obligatoriamente';
-                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.apellids)){
+                    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.apellidos)){
                         errores.apellidos = 'el campo no pude tener numeros';
                     }
 
@@ -74,6 +92,11 @@ export const RegistrarPersonal = () => {
                         errores.telefono = 'el numero de telefono ya fue registrado';
                     }
 
+                    //validacion de fecha de nacimiento
+                    if(!valores.fecha_nacimiento){
+                        errores.fecha_nacimiento = 'el campo Fecha de nacimiento es obligatoriamente';
+                    }
+
                     //validacion correo electronio
                     if(!valores.email){
                         errores.email = 'el campo Correo Electronico es requerido obligatoriamente';
@@ -83,18 +106,30 @@ export const RegistrarPersonal = () => {
                         errores.email = 'el correo electronico ya fue registrado';
                     }
 
+                    //validacion para contraseña
+                    if(!valores.password){
+                        errores.password = 'el campo Contraseña es requerido obligatoriamente';
+                    }else if(valores.password.length < 6){
+                        errores.password = 'el campo Contraseña debe tener una longitud mayor a 6 digitos';
+                    }
+
+                    //validacion para confirmar contraseña
+                    if(!valores.confirmar_password){
+                        errores.confirmar_password = 'el campo confirmar Contraseña es requerido obligatoriamente';
+                    }else if(valores.password !== valores.confirmar_password){
+                        errores.confirmar_password = 'las contraseñas no coiciden ';
+                    }
+
                     return errores;
                 }}
 
-                onSubmit={ (valores) => {
+                onSubmit={ (valores) => {   
                     console.log(valores);
-                    console.log(endPoint);
-                    console.log("http://localhost:8080/auth/register");
                     const store = async (e) => {
                         e.preventDefault()
                         await axios.post(endPoint, {
                             username: valores.email,
-                            password: valores.ci,
+                            password: valores.password,
                             firstname: valores.nombre,
                             lastname: valores.apellidos,
                             country: "Bolivia",
@@ -121,6 +156,20 @@ export const RegistrarPersonal = () => {
                             onBlur={handleBlur}
                         />
                         {touched.ci && errors.ci && <div className='styleErrores'>{errors.ci}</div>}
+                    </div>
+                    <div>
+                        <label htmlFor='numero_interno'>Numero de Interno</label>
+                        <input 
+                            className='stylesInput'
+                            type='text'
+                            id='numero_interno'
+                            name='numero_interno'
+                            placeholder='escribe tu numero de Interno'
+                            value={values.numero_interno}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        {touched.numero_interno && errors.numero_interno && <div className='styleErrores'>{errors.numero_interno}</div>}
                     </div>
                     <div>
                         <label htmlFor='nombre'>nombres</label>
@@ -157,7 +206,7 @@ export const RegistrarPersonal = () => {
                             type='text'
                             id='telefono'
                             name='telefono'
-                            placeholder='escribe tu numero de Telefono'
+                            placeholder='escribe tu numero de Telefono Corporativo'
                             value={values.telefono}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -165,18 +214,18 @@ export const RegistrarPersonal = () => {
                         {touched.telefono && errors.telefono && <div className='styleErrores'>{errors.telefono}</div>}
                     </div>
                     <div>
-                        <label htmlFor='nombre_cargo'>Empleado</label>
-                        <select 
+                        <label htmlFor='fecha_nacimiento'>Fecha nacimiento</label>
+                        <input 
                             className='stylesInput'
-                            type='text' 
-                            id='nombre_cargo'
-                            name="nombre_cargo"
-                            value={values.nombre_cargo}
+                            type='date'
+                            id='fecha_nacimiento'
+                            name='fecha_nacimiento'
+                            placeholder='dd/mm/aaaa'
+                            value={values.fecha_nacimiento}
                             onChange={handleChange}
-                        >
-                            <option value='Soporte Tecnico'> Soporte Tecnico </option>
-                            <option value='Supervisor'> Supervisor </option>
-                        </select>
+                            onBlur={handleBlur}
+                        />
+                        {touched.fecha_nacimiento && errors.fecha_nacimiento && <div className='styleErrores'>{errors.fecha_nacimiento}</div>}
                     </div>
                     <div>
                         <label htmlFor='email'>Correo Electronico</label>
@@ -192,7 +241,34 @@ export const RegistrarPersonal = () => {
                         />
                         {touched.email && errors.email && <div className='styleErrores'>{errors.email}</div>}
                     </div>
-                    
+                    <div>
+                        <label htmlFor='password'>Contraseña</label>
+                        <input 
+                            className='stylesInput'
+                            type='password'
+                            id='password'
+                            name='password'
+                            placeholder='escribe tu Contraseña'
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        {touched.password && errors.password && <div className='styleErrores'>{errors.password}</div>}
+                    </div>
+                    <div>
+                        <label htmlFor='confirmar_password'>Confirmar contraseña</label>
+                        <input 
+                            className='stylesInput'
+                            type='password'
+                            id='confirmar_password'
+                            name='confirmar_password'
+                            placeholder='escribe tu Contraseña'
+                            value={values.confirmar_password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        {touched.confirmar_password && errors.confirmar_password && <div className='styleErrores'>{errors.confirmar_password}</div>}
+                    </div>
                     <div className="stylesContenedorButton">
                         <button  className='stylesButoon' type="submit">
                             Guardar
@@ -201,7 +277,7 @@ export const RegistrarPersonal = () => {
                     </div>
                     <br />
                     <div className='stylesContenedorButton'>
-                        <button className='stylesButoon' onClick={ handleClick }>
+                        <button className='stylesButoon' onClick={handleClick}>
                             Cancelar
                         </button>
                     </div>

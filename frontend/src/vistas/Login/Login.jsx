@@ -31,16 +31,27 @@ export const Login = () => {
                 }}
 
                 onSubmit={ (valores) => {
-                    console.log(endPoint);
                     const store = async (e) => {
-                        e.preventDefault()
-                        await axios.post(endPoint, {
+                        e.preventDefault()  
+                        const response = await axios.post(endPoint, {
                             username: valores.user,
                             password: valores.pass
                         });
-                        navigate('/home');
+                        auth.saveToken(response.data.token)
+                        navigate("/home")
                     }
                     store(event);
+                    /**const response = await fetch(endPoint, {
+                        body: JSON.stringify({
+                            username: valores.user,
+                            password: valores.pass,
+                        })
+                    })
+
+                    if(response.ok){
+                        console.log(response)
+                    }
+                    console.log()*/
                 }}
 
             >
@@ -73,7 +84,7 @@ export const Login = () => {
                         </button>
                     </div>
                     <div className="styleLinks">
-                        <NavLink to="/personal" className="styleLinksA">Crear cuenta</NavLink>
+                        <NavLink to="/singauth" className="styleLinksA">Crear cuenta</NavLink>
                         <a className="styleLinksA">Olvide mi Contraseña</a>
                     </div>
                 </form>

@@ -1,3 +1,14 @@
+
+.stylesContentButtonsBig{
+  padding: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 5px;
+  justify-items: center;
+  align-items: center;
+
+}
+
 .layout {
     width: 1366px;
     height: 768px;
