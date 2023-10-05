@@ -1,0 +1,61 @@
+.stylesRegistroPersonal{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+    padding: 15px; 
+}
+
+.stylesInput {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}   
+
+.stylePasswordInput{
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.stylesContenedorButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stylesButoon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #eb2929;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: .3s;
+  }
+
+  .stylesButoon:hover {
+    width: 90%;
+  }
+.styleErrores{
+    font-size: 0.8rem;
+    color: #eb2929;
+    padding: 5px 0px;
+}
+
