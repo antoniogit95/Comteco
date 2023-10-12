@@ -4,9 +4,9 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import { URL_API_public } from '../../providerContext/EndPoint';
 import { useNavigate } from 'react-router-dom';
-import './RegistroTecnico.css'
+import './Reports.css'
 
-export const RegistroTecnico = () => {
+export const Reports = () => {
 
     const endPoint = URL_API_public+"/register";
     const navigate = useNavigate();
@@ -157,6 +157,8 @@ export const RegistroTecnico = () => {
                     </div>
                     </section>
                     </section>
+
+                    
                 </form>
                 )}
             </Formik>
