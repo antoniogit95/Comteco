@@ -158,7 +158,7 @@ export const RegistrarPersonal = () => {
                         {touched.ci && errors.ci && <div className='styleErrores'>{errors.ci}</div>}
                     </div>
                     <div>
-                        <label htmlFor='numero_interno'>Numero de Interno</label>
+                        <label htmlFor='numero_interno'>Numero de Item</label>
                         <input 
                             className='stylesInput'
                             type='text'

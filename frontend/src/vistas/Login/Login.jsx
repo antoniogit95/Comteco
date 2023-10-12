@@ -11,7 +11,8 @@ export const Login = () => {
     const [login, setLogin] = useState();
     const navigate = useNavigate();
     const endPoint = URL_API_public+"/login";
-
+    const [error, setError] = useState("");
+    const [exisError, setExisError] = useState(false);
     const auth = useAuth();
 
     if(auth.isAuthenticated){
@@ -22,6 +23,21 @@ export const Login = () => {
         console.log("presionaste boton cancelar");
     }
 
+    function adminErrros(nameErrors){
+        setExisError(true);
+        switch (nameErrors) {
+            case "ERR_BAD_REQUEST":
+                setError("usuario Incoreccto");
+                break;
+            case "ERR_NETWORK":
+                setError("no hay conexion con el servidor");
+                break;
+            default:
+                setError(nameErrors);
+                break;
+        }
+    }
+
     return (
         <div className='stylesLoginContainer'>
             <Formik
@@ -30,44 +46,63 @@ export const Login = () => {
                     pass: ''       
                 }}
 
+                validate={(valores) => {
+                    let errores = {};
+
+                    //validacion Celula de Identidad
+                    if(!valores.user){
+                        errores.user = 'el campo Usuario es requerido obligatoriamente';
+                    }
+
+
+                    //validacion para contraseña
+                    if(!valores.pass){
+                        errores.pass = 'el campo Contraseña es requerido obligatoriamente';
+                    }
+                    return errores;
+                }}
+
                 onSubmit={ (valores) => {
                     const store = async (e) => {
                         e.preventDefault()  
-                        const response = await axios.post(endPoint, {
-                            username: valores.user,
-                            password: valores.pass
-                        });
-                        auth.saveToken(response.data.token)
-                        navigate("/home")
+                        try{
+                            const response = await axios.post(endPoint, {
+                                username: valores.user,
+                                password: valores.pass
+                            });
+                            auth.saveToken(response.data.token)
+                            navigate("/home")
+                        } catch (error){
+                            adminErrros(error.code);
+                            console.log('error inesperado: ',error);
+                        }
+                        
                     }
-                    store(event);
-                    /**const response = await fetch(endPoint, {
-                        body: JSON.stringify({
-                            username: valores.user,
-                            password: valores.pass,
-                        })
-                    })
 
-                    if(response.ok){
-                        console.log(response)
-                    }
-                    console.log()*/
+                    store(event);
                 }}
 
             >
-                {({values, handleSubmit, handleChange, handleBlur, resetForm}) => (
+                {({values, errors, touched, handleSubmit, handleChange, handleBlur, resetForm}) => (
                     <form onSubmit={handleSubmit}>
                     <h2 className="stylesH2Login"> Iniciar Sesion</h2>
+                    <div className={exisError? 'stylesErrosGeneral': ''}>
+                        <label >{error}</label>
+                    </div>
                     <div>
                         <input 
                             className='stylesInput'
                             type='text'
                             id='user'
                             name='user'
-                            placeholder='escribe tu nomnre de usuario'
+                            placeholder='escribe tu nombre de usuario'
                             value={values.user}
                             onChange={handleChange}
+                            onBlur={handleBlur}
                         />
+                        {touched.user && errors.user && <div className='styleErrores'>{errors.user}</div>}
+                    </div>
+                    <div>    
                         <input 
                             className='stylesInput'
                             type='password'
@@ -76,7 +111,9 @@ export const Login = () => {
                             placeholder='escribe tu Contraseña'
                             value={values.pass}
                             onChange={handleChange}
+                            onBlur={handleBlur}
                         />
+                        {touched.pass && errors.pass && <div className='styleErrores'>{errors.pass}</div>}
                     </div>                   
                     <div className="stylesContenedorButton">
                         <button  className='stylesButoon' type="submit">

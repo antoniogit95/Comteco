@@ -21,6 +21,9 @@ export const PersonCard = ({person}) => {
             <div>
                 <label>{person.dateBrich}</label>
             </div>
+            <div>
+                <label>estado: desconectado</label>
+            </div>
         </div>
     </>
 }
