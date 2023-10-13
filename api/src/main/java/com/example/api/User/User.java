@@ -8,10 +8,14 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.example.api.Person.Person;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,15 +29,17 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    Integer id;
+    private Integer id;
     @Column(nullable = false)
-    String username;
-    String password;
-    String lastname;
-    String firstname;
-    String country;
+    private String username;
+    private String password;
+    private boolean status;
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
+
+    @OneToOne
+    @JoinColumn(name = "id_person", referencedColumnName = "id_person")
+    private Person person;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){

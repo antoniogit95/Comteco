@@ -20,7 +20,7 @@ export const Personal = () => {
 
     const getRoutePrivate = async () => {
         try {
-            const response = await axios.get(endPoint,  { headers });
+            const response = await axios.get(endPoint);
             setData(response.data)+ "logro entrar aqui";    
         } catch (error) {
             console.log("Error : "+error)   
