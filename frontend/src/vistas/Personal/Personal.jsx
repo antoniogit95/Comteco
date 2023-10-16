@@ -7,52 +7,35 @@ import axios from "axios";
 export const Personal = () => {
 
     const endPoint = URL_API_private + "/person";
-    const [data, setData] = useState();
-    const token = localStorage.getItem('token');
+    const [data, setData] = useState([]);
+    const token = JSON.parse(localStorage.getItem('user_data')).token;
 
     useEffect(() => {
         getRoutePrivate();
-    })
+    }, [])
 
-    const headers = {
-        Authorization: `Bearer ${token}`
-    }
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
 
     const getRoutePrivate = async () => {
         try {
-            const response = await axios.get(endPoint);
-            setData(response.data)+ "logro entrar aqui";    
+            const response = await axios.get(endPoint, config);
+            setData(response.data)
         } catch (error) {
             console.log("Error : "+error)   
         }
     }
 
-    const person1 = {
-        firstname: 'JUAN',
-        lastname: 'PEREZ',
-        item: '12345',
-        ocupation: 'SOPORTE',
-        dateBrich: '01/01/2000',
-        status: false
-    }
-    
-    const person2 = {
-        firstname: 'JUAN',
-        lastname: 'PEREZ',
-        item: '12345',
-        ocupation: 'SOPORTE',
-        dateBrich: '01/01/2000',
-        status: true
-    }
-
     return(<>
         <NavBar/>
-        <h1>{endPoint}</h1>
-        <h1>{headers.Authorization}</h1>
-        <h2>{data+ ": datos del server"}</h2>
-        <PersonCard person = {person1}/>
-        <PersonCard person = {person2}/>
-        <PersonCard person = {person2}/>
-        
+        {console.log(data)}
+        <div>
+          {data.map((data) => (
+            <PersonCard key={data.id_person} person={data} />
+          ))}
+        </div>
     </>);
 }

@@ -14,6 +14,6 @@ public class DataTecnicoRequest {
     private Long id_person;
     private String num_producto;
     private String caja_nap;
-    private String estadp_odt;
-    private String obasrvaciones;
+    private String estado_odt;
+    private String observaciones;
 }

@@ -44,11 +44,12 @@ public class DataTecnicoService {
         Optional<Person> existingPerson = personRepository.findById(request.getId_person());
         if(existingPerson.isPresent()){
             Person person = existingPerson.get();
+            System.out.println(request.getObservaciones());
             DataTecnico dataTecnico = DataTecnico.builder()
                 .num_producto(request.getNum_producto())
                 .caja_nap(request.getCaja_nap())
-                .estadp_odt(request.getEstadp_odt())
-                .obasrvaciones(request.getObasrvaciones())
+                .estadp_odt(request.getEstado_odt())
+                .obasrvaciones(request.getObservaciones())
                 .created_at(getTimestamp())
                 .update_at(getTimestamp())
                 .person(person)

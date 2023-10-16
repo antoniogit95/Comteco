@@ -130,9 +130,13 @@ export const RegistrarPersonal = () => {
                         await axios.post(endPoint, {
                             username: valores.email,
                             password: valores.password,
-                            firstname: valores.nombre,
-                            lastname: valores.apellidos,
-                            country: "Bolivia",
+                            nombre: valores.nombre,
+                            apellidos: valores.apellidos,
+                            celula_identidad: valores.ci,
+                            item: valores.input,
+                            fecha_nacimiento: valores.fecha_nacimiento,
+                            email: valores.email,
+                            telefono: valores.telefono,
                         });
                         navigate('/home');
                     }
