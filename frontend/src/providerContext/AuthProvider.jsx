@@ -7,16 +7,23 @@ const AuthContext  = createContext({
 })
 
 export const AuthProvider = ({ children }) =>{
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [accessToken, setAccessToekn] = useState("");
 
     function getAccessToken(){
         return accessToken;
     }
 
-    function saveToken(token){
+    function saveToken(token, person){
         setAccessToekn(token);
-        localStorage.setItem("token", token);
+        localStorage.setItem("user_data", JSON.stringify({
+            token: token,
+            person: {
+                id_person: person.id_person,
+                firstname: person.nombre,
+                lastname: person.apellidos,
+            }
+        }));
         setIsAuthenticated(true);
     }
 

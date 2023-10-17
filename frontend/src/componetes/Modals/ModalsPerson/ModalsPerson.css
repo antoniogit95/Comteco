@@ -1,0 +1,16 @@
+.stylesButoonModal {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: brown;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: .9s;
+  }
+
+  .stylesButoonModal:hover {
+    background-color: rgb(133, 11, 11);
+  }

@@ -2,18 +2,28 @@ import React from "react";
 import { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
-import { URL_API_public } from '../../providerContext/EndPoint';
+import { URL_API_private } from '../../providerContext/EndPoint';
 import { useNavigate } from 'react-router-dom';
 import './RegistroTecnico.css'
 
 export const RegistroTecnico = () => {
-
-    const endPoint = URL_API_public+"/register";
+    
     const navigate = useNavigate();
+    const personData = localStorage.getItem('user_data');
+    const id_person = JSON.parse(personData).person.id_person;
+    const token = JSON.parse(personData).token;
+    const endPoint = URL_API_private+"/datatecnico"
 
+
+    console.log(id_person)
     function handleClick (){
         console.log("presionaste boton cancelar");
     }
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
 
     return(
         <div className='stylesRegistroTecnico'>
@@ -54,22 +64,22 @@ export const RegistroTecnico = () => {
                     return errores;
                 }}
 
-                onSubmit={ (valores) => {   
-                    console.log(valores);
-                    /**const store = async (e) => {
-                        e.preventDefault()
-                        await axios.post(endPoint, {
-                            username: valores.email,
-                            password: valores.password,
-                            firstname: valores.nombre,
-                            lastname: valores.apellidos,
-                            country: "Bolivia",
+                onSubmit={ async (valores) => {
+                    try {
+                        const response = await axios.post(endPoint, {
+                            id_person: id_person,
+                            num_producto: valores.nomber_product,
+                            caja_nap: valores.BoxNap,
+                            estado_odt: valores.DtStatus,
+                            observaciones: valores.Comments
+                        }, {
+                            headers: config.headers,
                         });
-                        navigate('/home');
+                            console.log('Respuesta del Servidor: '+ response.data)
+                    }catch (error) {
+                        console.log('Error Inesperado: '+error)
                     }
-                    store(event);
-                    */
-
+                    
                 }}
 
             >
@@ -132,10 +142,9 @@ export const RegistroTecnico = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                         >
-                        <option value='' disabled>Selecciona un estado</option>
-                        <option value='estado1'>Mismo DT</option>
-                        <option value='estado2'>Cambia DT</option>
-                        <option value='estado3'>Vacio</option>
+                        <option value='vacio' >vacio</option>
+                        <option value='mismo'>Mismo DT</option>
+                        <option value='cambio'>Cambia DT</option>
                         {/* Agrega más opciones según tus necesidades */}
                         </select>
                         {touched.DtStatus && errors.DtStatus && <div className='styleErrores'>{errors.DtStatus}</div>}
