@@ -56,6 +56,8 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .status(false)
                 .role(Role.ADMIN)
+                .created_at(getTimestamp())
+                .update_at(getTimestamp())
                 .person(person)
                 .build();
         userRepository.save(user);

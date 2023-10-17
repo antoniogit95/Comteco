@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.api.Person.Person;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private boolean status;
+    private Timestamp created_at;
+    private Timestamp update_at;
     @Enumerated(EnumType.STRING)
     private Role role;
 
