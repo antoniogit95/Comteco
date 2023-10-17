@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 
@@ -64,4 +66,15 @@ public class DataTecnicoController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
-}
+
+    @PostMapping("/savefile")
+    public ResponseEntity<String> saveFileDataTecnico(@RequestParam("file") MultipartFile file){
+        
+        if(file != null){
+            return dataTecnicoService.saveFile(file);
+        }else{
+            return ResponseEntity.badRequest().body("No se proporcionó ningún archivo.");
+        }
+    }
+    
+}   

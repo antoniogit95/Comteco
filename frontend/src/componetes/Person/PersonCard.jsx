@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import './PersonCard.css'
 
-export const PersonCard = ({person}) => {
+export const PersonCard = ({person, onCardClick}) => {
     const [acepted, setAcepted] = useState(person.status);
-    console.log(person.id_person +" -----------------------")
     return <>
-        <div className={acepted? 'stylesCardPersonAcepted':'stylesCardPersonFailed'}>
+        <div onClick={() => onCardClick(person)} className={acepted? 'stylesCardPersonAcepted':'stylesCardPersonFailed'}>
             <div>
                 <label>{person.nombre}</label>
             </div>
