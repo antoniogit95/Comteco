@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) =>{
         return accessToken;
     }
 
-    function saveToken(token, person){
+    function saveToken(token, person, role){
         setAccessToekn(token);
         localStorage.setItem("user_data", JSON.stringify({
             token: token,
@@ -22,7 +22,8 @@ export const AuthProvider = ({ children }) =>{
                 id_person: person.id_person,
                 firstname: person.nombre,
                 lastname: person.apellidos,
-            }
+            },
+            role: role,
         }));
         setIsAuthenticated(true);
     }
