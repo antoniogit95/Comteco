@@ -8,7 +8,7 @@ import './Reports.css'
 
 export const Reports = () => {
    
-   
+
     const [mostrarColumnas, setMostrarColumnas] = useState(true); 
 
     const toggleColumnas = () => {
