@@ -70,11 +70,11 @@ export const Login = () => {
                                 username: valores.user,
                                 password: valores.pass
                             });
-                            auth.saveToken(response.data.token, response.data.person)
+                            console.log(response.data.message);
+                            auth.saveToken(response.data.token, response.data.person, response.data.role)
                             navigate("/home")
                         } catch (error){
-                            adminErrros(error.code);
-                            console.log('error inesperado: ',error);
+                            adminErrros(error.response.data.message);    
                         }
                         
                     }

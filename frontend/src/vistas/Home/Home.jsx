@@ -5,13 +5,18 @@ import { Button } from "../../componetes/Button/Button"
 
 export const Home = () => {
     
-    const [permisos, setPermisos] = useState("ADMIN");
+    const role = JSON.parse(localStorage.getItem('user_data')).role;
+    const buttons = showButtons();
 
-    function isAdmin(){
-        if(permisos === "ADMIN"){
-            return true;
-        }else{
-            return false;
+    function showButtons(){
+        switch (role) {
+            case "ADMIN":
+                return buttonsAdmin();
+            case "SOPORTE":
+                return buttonsSoporte();
+            default:
+                setError(nameErrors);
+                break;
         }
     }
 
@@ -25,14 +30,14 @@ export const Home = () => {
     
     function buttonsSoporte(){
         return (<div className="stylesContentButtonsBig">
-            <Button name="Registrar" link="/"/>
+            <Button name="Registrar" link="/registrar"/>
         </div>)
     }
     
 
     return(<>
         <NavBar />
-        {isAdmin? buttonsAdmin(): buttonsSoporte()}       
+        {buttons}       
     </>)
 }
 
