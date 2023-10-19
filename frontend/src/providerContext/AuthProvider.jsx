@@ -3,7 +3,8 @@ import React, {useContext, useState, createContext, useEffect} from "react";
 const AuthContext  = createContext({
     isAuthenticated: false,
     getAccessToken: () => {},
-    saveToken: (token) => {}, 
+    saveToken: (token, person, role, time) => {},
+    deletToken: () =>{},
 })
 
 export const AuthProvider = ({ children }) =>{
@@ -14,7 +15,13 @@ export const AuthProvider = ({ children }) =>{
         return accessToken;
     }
 
-    function saveToken(token, person, role){
+    function deletToken(){
+        setAccessToekn("");
+        localStorage.removeItem('user_data');
+        setIsAuthenticated(false);
+    }
+
+    function saveToken(token, person, role, expirationTime){
         setAccessToekn(token);
         localStorage.setItem("user_data", JSON.stringify({
             token: token,
@@ -26,11 +33,12 @@ export const AuthProvider = ({ children }) =>{
             role: role,
         }));
         setIsAuthenticated(true);
+        setTimeout(deletToken, expirationTime);
     }
 
-    return <AuthContext.Provider value={{ isAuthenticated, getAccessToken, saveToken }}>
+    return <AuthContext.Provider value={{ isAuthenticated, getAccessToken, saveToken, deletToken }}>
         {children}
-    </AuthContext.Provider>
+    </AuthContext.Provider> 
 }
 
 export const useAuth = () => useContext(AuthContext);

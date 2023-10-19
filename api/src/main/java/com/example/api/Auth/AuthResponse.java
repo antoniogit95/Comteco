@@ -17,4 +17,5 @@ public class AuthResponse {
     Person person;
     Role role;
     String message;
+    int time;
 }

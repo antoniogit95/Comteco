@@ -15,7 +15,7 @@ export const ModalPerson = ({ person, show, onHide, onChange }) => {
             </Modal.Header>
             <Modal.Body>
                 <p>ID de la persona: {person.id_person}</p>
-                <p>Cédula de Identidad: {person.cedula_identidad}</p>
+                <p>Cédula de Identidad: {person.celula_identidad}</p>
                 <p>Nombre: {person.nombre}</p>
                 <p>Apellidos: {person.apellidos}</p>
                 <p>Item: {person.item}</p>

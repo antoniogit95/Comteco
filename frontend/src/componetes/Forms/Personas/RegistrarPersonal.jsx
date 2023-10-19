@@ -37,7 +37,7 @@ export const RegistrarPersonal = () => {
             <Formik
                 initialValues={{
                     ci: '',
-                    numero_interno: '',
+                    item:'',
                     nombre: '',
                     apellidos: '',
                     telefono: '',
@@ -60,13 +60,13 @@ export const RegistrarPersonal = () => {
                         errores.ci = 'el numero de carnet ya fue registrado';
                     }
 
-                    //validacion de numero_interno
-                    if(!valores.numero_interno){
-                        errores.numero_interno = 'el campo numero de interno es requerido obligatoriamente';
-                    }else if(!/^[0-9\s]{1,9}$/.test(valores.numero_interno)){
-                        errores.numero_interno = 'no es un numero';
-                    }else if(numInterExistente(valores.numero_interno)){
-                        errores.numero_interno = 'el numero de interno ya fue registrado';
+                    //validacion de item
+                    if(!valores.item){
+                        errores.item = 'el campo numero de item es requerido obligatoriamente';
+                    }else if(!/^[0-9\s]{1,9}$/.test(valores.item)){
+                        errores.item = 'no es un numero';
+                    }else if(numInterExistente(valores.item)){
+                        errores.item = 'el numero de interno ya fue registrado';
                     }
 
                     //validacion para el nombre
@@ -126,14 +126,15 @@ export const RegistrarPersonal = () => {
                 onSubmit={ (valores) => {   
                     console.log(valores);
                     const store = async (e) => {
+                        console.log(valores)
                         e.preventDefault()
                         await axios.post(endPoint, {
                             username: valores.email,
                             password: valores.password,
-                            nombre: valores.nombre,
-                            apellidos: valores.apellidos,
+                            nombre: valores.nombre.toUpperCase(),
+                            apellidos: valores.apellidos.toUpperCase(),
                             celula_identidad: valores.ci,
-                            item: valores.input,
+                            item: valores.item,
                             fecha_nacimiento: valores.fecha_nacimiento,
                             email: valores.email,
                             telefono: valores.telefono,
@@ -162,18 +163,18 @@ export const RegistrarPersonal = () => {
                         {touched.ci && errors.ci && <div className='styleErrores'>{errors.ci}</div>}
                     </div>
                     <div>
-                        <label htmlFor='numero_interno'>Numero de Item</label>
+                        <label htmlFor='item'>Numero de Item</label>
                         <input 
                             className='stylesInput'
                             type='text'
-                            id='numero_interno'
-                            name='numero_interno'
-                            placeholder='escribe tu numero de Interno'
-                            value={values.numero_interno}
+                            id='item'
+                            name='item'
+                            placeholder='escribe tu numero de Item'
+                            value={values.item}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
-                        {touched.numero_interno && errors.numero_interno && <div className='styleErrores'>{errors.numero_interno}</div>}
+                        {touched.item && errors.item && <div className='styleErrores'>{errors.item}</div>}
                     </div>
                     <div>
                         <label htmlFor='nombre'>nombres</label>

@@ -71,7 +71,12 @@ export const Login = () => {
                                 password: valores.pass
                             });
                             console.log(response.data.message);
-                            auth.saveToken(response.data.token, response.data.person, response.data.role)
+                            auth.saveToken(
+                                response.data.token, 
+                                response.data.person, 
+                                response.data.role,
+                                response.data.time
+                            );
                             navigate("/home")
                         } catch (error){
                             adminErrros(error.response.data.message);    
