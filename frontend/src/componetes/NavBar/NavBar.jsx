@@ -1,42 +1,57 @@
 import React, { useState } from "react";
 import "./NavBar.css"
-import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../providerContext/AuthProvider";
 
 export const NavBar = () => {
 
     const userRole = JSON.parse(localStorage.getItem('user_data')).role;
     const isAdmin = userRole === 'ADMIN';
     const isSoporte = userRole === 'SOPORTE';
+    const { deletToken } = useAuth();
+    const navigate = useNavigate();
+    const auth = useAuth();
+
+    console.log(auth.isAuthenticated);
+    if(!auth.isAuthenticated){
+        console.log(auth.isAuthenticated);
+        navigate('/login');
+    }
+
+    const handleClick = () => {
+        console.log("eliminando Token")
+        deletToken();
+        navigate('/login');
+    }
 
     return(
     <nav className="stylesNavBar">
-        <div>
+        <div className="stylesLogoContainer">
             <h2 className="stylesH2">Laboratorio Comteco</h2>
         </div>
-        <ul>
-            {(isAdmin || isSoporte) && (
+        <ul className="stylesUl">
+            {(isAdmin || isSoporte) && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/home">Home</NavLink>
+                to="/home">Home</NavLink></li>
             )}
             
-            {isAdmin && (
+            {isAdmin && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/personal">Personas</NavLink>
+                to="/personal">Personas</NavLink></li>
             )}
             
-            {(isAdmin || isSoporte) && (
+            {(isAdmin || isSoporte) && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/registrar">Registrar</NavLink>
+                to="/registrar">Registrar</NavLink></li>
             )}
 
-            {isAdmin && (
+            {isAdmin && ( <li className="stylesLi">
                     <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                    to="/reportes">Reportes</NavLink>
+                    to="/reportes">Reportes</NavLink></li>
                 )}
         </ul>
         <div>
-            <button>Cerrar Sesión</button>
+            <button className="stylesButoonNavBar" onClick={handleClick}>Cerrar Sesión</button>
         </div>
     </nav>
     );
