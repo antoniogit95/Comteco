@@ -47,6 +47,7 @@ export const Personal = () => {
 
     const getRoutePrivate = async () => {
         try {
+            console.log(endPoint)
             const response = await axios.get(endPoint, config);
             setData(response.data)
         } catch (error) {

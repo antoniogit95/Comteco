@@ -46,6 +46,7 @@ public class AuthService {
                 .token(token)
                 .person(person)
                 .role(role)
+                .time(1000*60*24)
                 .build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(AuthResponse.builder()
