@@ -17,3 +17,20 @@
   background-color: #f2f2f2;
   font-weight: bold;
 }
+
+.table-container {
+  height: 400px; /* Establece la altura deseada */
+  overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+  border: #c91b0e;
+}
+
+.table-header {
+  /* Estilos para el encabezado de la tabla (opcional) */
+  background-color: #c91b0e;
+  /* Otros estilos de encabezado */
+}
+
+.table-body {
+  /* Estilos para el cuerpo de la tabla (opcional) */
+  /* Otros estilos de cuerpo */
+}

@@ -25,6 +25,20 @@ export const RegistroTecnico = () => {
         },
     };
 
+    //function numberValue(e) {
+        // Obtén el valor del campo de entrada
+        //let inputValue = e.target.value;
+    
+        // Reemplaza cualquier carácter que no sea número con una cadena vacía
+        //inputValue = inputValue.replace(/[^0-9]/g, '');
+        //console.log(inputValue);
+        // Actualiza el estado con el nuevo valor numérico
+        //setValues({
+        //    ...values,
+        //   nomber_product: inputValue
+        //});
+    //}
+
     return(
         <div className='stylesRegistroTecnico'>
             <Formik
@@ -96,7 +110,7 @@ export const RegistroTecnico = () => {
                             placeholder='escribe tu numero de producto'
                             value={values.nomber_product}
                             onChange={handleChange}
-                            onBlur={handleBlur}
+                            onBlur={handleBlur}  
                         />
                         {touched.nomber_product && errors.nomber_product && <div className='styleErrores'>{errors.nomber_product}</div>}
                     </div>
@@ -143,8 +157,8 @@ export const RegistroTecnico = () => {
                             onBlur={handleBlur}
                         >
                         <option value='vacio' >vacio</option>
-                        <option value='mismo'>Mismo DT</option>
-                        <option value='cambio'>Cambia DT</option>
+                        <option value='Mismo DT'>Mismo DT</option>
+                        <option value='Cambia DT'>Cambia DT</option>
                         {/* Agrega más opciones según tus necesidades */}
                         </select>
                         {touched.DtStatus && errors.DtStatus && <div className='styleErrores'>{errors.DtStatus}</div>}

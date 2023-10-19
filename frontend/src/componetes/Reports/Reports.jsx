@@ -55,11 +55,11 @@ export const Reports = () => {
         setMostrarColumnas(!mostrarColumnas); 
     };
     return (
-        <div className="excel-table-container">
+        <div className="table-container">
             <button onClick={toggleColumnas}>Mostrar/Ocultar Columnas</button>
             {mostrarColumnas && (
                 <table className="excel-table">
-                    <thead>
+                    <thead className="table-header">
                         <tr>
                             <th>ID</th>
                             <th>MES</th>
@@ -76,7 +76,7 @@ export const Reports = () => {
                             <th>ANALISTA SOPORTE</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="table-body">
                        {dataTecnico.map(data => (
                         <tr key={data.id_reg_data_tec}>
                             <td>{data.id_reg_data_tec}</td>
