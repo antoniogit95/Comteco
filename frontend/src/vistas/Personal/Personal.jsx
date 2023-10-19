@@ -4,6 +4,7 @@ import { PersonCard } from "../../componetes/Person/PersonCard";
 import { URL_API_private } from "../../providerContext/EndPoint";
 import { ModalPerson } from "../../componetes/Modals/ModalsPerson/ModalsPerson";
 import axios from "axios";
+import './Personal.css'
 
 export const Personal = () => {
 
@@ -55,7 +56,7 @@ export const Personal = () => {
 
     return(<>
         <NavBar/>
-        <div>
+        <div className="stylesContentCardPersonal">
           {data.map((data) => (
             <PersonCard key={data.id_person} person={data} onCardClick={() => handleShowModal(data)}/>
           ))}

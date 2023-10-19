@@ -1,6 +1,7 @@
 package com.example.api.Auth;
 
 import com.example.api.Person.Person;
+import com.example.api.User.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,4 +15,6 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     String token;
     Person person;
+    Role role;
+    String message;
 }
