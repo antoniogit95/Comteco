@@ -31,7 +31,7 @@ export const SaveDataTecnico = () => {
 
     return (
         <div>
-            <h1>cargar datos del arvhico</h1>
+            <h1>cargar datos del archivo</h1>
             <input type="file" name='file' onChange={(e) => setFile(e.target.files)} />
             <button onClick={subirArchivo}>guardar</button>
         </div>

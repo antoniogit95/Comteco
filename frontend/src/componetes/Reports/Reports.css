@@ -31,6 +31,15 @@
 }
 
 .table-body {
+  background-color: azure;
   /* Estilos para el cuerpo de la tabla (opcional) */
   /* Otros estilos de cuerpo */
+}
+
+.even-row {
+  background-color: #f2f2f2; /* Color para filas pares */
+}
+
+.odd-row {
+  background-color: #ffffff; /* Color para filas impares */
 }
