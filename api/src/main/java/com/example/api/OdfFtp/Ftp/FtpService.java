@@ -15,5 +15,5 @@ public class FtpService {
     public List<Ftp> getAllFtps() {
         return ftpRepository.findAll();
     }
-    
+
 }

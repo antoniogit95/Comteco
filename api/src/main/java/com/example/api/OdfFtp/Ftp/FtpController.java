@@ -25,4 +25,5 @@ public class FtpController{
         List<Ftp> ftps = ftpService.getAllFtps();
         return new ResponseEntity<>(ftps, HttpStatus.OK);
     }
+
 }
