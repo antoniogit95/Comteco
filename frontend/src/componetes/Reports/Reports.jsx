@@ -13,7 +13,7 @@ export const Reports = () => {
     const endPoint = URL_API_private+"/datatecnico";
     const [dataTecnico, setDataTecnico] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
-    const [filtro, setFiltro] = useState('nombre'); // Tipo de dato predeterminado
+    const [filtro, setFiltro] = useState('nombre'); 
     const [termino, setTermino] = useState('');
     
     console.log(endPoint);
@@ -38,7 +38,6 @@ export const Reports = () => {
     }
 
     const buscarDatos = () => {
-        // Filtrar los datos según el tipo de dato y término de búsqueda
         const resultados = dataTecnico.filter(data => {
             if (filtro === 'nombre') {
                 return data.person.nombre.toLowerCase().includes(termino.toLowerCase());
@@ -50,11 +49,10 @@ export const Reports = () => {
                 return data.caja_nap.toLowerCase().includes(termino.toLowerCase());
             }
 
-            // Agrega más condiciones según los tipos de datos que quieras permitir buscar
             return false;
         });
     
-        // Actualizar los datos mostrados con los resultados filtrados
+        
         setDataTecnico(resultados);
     };
 
@@ -84,7 +82,7 @@ export const Reports = () => {
                     <option value="producto">Producto</option>
                     <option value="EstadoDt">Estado Dt</option>
                     <option value="CajaNap">Caja Nap</option>
-                    {/* Agrega más opciones según los tipos de datos que quieras permitir buscar */}
+
                 </select>
                 <input 
                     type="text"
