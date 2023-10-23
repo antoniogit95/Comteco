@@ -1,8 +1,9 @@
-package com.example.api.OdfFtp.Ftp;
+package com.example.api.Routes.Nap;
 
-import com.example.api.OdfFtp.Odf.Odf;
+import com.example.api.Routes.Fdt.Fdt;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,19 +17,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Ftp {
-    
+public class Nap {
+
     @Id
-    private Long id_fdt;
+    @GeneratedValue
+    private Long id_nap;
     private String cod;
-    private String tec;
-    private String res;
-    private String mc;
-    private String mbc;
-    private String mac;
-    private String oc;
+    private boolean estado;
 
     @ManyToOne
-    @JoinColumn(name = "id_odf")
-    private Odf odf;
+    @JoinColumn(name = "id_fdt")
+    private Fdt fdt;
 }
