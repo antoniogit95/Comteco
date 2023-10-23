@@ -1,4 +1,4 @@
-package com.example.api.OdfFtp.Ftp;
+package com.example.api.Routes.Fdt;
 
 
 import java.util.List;
@@ -16,13 +16,13 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api/v1/ftp")
 @CrossOrigin("*")
 @AllArgsConstructor
-public class FtpController{
+public class FdtController{
 
-    private FtpService ftpService;
+    private FdtService fdtService;
 
     @GetMapping
-    public ResponseEntity<List<Ftp>> getAllFtp() {
-        List<Ftp> ftps = ftpService.getAllFtps();
+    public ResponseEntity<List<Fdt>> getAllFtp() {
+        List<Fdt> ftps = fdtService.getAllFdts();
         return new ResponseEntity<>(ftps, HttpStatus.OK);
     }
 

@@ -1,4 +1,4 @@
-package com.example.api.OdfFtp.Odf;
+package com.example.api.Routes.Odf;
 
 import java.util.List;
 

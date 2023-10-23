@@ -1,4 +1,4 @@
-package com.example.api.OdfFtp.Ftp;
+package com.example.api.Routes.Fdt;
 
 import java.util.List;
 
@@ -8,11 +8,11 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class FtpService {
+public class FdtService {
 
-    private FtpRepository ftpRepository;
+    private FdtRepository ftpRepository;
 
-    public List<Ftp> getAllFtps() {
+    public List<Fdt> getAllFdts() {
         return ftpRepository.findAll();
     }
 
