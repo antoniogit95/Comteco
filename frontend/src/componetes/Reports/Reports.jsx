@@ -13,7 +13,8 @@ export const Reports = () => {
     const endPoint = URL_API_private+"/datatecnico";
     const [dataTecnico, setDataTecnico] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
-    
+    const [filtro, setFiltro] = useState('nombre'); // Tipo de dato predeterminado
+    const [termino, setTermino] = useState('');
     
     console.log(endPoint);
 
@@ -36,6 +37,27 @@ export const Reports = () => {
         }
     }
 
+    const buscarDatos = () => {
+        // Filtrar los datos según el tipo de dato y término de búsqueda
+        const resultados = dataTecnico.filter(data => {
+            if (filtro === 'nombre') {
+                return data.person.nombre.toLowerCase().includes(termino.toLowerCase());
+            } else if (filtro === 'producto') {
+                return data.num_producto.toString().includes(termino);
+            } else if (filtro === 'EstadoDt' ) {
+                return data.estadp_odt.toLowerCase().includes(termino.toLowerCase());
+            } else if (filtro === 'CajaNap') {
+                return data.caja_nap.toLowerCase().includes(termino.toLowerCase());
+            }
+
+            // Agrega más condiciones según los tipos de datos que quieras permitir buscar
+            return false;
+        });
+    
+        // Actualizar los datos mostrados con los resultados filtrados
+        setDataTecnico(resultados);
+    };
+
     function getMes(data){
         const dataObjest = new Date(data);
         return dataObjest.getMonth() +1;
@@ -56,6 +78,23 @@ export const Reports = () => {
     };
     return (
         <div className="table-container">
+            <div>
+                <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
+                    <option value="nombre">Nombre Analista Soporte</option>
+                    <option value="producto">Producto</option>
+                    <option value="EstadoDt">Estado Dt</option>
+                    <option value="CajaNap">Caja Nap</option>
+                    {/* Agrega más opciones según los tipos de datos que quieras permitir buscar */}
+                </select>
+                <input 
+                    type="text"
+                    value={termino}
+                    onChange={(e) => setTermino(e.target.value)}
+                    placeholder="Ingrese el término de búsqueda"
+                />
+                <button onClick={() => buscarDatos()}>Buscar</button>
+            </div>
+
             <button onClick={toggleColumnas}>Mostrar/Ocultar Columnas</button>
             {mostrarColumnas && (
                 <table className="excel-table">
