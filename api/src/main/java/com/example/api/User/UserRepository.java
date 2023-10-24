@@ -9,7 +9,7 @@ import com.example.api.Person.Person;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     @EntityGraph(attributePaths = "person")
     Optional<User> findByUsername(String username);
