@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { URL_API_private } from '../../providerContext/EndPoint';
 import { useNavigate } from 'react-router-dom';
+import Chart from 'chart.js/auto';
 import './Reports.css'
 
 export const Reports = () => {
@@ -15,7 +16,9 @@ export const Reports = () => {
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
     const [termino, setTermino] = useState('');
-    
+    //const chartRef = useRef(null);
+    //const [chartData, setChartData] = useState
+
     console.log(endPoint);
 
     useEffect(() => {
@@ -37,6 +40,7 @@ export const Reports = () => {
         }
     }
 
+    
     const buscarDatos = () => {
         const resultados = dataTecnico.filter(data => {
             if (filtro === 'nombre') {
@@ -47,6 +51,9 @@ export const Reports = () => {
                 return data.estadp_odt.toLowerCase().includes(termino.toLowerCase());
             } else if (filtro === 'CajaNap') {
                 return data.caja_nap.toLowerCase().includes(termino.toLowerCase());
+            } else if (filtro === 'fecha') {
+                const fechaEnFormato = data.update_at.split('T')[0];
+                return fechaEnFormato.includes(termino);
             }
 
             return false;
@@ -55,6 +62,62 @@ export const Reports = () => {
         
         setDataTecnico(resultados);
     };
+
+    // Obtener el número de registros por mes
+    //const registrosPorMes = {};
+    //dataTecnico.forEach(data => {
+    //    const mes = new Date(data.created_at).getMonth() + 1;
+    //    registrosPorMes[mes] = (registrosPorMes[mes] || 0) + 1;
+    //});
+
+    // Obtener las etiquetas y datos para el gráfico
+    //const etiquetas = Object.keys(registrosPorMes).map(mes => `Mes ${mes}`);
+    //const datos = Object.values(registrosPorMes);
+
+    //useEffect(() => {
+
+         // Destruir el gráfico existente
+         //if (chartRef.current !== null) {
+         //   chartRef.current.destroy();
+       // }
+
+        // Crear el gráfico cuando se actualicen los datos
+        //const ctx = document.getElementById('grafico').getContext('2d');
+        //new Chart(ctx, {
+        //    type: 'bar',
+        //    data: {
+        //        labels: etiquetas,
+        //        datasets: [{
+        //            label: 'Número de registros',
+        //           data: datos,
+        //            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        //            borderColor: 'rgba(75, 192, 192, 1)',
+        //            borderWidth: 1
+        //        }]
+        //    },
+        //    options: {
+        //        scales: {
+        //            y: {
+        //                beginAtZero: true
+        //            }
+        //        }
+        //    }
+
+            
+
+        //});
+
+        //chartRef.current = newChart;
+
+        // Limpiar el gráfico al desmontar el componente
+        //return () => {
+        //    if (chartRef.current) {
+        //        chartRef.current.destroy();
+        //    }
+        //};
+
+    //}, [chartData]); // Renderizar el gráfico cuando los datos se actualicen
+
 
     function getMes(data){
         const dataObjest = new Date(data);
@@ -76,13 +139,14 @@ export const Reports = () => {
     };
     return (
         <div className="table-container">
+
             <div>
                 <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
                     <option value="nombre">Nombre Analista Soporte</option>
                     <option value="producto">Producto</option>
                     <option value="EstadoDt">Estado Dt</option>
-                    <option value="CajaNap">Caja Nap</option>
-
+                    <option value="CajaNap">Caja Nap -Dato Tecnico Actual-</option>
+                    <option value="fecha">Fecha - formato aaaa-mm-dd -</option>
                 </select>
                 <input 
                     type="text"
