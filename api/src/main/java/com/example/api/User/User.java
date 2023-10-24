@@ -30,7 +30,7 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     @Column(nullable = false)
     private String username;
     private String password;

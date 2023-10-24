@@ -1,5 +1,6 @@
 package com.example.api.Auth;
 
+import com.example.api.Cesion.CesionService;
 import com.example.api.Jwt.JwtService;
 import com.example.api.Person.Person;
 import com.example.api.Person.PersonRepository;
@@ -28,6 +29,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final PersonRepository personRepository;
+    private final CesionService cesionService;
 
     public ResponseEntity<AuthResponse> login(LoginRequest request){
         try {
@@ -42,11 +44,12 @@ public class AuthService {
                 .build());
             }
             String token = jwtService.getToken(user);
+            cesionService.saveCesion((User) user);
             return ResponseEntity.ok(AuthResponse.builder()
                 .token(token)
                 .person(person)
                 .role(role)
-                .time(1000*60*24)
+                .time(1000*60*60)
                 .build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(AuthResponse.builder()

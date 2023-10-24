@@ -3,13 +3,15 @@ import './PersonCard.css'
 import { URL_API_private } from "../../providerContext/EndPoint";
 import axios from "axios";
 
-export const PersonCard = ({person, onCardClick}) => {
+export const PersonCard = ({person, onCardClick, id_user}) => {
     const [acepted, setAcepted] = useState(false);
     const endPoint = URL_API_private+"/user/isValidate/"+person.id_person;
+    const endPointCesion = URL_API_private+"/cesion/actives/"+person.id_person;
     const token = JSON.parse(localStorage.getItem('user_data')).token;
-
+    const [online, setOnline] = useState(false);
     useEffect( () => {
         isAcepeted();
+        isOnline();
     });
     
     const config = {
@@ -18,12 +20,18 @@ export const PersonCard = ({person, onCardClick}) => {
         },
     };
 
+    const isOnline = async () => {
+        try {
+            const response = await axios.get(endPointCesion, config)
+            setOnline(response.data);
+        } catch (error) {
+            console.log("error: " +error)
+        }   
+    }
+
     const isAcepeted = async () => {
         try {
-            console.log(endPoint+"\n"+config.headers);
             const response = await axios.get(endPoint, config)
-            console.log("\n---------------------------------------------------------------\n"
-            +"entrando al servidor"+"\n---------------------------------------------------------------\n")
             setAcepted(response.data);
         } catch (error) {
             console.log("error: " +error)
@@ -48,7 +56,7 @@ export const PersonCard = ({person, onCardClick}) => {
                 <label>{person.fecha_nacimiento}</label>
             </div>
             <div>
-                <label>estado: desconectado</label>
+                <label>{online? "online" : "desactivado"}</label>
             </div>
         </div>
     </>

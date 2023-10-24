@@ -41,8 +41,6 @@ public class UserController {
 
     @GetMapping("/isValidate/{id_person}")
     public ResponseEntity<Boolean> isValidateUser(@PathVariable Long id_person) {
-        System.out.println("\n---------------------------------------------------------------\n"
-        +"entrando al servidor"+"\n---------------------------------------------------------------\n");
         Person person = personService.getPersonById(id_person);
         Optional<User> userOptional = userRepository.findByPerson(person);
         if (userOptional.isPresent()) {
