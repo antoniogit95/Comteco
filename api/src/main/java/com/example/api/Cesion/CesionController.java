@@ -42,9 +42,11 @@ public class CesionController {
     @GetMapping("/actives/{id}")//este metodo sirve para saber si un usuario esta activo por medio del id de la persona
     public ResponseEntity<Boolean> GetActiveForIdPerson(@PathVariable Long id) {
         Person person = personService.getPersonById(id);
-        Optional<User> userOptional = userRepository.findByPerson(person);
-        if(userOptional.isPresent()){
-            return cesionService.getCesionsActivesByUser(userOptional.get().getId());
+        if(person != null){
+            Optional<User> userOptional = userRepository.findByPerson(person);
+            if(userOptional.isPresent()){
+                return cesionService.getCesionsActivesByUser(userOptional.get().getId());
+            }
         }
         return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
     }
