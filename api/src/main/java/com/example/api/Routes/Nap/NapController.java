@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/api/v1/Nap")
+@RequestMapping("/api/v1/nap")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class NapController {
@@ -25,4 +26,8 @@ public class NapController {
         return new ResponseEntity<>(naps, HttpStatus.OK);
     }
     
+    @GetMapping("/byfdt/{id_fdt}")
+    public ResponseEntity<List<Nap>> getAllNapsByOdf(@PathVariable Long id_fdt){
+        return napService.getAllNapsByOdf(id_fdt);
+    }
 }

@@ -32,7 +32,6 @@ export const Personal = () => {
 
     const handleOnChange = async () => {
         setShowModal(false);
-        console.log(endPointUser+"/"+selectedPerson.id_person);
         try {
             const response = await axios.put(endPointUser+"/"+selectedPerson.id_person, {
                 id_person: selectedPerson.id_person,

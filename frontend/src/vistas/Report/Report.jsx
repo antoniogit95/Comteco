@@ -1,3 +1,4 @@
+import './Report.css'
 import React, { useState } from "react";
 import { NavBar } from "../../componetes/NavBar/NavBar";
 import { Reports } from "../../componetes/Reports/Reports"
@@ -16,7 +17,7 @@ export const Report = () => {
     return(<>
         <NavBar />
         <NavBarReports showReport={showReport}/>
-        <div>
+        <div className="stylesContetnReport">
             {activeReport === "jose" && <Reports/>}
             {activeReport === "david" && <h3>Reportes Ing David</h3>}
             {activeReport === "map" && <TablesMapRoutes/>}

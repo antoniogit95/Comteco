@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,11 @@ public class PosController {
     public ResponseEntity<List<Pos>> getAllPoss(){
         List<Pos> poss = posService.getAllPoss();
         return new ResponseEntity<>(poss, HttpStatus.OK);
+    }
+
+    @GetMapping("/bynap/{id_nap}")
+    public ResponseEntity<List<Pos>> getAllPossByNap(@PathVariable Long id_nap){
+        return posService.getAllPossByNap(id_nap);
     }
 
     @PostMapping
