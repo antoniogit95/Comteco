@@ -70,6 +70,8 @@ public class DataTecnicoController {
     @PostMapping("/savefile")
     public ResponseEntity<String> saveFileDataTecnico(@RequestParam("file") MultipartFile file){
         
+        System.out.println("agarrando el archivo file ////////-------------------------------------------");
+        
         if(file != null){
             return dataTecnicoService.saveFile(file);
         }else{

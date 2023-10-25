@@ -14,7 +14,7 @@ export const SaveDataTecnico = () => {
         formData.append('file', file);
         try {
             console.log(endPoint);
-            console.log(file[0]);
+            console.log(formData);
             const response = await axios.post(endPoint, formData,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -31,9 +31,9 @@ export const SaveDataTecnico = () => {
 
     return (
         <div>
-            <h1>cargar datos del arvhico</h1>
-            <input type="file" name='file' onChange={(e) => setFile(e.target.files[0])} />
-            <button onClick={subirArchivo}>guradar</button>
+            <h1>cargar datos del archivo</h1>
+            <input type="file" name='file' onChange={(e) => setFile(e.target.files)} />
+            <button onClick={subirArchivo}>guardar</button>
         </div>
     )
 }
