@@ -1,8 +1,9 @@
 .stylesNavBarReport{
-    background-color: #b14d4d91;
+    background-color: #CC0000;
     padding: .4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
 }
+
