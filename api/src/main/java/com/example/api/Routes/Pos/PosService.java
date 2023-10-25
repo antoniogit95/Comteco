@@ -106,4 +106,14 @@ public class PosService {
             return null;
         }
     }
+
+    public ResponseEntity<List<Pos>> getAllPossByNap(Long id_nap) {
+        try {
+            Optional<Nap> optionalNap = napRepository.findById(id_nap);
+            List<Pos> poss = posRepository.findAllByNap(optionalNap.get());
+            return new ResponseEntity<>(poss, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 }

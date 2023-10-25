@@ -69,8 +69,8 @@
 
 @media (max-width: 768px) {
     .stylesNavBar {
+        width: 100%;
         flex-direction: column;
-
     }
 
     .stylesLogoContainer {
@@ -79,6 +79,7 @@
 
     .stylesUl {
         margin: 1rem 0;
+        flex-direction: column;
     }
 
     .stylesLi {
