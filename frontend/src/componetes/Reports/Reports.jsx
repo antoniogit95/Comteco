@@ -6,6 +6,23 @@ import { URL_API_private } from '../../providerContext/EndPoint';
 import { useNavigate } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import './Reports.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle";
+import { Line } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler,
+} from 'chart.js';
+//import LinesChart from "./LinesChart";
+//import BarsChart from "./BarsChart";
+//import PiesChart from "./PiesChart";
 
 export const Reports = () => {
    
@@ -18,6 +35,52 @@ export const Reports = () => {
     const [termino, setTermino] = useState('');
     //const chartRef = useRef(null);
     //const [chartData, setChartData] = useState
+
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend,
+        Filler
+    );
+    //var pru = ;
+    var beneficios = [0, 56, 20, 36, 80, 40, 30, -20, 25, 30, 12, 60];
+    var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    
+    var midata = {
+        labels: meses,
+        datasets: [ // Cada una de las líneas del gráfico
+            {
+                label: 'Beneficios',
+                data: beneficios,
+                tension: 0.5,
+                fill : true,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                pointRadius: 5,
+                pointBorderColor: 'rgba(255, 99, 132)',
+                pointBackgroundColor: 'rgba(255, 99, 132)',
+            },
+            {
+                label: 'Otra línea',
+                data: [20, 25, 60, 65, 45, 10, 0, 25, 35, 7, 20, 25]
+            },
+        ],
+    };
+    
+    var misoptions = {
+        scales : {
+            y : {
+                min : 0
+            },
+            x: {
+                ticks: { color: 'rgb(255, 99, 132)'}
+            }
+        }
+    };
 
     console.log(endPoint);
 
@@ -138,8 +201,7 @@ export const Reports = () => {
         setMostrarColumnas(!mostrarColumnas); 
     };
     return (
-        <div className="table-container">
-
+        <div>
             <div>
                 <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
                     <option value="nombre">Nombre Analista Soporte</option>
@@ -155,26 +217,24 @@ export const Reports = () => {
                     placeholder="Ingrese el término de búsqueda"
                 />
                 <button onClick={() => buscarDatos()}>Buscar</button>
-            </div>
-
-            <button onClick={toggleColumnas}>Mostrar/Ocultar Columnas</button>
-            {mostrarColumnas && (
+            </div> 
+        <div className="table-container">
                 <table className="excel-table">
                     <thead className="table-header">
                         <tr>
-                            <th>ID</th>
-                            <th>MES</th>
-                            <th>FECHA</th>
-                            <th>TIPO DE ORDEN</th>
-                            <th>ZONA</th>
-                            <th>PRODUCTO</th>
-                            <th>DATO TECNICO ACTUAL</th>
-                            <th>DATO TECNICO ANTERIOR</th>
-                            <th>HORA</th>
-                            <th>ESTADO DATO TECNICO</th>
-                            <th>OBSERVACION</th>
-                            <th>TECNICO</th>
-                            <th>ANALISTA SOPORTE</th>
+                            <th className="white-color">ID</th>
+                            <th className="white-color">MES</th>
+                            <th className="white-color">FECHA</th>
+                            <th className="white-color">TIPO DE ORDEN</th>
+                            <th className="white-color">ZONA</th>
+                            <th className="white-color">PRODUCTO</th>
+                            <th className="white-color">DATO TECNICO ACTUAL</th>
+                            <th className="white-color">DATO TECNICO ANTERIOR</th>
+                            <th className="white-color">HORA</th>
+                            <th className="white-color">ESTADO DATO TECNICO</th>
+                            <th className="white-color">OBSERVACION</th>
+                            <th className="white-color">TECNICO</th>
+                            <th className="white-color">ANALISTA SOPORTE</th>
                         </tr>
                     </thead>
                     <tbody className="table-body">
@@ -197,7 +257,19 @@ export const Reports = () => {
                        ))}
                     </tbody>
                 </table>
-            )}
+            
         </div>
+        
+        <div>
+            
+            <div>
+                <p className="m-2"><b></b>Gráfico de líneas básico</p>
+                <div className="bg-light mx-auto px-2 border border-2 border-primary" style={{width:"450px", height:"230px"}}>
+                   <Line data={midata} options={misoptions}/>
+                </div>
+            </div>
+            
+        </div>
+      </div>  
     );
 };
