@@ -13,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+/**
+* Clase de configuración de seguridad que define la política de seguridad y la configuración de autenticación.
+*/
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -22,6 +25,13 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final CorsConfigurationSource corsConfigurationSource;
 
+     /**
+     * Define una cadena de filtros de seguridad que gestiona la autenticación y autorización de las solicitudes.
+     *
+     * @param http La configuración de seguridad HTTP.
+     * @return Una cadena de filtros de seguridad configurada para la aplicación.
+     * @throws Exception Si se produce un error al configurar la seguridad.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
         return http
