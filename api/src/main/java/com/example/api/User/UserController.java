@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * Controlador REST para la gestión de usuarios.
- * En la siguiente ruta api/v1/user 
+ * todas las rutas estan el contexto auth api/v1/user 
  */
 @RestController
 @RequestMapping("/api/v1/user")
