@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Controlador REST para la gestión de entidades 'Person'.
+ * En la siguiente ruta /api/v1/person
+ */
 @RestController
 @RequestMapping("/api/v1/person")
 @CrossOrigin("*")
@@ -25,6 +29,12 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
+    /**
+     * Obtiene una entidad 'Person' por su ID.
+     *
+     * @param id El ID de la persona que se busca.
+     * @return La entidad 'Person' si se encuentra, de lo contrario, devuelve NOT FOUND.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Person> getPersonById(@PathVariable Long id) {
         Person person = personService.getPersonById(id);
@@ -35,22 +45,40 @@ public class PersonController {
         }
     }
 
+    /**
+     * Obtiene todas las entidades 'Person' disponibles.
+     *
+     * @return Una lista de todas las entidades 'Person' y un estado OK.
+     */
     @GetMapping
     public ResponseEntity<List<Person>> getAllPersons() {
         List<Person> persons = personService.getAllPersons();
         return new ResponseEntity<>(persons, HttpStatus.OK);
     }
 
+    /**
+     * Elimina una entidad 'Person' por su ID.
+     *
+     * @param id El ID de la persona que se desea eliminar.
+     * @return NO CONTENT si la entidad se elimina con éxito, de lo contrario, devuelve NOT FOUND.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerson(@PathVariable Long id) {
         boolean deleted = personService.deletePerson(id);
         if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+     /**
+     * Actualiza una entidad 'Person' por su ID con los datos proporcionados.
+     *
+     * @param id     El ID de la persona que se desea actualizar.
+     * @param person Los nuevos datos de la persona.
+     * @return La entidad 'Person' actualizada si se encuentra y un estado OK, de lo contrario, devuelve NOT FOUND.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<Person> updatePerson(@PathVariable Long id, @RequestBody Person person) {
         Person updatedPerson = personService.updatePerson(id, person);
