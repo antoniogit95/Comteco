@@ -37,4 +37,27 @@ public class FdtService {
         }
     }
 
+    public Fdt updateFdt(Long id, Fdt fdt) {
+        if(fdtRepository.existsById(id)){
+            return fdtRepository.save(fdt);
+        }
+        return null;
+    }
+
+    public boolean deleteFdt(Long id) {
+        if (fdtRepository.existsById(id)) {
+            fdtRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public Fdt createFdt(Long id_odf, Fdt fdt) {
+        try {
+            return fdtRepository.save(fdt);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
