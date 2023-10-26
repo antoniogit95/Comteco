@@ -18,6 +18,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+* Filtro de autenticación JWT que verifica y autentica las solicitudes entrantes con tokens JWT.
+*/
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -55,6 +58,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+    * Obtiene el token JWT de la solicitud HTTP.
+    *
+    * @param request La solicitud HTTP entrante.
+    * @return El token JWT si se encuentra en la solicitud, de lo contrario, null.
+    */
     private String getTokenFormRequest(HttpServletRequest request){
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 

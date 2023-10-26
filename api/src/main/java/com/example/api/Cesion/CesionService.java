@@ -14,6 +14,9 @@ import com.example.api.User.UserRepository;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Servicio que gestiona la creacion y retorno cesiones.
+ */
 @Service
 @AllArgsConstructor
 public class CesionService {
@@ -21,6 +24,12 @@ public class CesionService {
     private CesionRepository cesionRepository;
     private UserRepository userRepository;
     
+    /**
+     * Crea un cesion por el user.
+     *
+     * @param user El user son todos los datos que contiene una cesion
+     * @return Una respuesta que debuelve la misma cesion.
+     */
     public Cesion saveCesion(User user){
         try {
             LocalDateTime finalyAt = LocalDateTime.now().plusMinutes(60);
@@ -35,7 +44,12 @@ public class CesionService {
             return null;
         }
     }
-    
+    /**
+     * Actualiza un cesion por el user.
+     *
+     * @param user El user son todos los datos que contiene una cesion
+     * @return Una respuesta que debuelve la misma cesion.
+     */
     public Cesion updateCesion(User user){
         try {
             LocalDateTime finalyAt = LocalDateTime.now().plusMinutes(60);
@@ -50,6 +64,11 @@ public class CesionService {
         }
     }
 
+    /**
+     * Debulve todas las cesiones que estan activas en ese momento
+     *
+     * @return List<Cesiones> una lista de todas las cesiones activas.
+     */
     public Optional<List<Cesion>> getCesionsActives(){
         return cesionRepository.findByFinalyAtAfter(getTimestamp());
     }
@@ -59,6 +78,13 @@ public class CesionService {
         return Timestamp.valueOf(now);
     }
 
+    /**
+     * Devuelve una cesion por el id_persona.
+     *
+     * @param id_person El id_person de la persona asociada a una persona que asu ves esta
+     *  asociada a un usuario que asu ves esta asociada a una cesion.
+     * @return Una respuesta que indica si la cesion esta activa o no.
+     */
     public ResponseEntity<Boolean> getCesionsActivesByUser(Long id) {
         ResponseEntity<Boolean> response;
         try {

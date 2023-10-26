@@ -11,6 +11,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Esta clase representa a una Fdts de las rutas
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -18,6 +21,10 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Fdt {
     
+    /**
+     * Identificador de Fds
+     * Se generar de manera automatica
+     */
     @Id
     private Long id_fdt;
     private String cod;
@@ -28,6 +35,9 @@ public class Fdt {
     private String mac;
     private String oc;
 
+    /**
+     * Relacion de muchoa a uno con la entidad ODF relacioando a su id
+     */
     @ManyToOne
     @JoinColumn(name = "id_odf")
     private Odf odf;

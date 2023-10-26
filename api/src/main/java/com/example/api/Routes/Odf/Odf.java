@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Esta clase representa a una Odf en el sistema
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,6 +18,10 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Odf{
     
+    /**
+     * Identificador único del usuario.
+     * Se genera de manera automatica
+     */
     @Id
     @GeneratedValue
     private Long id_odf;

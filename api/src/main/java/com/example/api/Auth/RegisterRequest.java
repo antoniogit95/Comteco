@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Contiene todos los datos necesarios para hacer un nuevo registro del personal.
+ */
 @Data
 @Builder
 @AllArgsConstructor

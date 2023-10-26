@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Continene todos lo parametros de entrada que son necesarios para hacer un registro de Datos tecnicos 
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

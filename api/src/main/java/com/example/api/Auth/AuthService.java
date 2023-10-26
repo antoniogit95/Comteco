@@ -20,6 +20,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Servicio que gestiona la autenticación de usuarios y operaciones relacionadas.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -31,6 +34,12 @@ public class AuthService {
     private final PersonRepository personRepository;
     private final CesionService cesionService;
 
+     /**
+     * Inicia sesión de un usuario.
+     *
+     * @param request La solicitud de inicio de sesión que incluye las credenciales del usuario.
+     * @return Una respuesta que contiene la información de autenticación del usuario si el inicio de sesión es exitoso.
+     */
     public ResponseEntity<AuthResponse> login(LoginRequest request){
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));    
@@ -52,12 +61,20 @@ public class AuthService {
                 .time(1000*60*60)
                 .build());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(AuthResponse.builder()
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(AuthResponse.builder()
             .message("Nombre de usuario o contraseña incorrectos.")
             .build());
         }        
     }
 
+     /**
+     * Registra un nuevo usuario en el sistema.
+     *
+     * @param request La solicitud de registro que incluye los datos del nuevo usuario 
+     * dentro la clase RegisterRequest.
+     * @return Una respuesta que contiene la información de autenticación del usuario 
+     * si el registro es exitoso con los datos que estan dentro la clase AuthResponse.
+     */
     public  AuthResponse register(RegisterRequest request){
         Person person = Person.builder()
                 .celula_identidad(request.getCelula_identidad())

@@ -14,11 +14,20 @@ import java.util.function.Function;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * Servicio para la gestión de tokens JWT.
+ */
 @Service
 public class JwtService {
 
     private static final String SECRET_KEY="gflIYt8y9eWGqNgOtd0GDSW4SV0rzonGqPCz7kEsXuE";
 
+    /**
+     * Genera un token JWT para el usuario proporcionado.
+     *
+     * @param user Los detalles del usuario para los que se genera el token.
+     * @return Un token JWT generado.
+     */
     public String getToken(UserDetails user){
         return getToken(new HashMap<>(), user);
     }
@@ -38,10 +47,23 @@ public class JwtService {
         return new SecretKeySpec(keyBytes, "HmacSHA256"); 
     }
 
+    /**
+     * Obtiene el nombre de usuario a partir de un token JWT.
+     *
+     * @param token El token JWT del que se extrae el nombre de usuario.
+     * @return El nombre de usuario extraído del token.
+     */
     public String getUsernameFromToken(String token) {
         return getClaim(token, Claims::getSubject);
     }
 
+    /**
+     * Verifica si un token JWT es válido para los detalles del usuario proporcionados.
+     *
+     * @param token El token JWT que se verifica.
+     * @param userDetails Los detalles del usuario con los que se compara el token.
+     * @return `true` si el token es válido, de lo contrario, `false`.
+     */
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username  = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));

@@ -14,6 +14,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Esta clase representa a un dato tecnico en el sistema
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +24,10 @@ import lombok.NoArgsConstructor;
 @Entity
 public class DataTecnico {
     
+    /**
+     * Identificador único del usuario.
+     * Se genera de manera automatica
+     */
     @Id
     @GeneratedValue
     private Long id_reg_data_tec;
@@ -31,6 +38,9 @@ public class DataTecnico {
     private Timestamp created_at;
     private Timestamp update_at;
 
+    /**
+     * Relación de muchos a uno con la entidad 'Person'.
+     */
     @ManyToOne
     @JoinColumn(name = "id_person")
     private Person person;
