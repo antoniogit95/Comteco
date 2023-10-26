@@ -32,13 +32,15 @@ import java.util.List;
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class User implements UserDetails {
+    
     /**
-    * Identificador único del usuario.
-    * Se genera de manera automatica
-    */
+     * Identificador único del usuario.
+     * Se genera de manera automatica
+     */
     @Id
     @GeneratedValue
     private Long id;
+    
     /**
      * Nombre de usuario del usuario. Debe ser único en el sistema.
      */
@@ -48,6 +50,7 @@ public class User implements UserDetails {
     private boolean status; //Estado del usuario si tiene o no permisos de autentificacion
     private Timestamp created_at; //fecha de creacion
     private Timestamp update_at; //fecha de actualizacion
+    
     /**
      * Rol del usuario, representado como un valor Enum.
      * los roles pueden ser: ADMIN, SOPORTE y SUPERVISOR.
