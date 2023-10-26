@@ -52,7 +52,7 @@ public class AuthService {
                 .time(1000*60*60)
                 .build());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(AuthResponse.builder()
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(AuthResponse.builder()
             .message("Nombre de usuario o contraseña incorrectos.")
             .build());
         }        

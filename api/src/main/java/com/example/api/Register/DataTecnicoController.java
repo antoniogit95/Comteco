@@ -43,8 +43,12 @@ public class DataTecnicoController {
 
     @GetMapping
     public ResponseEntity<List<DataTecnico>> getAllDataTecnicos() {
-        List<DataTecnico> dataTecnicos = dataTecnicoService.getAllDataTecnicos();
-        return new ResponseEntity<>(dataTecnicos, HttpStatus.OK);
+        try {
+            List<DataTecnico> dataTecnicos = dataTecnicoService.getAllDataTecnicos();
+            return new ResponseEntity<>(dataTecnicos, HttpStatus.OK);  
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
