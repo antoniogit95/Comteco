@@ -12,6 +12,9 @@ import com.example.api.Routes.Odf.OdfService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Servicio para la gestión de FDTs.
+ */
 @Service
 @AllArgsConstructor
 public class FdtService {
@@ -19,14 +22,31 @@ public class FdtService {
     private FdtRepository fdtRepository;
     private OdfService odfService;
 
+    /**
+     * Obtiene todos los FDTs disponibles.
+     *
+     * @return Una lista de todos los FDTs.
+     */
     public List<Fdt> getAllFdts() {
         return fdtRepository.findAll();
     }
 
+    /**
+     * Obtiene un FDT por su ID.
+     *
+     * @param id El ID del FDT que se busca.
+     * @return Un objeto Optional que contiene el FDT si se encuentra, o un objeto Optional vacío.
+     */
     public Optional<Fdt> getFdtById(Long id_fdt){
         return fdtRepository.findById(id_fdt);
     }
 
+    /**
+     * Obtiene todos los FDTs asociados a un ODF específico por su ID.
+     *
+     * @param id_odf El ID del ODF al que se asocian los FDTs.
+     * @return Una lista de FDTs asociados al ODF.
+     */
     public ResponseEntity<List<Fdt>> getAllFdtsByOdf(Long id_odf) {
         try {
             Optional<Odf> optionalOdf = odfService.getOdfById(id_odf);
@@ -37,6 +57,13 @@ public class FdtService {
         }
     }
 
+    /**
+     * Actualiza un FDT existente por su ID con los nuevos detalles proporcionados.
+     *
+     * @param id  El ID del ODF que se desea actualizar.
+     * @param fdt Los nuevos detalles del FDT.
+     * @return El FDT actualizado si existe, de lo contrario, devuelve null.
+     */
     public Fdt updateFdt(Long id, Fdt fdt) {
         if(fdtRepository.existsById(id)){
             return fdtRepository.save(fdt);
@@ -44,6 +71,12 @@ public class FdtService {
         return null;
     }
 
+    /**
+     * Elimina un FDT por su ID.
+     *
+     * @param id El ID del FDT que se desea eliminar.
+     * @return 'true' si el FDT se elimina con éxito, de lo contrario, 'false'.
+     */
     public boolean deleteFdt(Long id) {
         if (fdtRepository.existsById(id)) {
             fdtRepository.deleteById(id);
@@ -52,6 +85,12 @@ public class FdtService {
         return false;
     }
 
+    /**
+     * Crear un FDT.
+     *
+     * @param id El ID del ODF que se desa hacer referencia, solo en caso del FDT no tener id_odf.
+     * @return el mismo obgeto FDT, de lo contrario, 'NULL'.
+     */
     public Fdt createFdt(Long id_odf, Fdt fdt) {
         try {
             return fdtRepository.save(fdt);
