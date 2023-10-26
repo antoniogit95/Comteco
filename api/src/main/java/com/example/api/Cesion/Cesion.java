@@ -12,6 +12,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Esta clase representa una cesion en el sistema
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,12 +22,19 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Cesion {
     
+    /**
+    * Identificador único de la cesion.
+    * Se genera de manera automatica
+    */
     @Id
     @GeneratedValue
     private Long id_secion;
-    private Timestamp createdAt;
-    private Timestamp finalyAt;
+    private Timestamp createdAt; //fecha y hora de inicio de secion
+    private Timestamp finalyAt; //fecha y hora de finalizar la cesion
 
+    /**
+     * Relación de muchos a uno con la entidad User
+     */
     @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;

@@ -18,7 +18,10 @@ import com.example.api.User.UserRepository;
 
 import lombok.AllArgsConstructor;
 
-
+/**
+ * Controlador REST para la gestión de cesiones.
+ * todas las rutas estan el contexto auth api/v1/cesion 
+ */
 @RestController
 @RequestMapping("api/v1/cesion")
 @CrossOrigin("*")
@@ -29,6 +32,11 @@ public class CesionController {
     private PersonService personService;
     private UserRepository userRepository;
 
+    /**
+     * Debulve todas las cesiones que estan activas en ese momento
+     *
+     * @return List<Cesiones> una lista de todas las cesiones activas.
+     */
     @GetMapping("/actives")
     public ResponseEntity<List<Cesion>> GetAllActives() {
         Optional<List<Cesion>> optionaCesion = cesionService.getCesionsActives();
@@ -39,6 +47,13 @@ public class CesionController {
         }
     }
     
+    /**
+     * Devuelve una cesion por el id_persona.
+     *
+     * @param id_person El id_person de la persona asociada a una persona que asu ves esta
+     *  asociada a un usuario que asu ves esta asociada a una cesion.
+     * @return Una respuesta que indica si la cesion esta activa o no.
+     */
     @GetMapping("/actives/{id}")//este metodo sirve para saber si un usuario esta activo por medio del id de la persona
     public ResponseEntity<Boolean> GetActiveForIdPerson(@PathVariable Long id) {
         Person person = personService.getPersonById(id);

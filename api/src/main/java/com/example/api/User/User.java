@@ -32,10 +32,10 @@ import java.util.List;
 @Entity
 @Table(name = "usuarios", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class User implements UserDetails {
-      /**
-     * Identificador único del usuario.
-     * Se genera de manera automatica
-     */
+    /**
+    * Identificador único del usuario.
+    * Se genera de manera automatica
+    */
     @Id
     @GeneratedValue
     private Long id;
