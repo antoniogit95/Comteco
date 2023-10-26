@@ -16,6 +16,10 @@ import com.example.api.Person.PersonService;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Controlador REST para la gestión de usuarios.
+ * En la siguiente ruta api/v1/user 
+ */
 @RestController
 @RequestMapping("/api/v1/user")
 @AllArgsConstructor
@@ -24,6 +28,12 @@ public class UserController {
     UserRepository userRepository;
     PersonService personService;
 
+    /**
+     * Activa un usuario por id_person de la persona.
+     *
+     * @param id_person El id_person de la persona asociada a una persona que asu ves esta asociada a un usuario
+     * @return Una respuesta que indica si el usuario se activó exitosamente.
+     */
     @PutMapping("/active/{id_person}")
     public ResponseEntity<String> activarUsuarioPorIdPersona(@PathVariable Long id_person) {
         Person person = personService.getPersonById(id_person);
@@ -39,6 +49,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Verifica si un usuario está activo por id_person de la persona.
+     *
+     * @param id_person El ID de la persona asociada al usuario cuyo estado se verifica.
+     * @return Una respuesta que indica si el usuario está activo o no.
+     */
     @GetMapping("/isValidate/{id_person}")
     public ResponseEntity<Boolean> isValidateUser(@PathVariable Long id_person) {
         Person person = personService.getPersonById(id_person);
