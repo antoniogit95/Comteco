@@ -18,6 +18,9 @@ import com.example.api.Person.PersonRepository;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Servicio para la gestión de datos técnicos.
+ */
 @Service
 @AllArgsConstructor
 public class DataTecnicoService {
@@ -25,14 +28,32 @@ public class DataTecnicoService {
     private final DataTecnicoRepository dataTecnicoRepository;
     private final PersonRepository personRepository;
 
+    /**
+     * Obtiene datos técnicos por su ID.
+     *
+     * @param id El ID de los datos técnicos que se buscan.
+     * @return Los datos técnicos si se encuentran, de lo contrario, devuelve null.
+     */
     public DataTecnico getDataTecnicoById(Long id) {
         return dataTecnicoRepository.findById(id).orElse(null);
     }
 
+    /**
+     * Obtiene todos los datos técnicos disponibles.
+     *
+     * @return Una lista de todos los datos técnicos.
+     */
     public List<DataTecnico> getAllDataTecnicos() {
         return dataTecnicoRepository.findAll();
     }
 
+    /**
+     * Actualiza datos técnicos por su ID con los detalles proporcionados.
+     *
+     * @param id El ID de los datos técnicos que se desean actualizar.
+     * @param dataTecnico Los nuevos detalles de los datos técnicos.
+     * @return Los datos técnicos actualizados si existen, de lo contrario, devuelve null.
+     */
     public DataTecnico updateDataTecnico(Long id, DataTecnico dataTecnico) {
         if (dataTecnicoRepository.existsById(id)) {
             return dataTecnicoRepository.save(dataTecnico);
@@ -40,6 +61,12 @@ public class DataTecnicoService {
         return null;
     }
 
+    /**
+     * Elimina datos técnicos por su ID.
+     *
+     * @param id El ID de los datos técnicos que se desean eliminar.
+     * @return `true` si los datos técnicos se eliminan con éxito, de lo contrario, `false`.
+     */
     public boolean deleteDataTecnico(Long id) {
         if (dataTecnicoRepository.existsById(id)) {
             dataTecnicoRepository.deleteById(id);
@@ -48,6 +75,12 @@ public class DataTecnicoService {
         return false;
     }
 
+    /**
+     * Crea y registra nuevos datos técnicos con los detalles proporcionados.
+     *
+     * @param request Los detalles de los datos técnicos a crear.
+     * @return Los datos técnicos creados y registrados, o null si la persona no existe.
+     */
     public  DataTecnico createRegisterDataTecnico(DataTecnicoRequest request){
         Optional<Person> existingPerson = personRepository.findById(request.getId_person());
         if(existingPerson.isPresent()){
@@ -74,6 +107,12 @@ public class DataTecnicoService {
         return Timestamp.valueOf(now);
     }
 
+    /**
+     * Guarda muchos datos tecnicos a travez de un archivo
+     *
+     * @param file El archivo de datos técnicos a guardar.
+     * @return El resultado de la operación y un estado OK, o un respuesta de error si no se pudieron obtener los datos del archivo
+     */
     public ResponseEntity<String> saveFile(@RequestParam("file") MultipartFile file){
         try {
             Long id = 1L;
