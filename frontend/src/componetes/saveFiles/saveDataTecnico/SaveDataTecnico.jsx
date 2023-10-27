@@ -13,8 +13,6 @@ export const SaveDataTecnico = () => {
         const formData = new FormData();
         formData.append('file', file);
         try {
-            console.log(endPoint);
-            console.log(formData);
             const response = await axios.post(endPoint, formData,{
                 headers: {
                     'Content-Type': 'multipart/form-data',
