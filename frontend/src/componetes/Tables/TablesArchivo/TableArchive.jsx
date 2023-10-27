@@ -8,7 +8,7 @@ export const  TableArchive = () => {
     const [rescatarDatos, setRescatarDatos] = useState([])
     const [select, setSelectd] = useState("");
     const [buscar, setBuscar] = useState("");
-    const endPoint = URL_API_private+"files/get"
+    const endPoint = URL_API_private+"/files/get"
     const token  = JSON.parse(localStorage.getItem('user_data')).token
 
     useEffect( () => {
@@ -23,6 +23,9 @@ export const  TableArchive = () => {
 
     const getAllDatos = async () => {
         try {
+
+            console.log(endPoint)
+            console.log(config.headers)
             const response = await axios.get(endPoint, config);
             setDatos(response.data);
             setRescatarDatos(response.data);
