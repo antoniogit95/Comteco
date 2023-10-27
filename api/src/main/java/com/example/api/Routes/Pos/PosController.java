@@ -14,7 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+/**
+ * Controlador REST para la gestion de Posiciones
+ */
 @RestController
 @RequestMapping("/api/v1/pos")
 @CrossOrigin("*")
@@ -23,6 +25,11 @@ public class PosController {
     
     private PosService posService;
 
+    /**
+     * Obtiene todas las Posiciones disponibles
+     * 
+     * @return una lista de todas las Posiciones
+     */
     @GetMapping
     public ResponseEntity<List<Pos>> getAllPoss(){
         List<Pos> poss = posService.getAllPoss();
