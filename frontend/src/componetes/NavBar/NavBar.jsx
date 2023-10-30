@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import "./NavBar.css"
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../providerContext/AuthProvider";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export const NavBar = () => {
 
+    const [isNavExpanded, setIsNavExpanded] = useState(false);
     const userRole = JSON.parse(localStorage.getItem('user_data')).role;
     const isAdmin = userRole === 'ADMIN';
     const isSoporte = userRole === 'SOPORTE';
@@ -29,7 +31,10 @@ export const NavBar = () => {
         <div className="stylesLogoContainer">
             <h2 className="stylesH2">Laboratorio Comteco</h2>
         </div>
-        <ul className="stylesUl">
+        <button className="stylesImgContainerNavBar" onClick={() => {setIsNavExpanded(!isNavExpanded)}}>
+            <GiHamburgerMenu className="stylesIcon"/>
+        </button>
+        <ul className={isNavExpanded? "stylesUl": "sstylesUl-expanded"}>
             {(isAdmin || isSoporte) && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
                 to="/home">Home</NavLink></li>
@@ -49,15 +54,15 @@ export const NavBar = () => {
                     <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
                     to="/reportes">Reportes</NavLink></li>
                 )}
+            <div>
+                <button className="stylesButoonNavBar" onClick={handleClick}>Cerrar Sesión</button>
+            </div>
         </ul>
-        <div>
-            <button className="stylesButoonNavBar" onClick={handleClick}>Cerrar Sesión</button>
-        </div>
     </nav>
     );
 }
 
-/**<NavLink 
+/**<NavLink dd
                 className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')} 
                 to="/">Home</NavLink>
             <NavLink 

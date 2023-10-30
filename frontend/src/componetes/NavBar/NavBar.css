@@ -1,10 +1,12 @@
 .stylesNavBar{
-    background-color: #333;
-    padding: .4rem;
+    height: 60px;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     position: relative;
+    padding: 0.5rem;
+    background-color: #333;
+    box-shadow: 0 2px 2px 2px rgb(9, 9, 9, 0.25);
 }
 
 .stylesLogoContainer {
@@ -18,9 +20,30 @@
     margin: 0;
 }
 
+.stylesImgContainerNavBar{
+    border: 0;
+    height: auto;
+    width: a;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.stylesImgContainerNavBar:hover{
+    background-color: #2642af;
+}
+
+.stylesIcon{
+    width: 100%;
+    height: 100%;
+}
 .stylesUl{
-    width: auto;
-    right: 100%;
     display: flex;
     list-style: none;
     padding: 0;
@@ -67,19 +90,26 @@
     background-color: red;
 }
 
-@media (max-width: 768px) {
-    .stylesNavBar {
+@media screen and (max-width: 768px) {
+
+    .stylesImgContainerNavBar{
+        display: block;
+    }
+
+    .stylesUl ul{
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0px;
+        padding: 8px;
+        flex-direction: column;
         width: 100%;
-        flex-direction: column;
+        border-top: 1px solid black;
+        background-color: #333;
     }
 
-    .stylesLogoContainer {
-        margin: 1rem 0;
-    }
-
-    .stylesUl {
-        margin: 1rem 0;
-        flex-direction: column;
+    .stylesUl-expanded ul{
+        display: block;
     }
 
     .stylesLi {
