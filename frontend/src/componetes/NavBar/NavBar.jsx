@@ -34,7 +34,7 @@ export const NavBar = () => {
         <button className="stylesImgContainerNavBar" onClick={() => {setIsNavExpanded(!isNavExpanded)}}>
             <GiHamburgerMenu className="stylesIcon"/>
         </button>
-        <ul className={isNavExpanded? "stylesUl": "sstylesUl-expanded"}>
+        <ul className={isNavExpanded? "stylesUl-expanded": "stylesUl"}>
             {(isAdmin || isSoporte) && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
                 to="/home">Home</NavLink></li>
@@ -61,17 +61,3 @@ export const NavBar = () => {
     </nav>
     );
 }
-
-/**<NavLink dd
-                className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')} 
-                to="/">Home</NavLink>
-            <NavLink 
-                className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/reportes">Reportes</NavLink>
-            <NavLink 
-                className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/registrar">Registrar</NavLink>
-            <NavLink 
-                className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/personal">Personal</NavLink>
- */
