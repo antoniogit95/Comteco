@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './PersonCard.css'
 import { URL_API_private } from "../../providerContext/EndPoint";
 import axios from "axios";
+import { FcOk, FcCancel } from "react-icons/fc";
 
 export const PersonCard = ({person, onCardClick, id_user}) => {
     const [acepted, setAcepted] = useState(false);
@@ -40,6 +41,9 @@ export const PersonCard = ({person, onCardClick, id_user}) => {
 
     return <>
         <div onClick={() => onCardClick(person)} className={acepted? 'stylesCardPersonAcepted':'stylesCardPersonFailed'}>
+            <div className="stylesHeaderCard">
+                <h4>Datos personales</h4>
+            </div>
             <div>
                 <label>{person.nombre}</label>
             </div>
@@ -55,8 +59,14 @@ export const PersonCard = ({person, onCardClick, id_user}) => {
             <div>
                 <label>{person.fecha_nacimiento}</label>
             </div>
-            <div>
-                <label>{online? "online" : "desactivado"}</label>
+            <div className="stylesFooterCard">
+                {online? (<>
+                    <FcOk/> 
+                    <label>Activado</label>
+                </>) : (<>
+                        <FcCancel/> 
+                        <label>Desactivado</label>
+                </> )}
             </div>
         </div>
     </>
