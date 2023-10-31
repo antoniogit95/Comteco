@@ -36,6 +36,11 @@ public class PosController {
         return new ResponseEntity<>(poss, HttpStatus.OK);
     }
 
+    @GetMapping("/resume")
+    public ResponseEntity<List<PosResponseResume>> getAllPossResume(){
+        return posService.getAllPossResume();
+    }
+
     @GetMapping("/bynap/{id_nap}")
     public ResponseEntity<List<Pos>> getAllPossByNap(@PathVariable Long id_nap){
         return posService.getAllPossByNap(id_nap);

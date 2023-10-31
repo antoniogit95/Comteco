@@ -85,9 +85,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  .stylesButoon {
+.stylesButoon {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -98,14 +98,45 @@
     border-radius: 10px;
     cursor: pointer; 
     transition: .3s;
-  }
+}
 
-  .stylesButoon:hover {
+.stylesButoon:hover {
     width: 90%;
-  }
+}
+
 .styleErrores{
     font-size: 0.8rem;
     color: #eb2929;
     padding: 5px 20px;
 }
 
+.stylesTextarea{
+  resize: vertical;
+  width: 100%;
+  min-height: auto;
+  max-height: 350px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 768px){
+
+  .stylesContentForm{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .stylesInput {
+    height: 100%;
+  }
+  
+  .stylesContentInput{
+    width: 100%;
+  }
+}
