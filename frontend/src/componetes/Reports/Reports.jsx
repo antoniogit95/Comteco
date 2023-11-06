@@ -20,9 +20,7 @@ import {
     Legend,
     Filler,
 } from 'chart.js';
-//import LinesChart from "./LinesChart";
-//import BarsChart from "./BarsChart";
-//import PiesChart from "./PiesChart";
+
 
 export const Reports = () => {
    
@@ -33,9 +31,8 @@ export const Reports = () => {
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
     const [termino, setTermino] = useState('');
-    //const chartRef = useRef(null);
-    //const [chartData, setChartData] = useState
-
+    const [dataPorMes, setDataPorMes] = useState({});
+    
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -46,42 +43,8 @@ export const Reports = () => {
         Legend,
         Filler
     );
-    //var pru = ;
-    var beneficios = [0, 56, 20, 36, 80, 40, 30, -20, 25, 30, 12, 60];
-    var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     
-    var midata = {
-        labels: meses,
-        datasets: [ // Cada una de las líneas del gráfico
-            {
-                label: 'Beneficios',
-                data: beneficios,
-                tension: 0.5,
-                fill : true,
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                pointRadius: 5,
-                pointBorderColor: 'rgba(255, 99, 132)',
-                pointBackgroundColor: 'rgba(255, 99, 132)',
-            },
-            {
-                label: 'Otra línea',
-                data: [20, 25, 60, 65, 45, 10, 0, 25, 35, 7, 20, 25]
-            },
-        ],
-    };
     
-    var misoptions = {
-        scales : {
-            y : {
-                min : 0
-            },
-            x: {
-                ticks: { color: 'rgb(255, 99, 132)'}
-            }
-        }
-    };
-
     console.log(endPoint);
 
     useEffect(() => {
@@ -103,7 +66,35 @@ export const Reports = () => {
         }
     }
 
-    
+    useEffect(() => {
+        // Calcula la cantidad de datos por mes
+        const dataPorMesCalculada = dataTecnico.reduce((acc, data) => {
+            const mes = new Date(data.created_at).getMonth(); // Obtiene el mes (0-11)
+            acc[mes] = (acc[mes] || 0) + 1; // Incrementa la cantidad de datos para el mes
+            return acc;
+        }, []);
+
+        // Convierte el objeto a un array para Chart.js
+        setDataPorMes(Object.values(dataPorMesCalculada));
+    }, [dataTecnico]);
+
+    const meses = [
+        "Octubre","Noviembre","Diciembre"
+    ];
+
+    const midata = {
+        labels: meses,
+        datasets: [
+            {
+                label: 'Cantidad de Datos',
+                data: dataPorMes,
+                fill: true,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }
+        ]
+    }; 
+
     const buscarDatos = () => {
         const resultados = dataTecnico.filter(data => {
             if (filtro === 'nombre') {
@@ -125,62 +116,6 @@ export const Reports = () => {
         
         setDataTecnico(resultados);
     };
-
-    // Obtener el número de registros por mes
-    //const registrosPorMes = {};
-    //dataTecnico.forEach(data => {
-    //    const mes = new Date(data.created_at).getMonth() + 1;
-    //    registrosPorMes[mes] = (registrosPorMes[mes] || 0) + 1;
-    //});
-
-    // Obtener las etiquetas y datos para el gráfico
-    //const etiquetas = Object.keys(registrosPorMes).map(mes => `Mes ${mes}`);
-    //const datos = Object.values(registrosPorMes);
-
-    //useEffect(() => {
-
-         // Destruir el gráfico existente
-         //if (chartRef.current !== null) {
-         //   chartRef.current.destroy();
-       // }
-
-        // Crear el gráfico cuando se actualicen los datos
-        //const ctx = document.getElementById('grafico').getContext('2d');
-        //new Chart(ctx, {
-        //    type: 'bar',
-        //    data: {
-        //        labels: etiquetas,
-        //        datasets: [{
-        //            label: 'Número de registros',
-        //           data: datos,
-        //            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        //            borderColor: 'rgba(75, 192, 192, 1)',
-        //            borderWidth: 1
-        //        }]
-        //    },
-        //    options: {
-        //        scales: {
-        //            y: {
-        //                beginAtZero: true
-        //            }
-        //        }
-        //    }
-
-            
-
-        //});
-
-        //chartRef.current = newChart;
-
-        // Limpiar el gráfico al desmontar el componente
-        //return () => {
-        //    if (chartRef.current) {
-        //        chartRef.current.destroy();
-        //    }
-        //};
-
-    //}, [chartData]); // Renderizar el gráfico cuando los datos se actualicen
-
 
     function getMes(data){
         const dataObjest = new Date(data);
@@ -262,13 +197,13 @@ export const Reports = () => {
         
         <div>
             
+            
             <div>
-                <p className="m-2"><b></b>Gráfico de líneas básico</p>
-                <div className="bg-light mx-auto px-2 border border-2 border-primary" style={{width:"450px", height:"230px"}}>
-                   <Line data={midata} options={misoptions}/>
+                <p className="m-2"><b>Gráfico de Líneas: Cantidad de Datos por Mes</b></p>
+                <div style={{ width: "450px", height: "230px" }}>
+                    <Line data={midata} />
                 </div>
             </div>
-            
         </div>
       </div>  
     );
