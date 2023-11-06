@@ -117,7 +117,7 @@ export const RegistroTecnico = () => {
                     <div>
                         <label htmlFor='Comments'>Observaciones</label>
                         <textarea
-                            className='stylesInput'
+                            className='stylesTextarea'
                             type='textarea'
                             rows='3'
                             cols='50'

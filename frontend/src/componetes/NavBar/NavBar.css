@@ -1,10 +1,13 @@
 .stylesNavBar{
-    background-color: #333;
-    padding: .4rem;
+    height: 60px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
+    padding: 0.5rem;
+    background-color: rgba(51, 51, 51, .9) ;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.20);
 }
 
 .stylesLogoContainer {
@@ -18,6 +21,29 @@
     margin: 0;
 }
 
+.stylesImgContainerNavBar{
+    border: 0;
+    height: auto;
+    width: a;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.stylesImgContainerNavBar:hover{
+    background-color: rgb(223, 31, 31);
+}
+
+.stylesIcon{
+    width: 100%;
+    height: 100%;
+}
 .stylesUl{
     width: auto;
     right: 100%;
@@ -67,22 +93,48 @@
     background-color: red;
 }
 
-@media (max-width: 768px) {
-    .stylesNavBar {
+@media screen and (max-width: 768px) {
+
+    .stylesImgContainerNavBar{
+        display: block;
+    }
+
+    .stylesUl{
+        display: none;
+        
+    }
+
+    .stylesUl-expanded{
+        display: block;
+        position: absolute;
+        top: 60px;
+        left: 0px;
+        list-style: none;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
-        flex-direction: column;
-    }
-
-    .stylesLogoContainer {
-        margin: 1rem 0;
-    }
-
-    .stylesUl {
-        margin: 1rem 0;
-        flex-direction: column;
+        border-top: 1px solid black;
+        background-color: #333;
     }
 
     .stylesLi {
         margin: 1rem 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .stylesA{
+        width: 100%;
+        text-decoration: none;
+        padding: 5px;
+        border-radius: 10px;
+        transition: .3s ;
+    }
+    
+    .stylesA:hover{
+        background-color: rgb(223, 31, 31);
     }
 }

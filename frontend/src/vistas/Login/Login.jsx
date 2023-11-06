@@ -23,6 +23,7 @@ export const Login = () => {
         console.log("presionaste boton cancelar");
     }
 
+
     function adminErrros(nameErrors){
         setExisError(true);
         switch (nameErrors) {
@@ -32,10 +33,18 @@ export const Login = () => {
             case "ERR_NETWORK":
                 setError("no hay conexion con el servidor");
                 break;
+            case "":
+                    setError("no hay conexion con el servidor");
+                    break;
             default:
                 setError(nameErrors);
                 break;
         }
+
+        setTimeout(() => {
+            setExisError(false);
+            setError("");
+          }, 3000);
     }
 
     return (
@@ -79,7 +88,13 @@ export const Login = () => {
                             );
                             navigate("/home")
                         } catch (error){
-                            adminErrros(error.response.data.message);    
+                            console.log(error.code)
+                            if(error.code === "ERR_NETWORK"){
+                                adminErrros("No hay conexion con el servidor");
+                            }else{
+                                adminErrros(error.response.data.message);
+                            }
+                                
                         }
                         
                     }
@@ -121,7 +136,7 @@ export const Login = () => {
                         {touched.pass && errors.pass && <div className='styleErrores'>{errors.pass}</div>}
                     </div>                   
                     <div className="stylesContenedorButton">
-                        <button  className='stylesButoon' type="submit">
+                        <button  className='stylesButoonLogin' type="submit">
                             Iniciar Secion
                         </button>
                     </div>

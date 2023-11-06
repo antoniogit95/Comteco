@@ -1,8 +1,9 @@
 .stylesCardPersonFailed {
+    width: 305px;
     border: 1px solid black;
     padding: 20px;
-    margin: 20px;
-    border-radius: 15px;
+    margin: 8px;
+    border-radius: 8px;
     background-color: red;
     max-width: 350px;
     display: flex;
@@ -12,6 +13,7 @@
 }
 
 .stylesCardPersonAcepted {
+    width: 305px;
     border: 1px solid black;
     padding: 20px;
     margin: 20px;
@@ -28,9 +30,26 @@
 .stylesCardPersonFailed:hover{
     cursor: pointer;
     max-width: 330px;
+    background-color: rgba(255, 0, 0, .8)
 }
 
 .stylesCardPersonAcepted:hover{
     cursor: pointer;
     max-width: 330px;
+    background-color: rgba(0, 128, 0, .8);
+}
+
+.stylesFooterCard{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid black;
+}
+
+.stylesHeaderCard{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid black;
 }

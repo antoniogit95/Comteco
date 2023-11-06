@@ -116,4 +116,24 @@ public class PosService {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    public ResponseEntity<List<PosResponseResume>> getAllPossResume() {
+        try {
+            List<Pos> poss = posRepository.findAll();
+            List<PosResponseResume> response = new ArrayList<>();
+            for (Pos pos : poss) {
+                PosResponseResume pRR = PosResponseResume.builder()
+                    .id_pos(pos.getId_pos())
+                    .codNAP(pos.getNap().getFdt().getCod()+"-"+pos.getNap().getCod()+"-"+pos.getCod())
+                    .nameODF(pos.getNap().getFdt().getOdf().getNombre())
+                    .build();
+                response.add(pRR);
+            }
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        
+        
+    }
 }

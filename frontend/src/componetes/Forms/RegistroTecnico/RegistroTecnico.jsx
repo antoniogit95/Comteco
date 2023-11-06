@@ -4,6 +4,8 @@ import { Formik, Form, Field} from 'formik';
 import axios from 'axios';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import './RegistroTecnico.css'
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const RegistroTecnico = () => {
     
@@ -11,18 +13,18 @@ export const RegistroTecnico = () => {
     const id_person = JSON.parse(personData).person.id_person;
     const token = JSON.parse(personData).token;
     const endPoint = URL_API_private+"/datatecnico";
-    const endPointFtp = URL_API_private+"/ftp"
-    const [ftpData, setFtpData] = useState([]);
+    const endPointFtp = URL_API_private+"/pos/resume"
+    const [possData, setPossData] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
-        getAllDataFtp();
+        getAllDataPoss();
     }, []);
 
-    const getAllDataFtp = async () => {
+    const getAllDataPoss = async () => {
         try {
             const response = await axios.get(endPointFtp, config);
-            setFtpData(response.data);
+            setPossData(response.data);
         } catch (error) {
             console.error("error inesperado: " +error);
             console.error("mensaje de error del servidor: " +error.response);
@@ -37,8 +39,8 @@ export const RegistroTecnico = () => {
 
     const fechtSuggestion = async (searchValue) =>{
         if(searchValue){
-            const filteredSuggestions = ftpData.filter((item) =>
-                item.cod.toLowerCase().includes(searchValue.toLowerCase())
+            const filteredSuggestions = possData.filter((item) =>
+                item.codNAP.toLowerCase().includes(searchValue.toLowerCase())
             );
             setSuggestions(filteredSuggestions);
         }else{
@@ -77,7 +79,7 @@ export const RegistroTecnico = () => {
                    
                     return errores;
                 }}
-                onSubmit={ async (valores) => {
+                onSubmit={ async (valores, {resetForm}) => {
                     try {
                         const response = await axios.post(endPoint, {
                             id_person: id_person,
@@ -88,10 +90,14 @@ export const RegistroTecnico = () => {
                         }, {
                             headers: config.headers,
                         });
-                            console.log('Respuesta del Servidor: '+ response.data)
+                        toast.success('Registro Tecnico, Registrado con exito', {
+                            position: 'top-center',
+                            autoClose: 3000,      
+                        });
+                        resetForm();
                     }catch (error) {
                         console.error("Error del Servidor: "+ error.response)
-                        console.erro('Error Inesperado: '+error)
+                        console.error('Error Inesperado: '+error)
                     }
                     
                 }}
@@ -100,7 +106,7 @@ export const RegistroTecnico = () => {
                 {({values, errors, touched, handleSubmit, handleChange, handleBlur, setFieldValue, resetForm}) => (
                     <Form onSubmit={handleSubmit} className="stylesForm">
                     <section className="stylesContentForm">
-                        <div>
+                        <div className="stylesContentInput">
                             <label htmlFor='nomber_product'>Numero de producto</label>
                             <Field 
                                 className='stylesInput'
@@ -115,7 +121,7 @@ export const RegistroTecnico = () => {
                             {touched.nomber_product && errors.nomber_product && <div className='styleErrores'>{errors.nomber_product}</div>}
                         </div>
                     
-                        <div>
+                        <div className="stylesContentInput">
                             <label htmlFor='BoxNap'>Caja Nap</label>
                             <Field 
                                 className='stylesInput'
@@ -135,17 +141,17 @@ export const RegistroTecnico = () => {
                                 {suggestions.length > 0 && (
                                     suggestions.map((suggestions) =>(
                                         <div className="stylesSuggestion-item" key={suggestions.id_fdt} onClick={() => {
-                                            setFieldValue('BoxNap', suggestions.cod);
+                                            setFieldValue('BoxNap', suggestions.codNAP);
                                             setSuggestions([])
                                         }}>
-                                            {suggestions.cod + " zona: "+ suggestions.odf.nombre}
+                                            {suggestions.codNAP + " zona: "+ suggestions.nameODF}
                                         </div>
                                     ))
                                 )}
                             </div>
                             {touched.BoxNap && errors.BoxNap && <div className='styleErrores'>{errors.BoxNap}</div>}
                         </div>
-                        <div>
+                        <div className="stylesContentInput">
                             <label htmlFor='DtStatus'>Estado DT</label>
                             <select
                                 className='stylesInput'
@@ -162,10 +168,10 @@ export const RegistroTecnico = () => {
                             </select>
                             {touched.DtStatus && errors.DtStatus && <div className='styleErrores'>{errors.DtStatus}</div>}
                         </div>
-                        <div>
+                        <div className="stylesContentInput">
                             <label htmlFor='Comments'>Observaciones</label>
                             <Field
-                                className='stylesInput'
+                                className='stylesTextarea'
                                 type='textarea'
                                 id='Comments'
                                 name='Comments'
@@ -187,7 +193,7 @@ export const RegistroTecnico = () => {
                     </div>
                 
                     <div className='stylesContenedorButton'>
-                        <button className='stylesButoon' onClick={resetForm}>
+                        <button className='stylesButoon' type='button' onClick={resetForm}>
                             Cancelar
                         </button>
                     </div>
@@ -195,7 +201,7 @@ export const RegistroTecnico = () => {
                 </Form>
                 )}
             </Formik>
-            
+            <ToastContainer />
         </div>
     );
 }

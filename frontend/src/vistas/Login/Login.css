@@ -30,12 +30,12 @@
     align-items: center;
   }
 
-  .stylesButoon {
+  .stylesButoonLogin {
     width: 100%;
     display: flex;
     justify-content: center;
     padding: 10px;
-    background-color: brown;
+    background-color: #ff2424;
     color: white;
     border: none;
     border-radius: 10px;
@@ -43,8 +43,8 @@
     transition: .3s;
   }
 
-  .stylesButoon:hover {
-    width: 90%;
+  .stylesButoonLogin:hover {
+    background-color: #fd0808;
   }
 
   .styleLinks {
@@ -56,6 +56,7 @@
     color: #007bff;
     display: block;
     padding: 3px;
+    text-decoration: none;
   }
   
   .styleLinksA:hover {
