@@ -5,6 +5,8 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import { URL_API_public } from '../../../providerContext/EndPoint';
 import { useNavigate } from 'react-router-dom';
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const RegistrarPersonal = () => {
 
@@ -13,7 +15,7 @@ export const RegistrarPersonal = () => {
     const navigate = useNavigate();
 
     function handleClick (){
-        console.log("presionaste boton cancelar");
+        navigate("/");
     }
 
     function ciExistente(dato){
@@ -123,23 +125,36 @@ export const RegistrarPersonal = () => {
                     return errores;
                 }}
 
-                onSubmit={ (valores) => {   
-                    console.log(valores);
+                onSubmit={ (valores) => {
                     const store = async (e) => {
                         console.log(valores)
                         e.preventDefault()
-                        await axios.post(endPoint, {
-                            username: valores.email,
-                            password: valores.password,
-                            nombre: valores.nombre.toUpperCase(),
-                            apellidos: valores.apellidos.toUpperCase(),
-                            celula_identidad: valores.ci,
-                            item: valores.item,
-                            fecha_nacimiento: valores.fecha_nacimiento,
-                            email: valores.email,
-                            telefono: valores.telefono,
-                        });
-                        navigate('/home');
+                        try {
+                            await axios.post(endPoint, {
+                                username: valores.email,
+                                password: valores.password,
+                                nombre: valores.nombre.toUpperCase(),
+                                apellidos: valores.apellidos.toUpperCase(),
+                                celula_identidad: valores.ci,
+                                item: valores.item,
+                                fecha_nacimiento: valores.fecha_nacimiento,
+                                email: valores.email,
+                                telefono: valores.telefono,
+                            });
+                            toast.success('Usuario registrado con éxito', {
+                                position: 'top-right',
+                                autoClose: 3000,      
+                              });
+                            navigate('/home');    
+                        } catch (error) {
+                            console.log(error)
+                            console.log("mensaje")
+                            toast.error(error.code, {
+                                position: 'top-right', 
+                                autoClose: 3000,  
+                            });
+                        }
+                        
                     }
                     store(event);
 
@@ -282,14 +297,14 @@ export const RegistrarPersonal = () => {
                     </div>
                     <br />
                     <div className='stylesContenedorButton'>
-                        <button className='stylesButoon' onClick={handleClick}>
+                        <button className='stylesButoon' type="button" onClick={handleClick}>
                             Cancelar
                         </button>
                     </div>
                 </form>
                 )}
             </Formik>
-            
+            <ToastContainer />
         </div>
     );
 }

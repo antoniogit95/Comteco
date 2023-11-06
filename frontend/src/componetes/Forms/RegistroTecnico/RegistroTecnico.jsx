@@ -4,6 +4,8 @@ import { Formik, Form, Field} from 'formik';
 import axios from 'axios';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import './RegistroTecnico.css'
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const RegistroTecnico = () => {
     
@@ -77,7 +79,7 @@ export const RegistroTecnico = () => {
                    
                     return errores;
                 }}
-                onSubmit={ async (valores) => {
+                onSubmit={ async (valores, {resetForm}) => {
                     try {
                         const response = await axios.post(endPoint, {
                             id_person: id_person,
@@ -88,10 +90,14 @@ export const RegistroTecnico = () => {
                         }, {
                             headers: config.headers,
                         });
-                            console.log('Respuesta del Servidor: '+ response.data)
+                        toast.success('Registro Tecnico, Registrado con exito', {
+                            position: 'top-center',
+                            autoClose: 3000,      
+                        });
+                        resetForm();
                     }catch (error) {
                         console.error("Error del Servidor: "+ error.response)
-                        console.erro('Error Inesperado: '+error)
+                        console.error('Error Inesperado: '+error)
                     }
                     
                 }}
@@ -187,7 +193,7 @@ export const RegistroTecnico = () => {
                     </div>
                 
                     <div className='stylesContenedorButton'>
-                        <button className='stylesButoon' onClick={resetForm}>
+                        <button className='stylesButoon' type='button' onClick={resetForm}>
                             Cancelar
                         </button>
                     </div>
@@ -195,7 +201,7 @@ export const RegistroTecnico = () => {
                 </Form>
                 )}
             </Formik>
-            
+            <ToastContainer />
         </div>
     );
 }
