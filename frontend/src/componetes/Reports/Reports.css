@@ -23,7 +23,7 @@
 }
 
 .table-container {
-  max-height: 400px; /* Establece la altura deseada */
+  max-height: 375px; /* Establece la altura deseada */
   width: min-content;
   overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
   border: #c91b0e;
@@ -48,4 +48,10 @@
 
 .odd-row {
   background-color: #ffffff; /* Color para filas impares */
+}
+
+.graph{
+  width:"450px";
+  height:"230px";
+  
 }
