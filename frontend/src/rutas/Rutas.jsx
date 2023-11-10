@@ -8,6 +8,7 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 import { SingAuth } from "../vistas/SingAuth/SingAuth";
 import { Report } from "../vistas/Report/Report";
 import { Register } from "../vistas/Register/Register";
+import { ForgenPassword } from "../vistas/ForgenPassword/ForgenPassword";
 //import { NavBar } from '../componetes/NavBar/NavBar';
 
 
@@ -15,6 +16,7 @@ export const Rutas = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path:'/login', element:<Login /> },
   { path:'/singauth', element:<SingAuth /> },
+  { path:'/forgenpassword', element:<ForgenPassword /> },
   { path: "/", element: <ProtectedRoutes />,
     children:[
       { path:'/home', element:<Home/> },
