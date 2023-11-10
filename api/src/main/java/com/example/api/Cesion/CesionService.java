@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.api.Person.Person;
+import com.example.api.Person.PersonService;
 import com.example.api.User.User;
 import com.example.api.User.UserRepository;
 
@@ -22,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class CesionService {
     
     private CesionRepository cesionRepository;
+    private PersonService personService;
     private UserRepository userRepository;
     
     /**
@@ -85,24 +88,40 @@ public class CesionService {
      *  asociada a un usuario que asu ves esta asociada a una cesion.
      * @return Una respuesta que indica si la cesion esta activa o no.
      */
-    public ResponseEntity<Boolean> getCesionsActivesByUser(Long id) {
+    public ResponseEntity<Boolean> getCesionsActivesByUser(User user) {
         ResponseEntity<Boolean> response;
         try {
-            Optional<User> optionalUser = userRepository.findById(id);
-            if (optionalUser.isPresent()) {
-                Optional<Cesion> optionaCesion = cesionRepository.findByFinalyAtAfterAndUser(getTimestamp(), optionalUser.get()); 
-                if (optionaCesion.isPresent()) {
-                    response =  new ResponseEntity<>(true, HttpStatus.OK);            
-                } else {
-                    response = new ResponseEntity<>(false, HttpStatus.OK);
-                }
+            System.out.println("Imprimiendo mensajes al intentar ver las cesiones: "+getTimestamp()+" "+ user.getId());
+            Optional<Cesion> optionaCesion = cesionRepository.findByFinalyAtAfterAndUser(getTimestamp(), user); 
+            if (optionaCesion.isPresent()) {
+                response =  new ResponseEntity<>(true, HttpStatus.OK);            
             } else {
-                response = new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);
+                response = new ResponseEntity<>(false, HttpStatus.OK);
             }
             
         } catch (Exception e) {
             response =  new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
         return response;
+    }
+
+
+    /**
+     * Devuelve una lista de cesion por el id_persona.
+     *
+     * @param id_person El id_person de la persona asociada a una persona que asu ves esta
+     *  asociada a un usuario que asu ves esta asociada a una cesion.
+     * @return Una respuesta que muestra un listado de todas las cesiones que tubo un usuario.
+     */
+    public ResponseEntity<List<Cesion>> getAllCesionsByUser(Long id) {
+        try {
+            System.out.println("prueba de imprecion" + id);
+            Person person = personService.getPersonById(id);
+            Optional<User> user = userRepository.findByPerson(person);
+            Optional<List<Cesion>> optionalCesion = cesionRepository.findAllByUser(user.get());
+            return new ResponseEntity<>(optionalCesion.get(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 }

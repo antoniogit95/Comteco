@@ -47,6 +47,20 @@ public class CesionController {
         }
     }
     
+
+    /**
+     * Devuelve una lista de cesion por el id_persona.
+     *
+     * @param id_person El id_person de la persona asociada a una persona que asu ves esta
+     *  asociada a un usuario que asu ves esta asociada a una cesion.
+     * @return Una respuesta que muestra un listado de todas las cesiones que tubo un usuario.
+     */
+    @GetMapping("/allactivesperson/{id}")
+    public ResponseEntity<List<Cesion>> GetAllCesionForIdPerson(@PathVariable Long id) {
+        System.out.println("prueba de imprecion" + id);
+        return cesionService.getAllCesionsByUser(id);
+    }
+
     /**
     * Devuelve una cesion por el id_persona.
     *
@@ -60,7 +74,7 @@ public class CesionController {
         if(person != null){
             Optional<User> userOptional = userRepository.findByPerson(person);
             if(userOptional.isPresent()){
-                return cesionService.getCesionsActivesByUser(userOptional.get().getId());
+                return cesionService.getCesionsActivesByUser(userOptional.get());
             }
         }
         return new ResponseEntity<Boolean>(false, HttpStatus.NOT_FOUND);

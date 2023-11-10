@@ -28,8 +28,17 @@ public interface CesionRepository extends JpaRepository<Cesion, Long>{
      * Busca una Cesiones  por el timepo actual.
      *
      * @param now La entidad Timestamp asociada al tiempo actual.
+     * @param user la entidad a ser buscada asociada a un usuario
      * @return Un objeto Optional que contiene la cesion si esta activa.
      */
     Optional<Cesion> findByFinalyAtAfterAndUser(Timestamp now, User user);
+
+    /**
+     * Busca todas las Cesiones  de un usuario determinado.
+     *
+     * @param user la entidad a ser buscada asociada a un usuario
+     * @return Un objeto Optional que contiene una lista de todas las cesiones un un usuario
+     */
+    Optional<List<Cesion>> findAllByUser(User user);
     
 }

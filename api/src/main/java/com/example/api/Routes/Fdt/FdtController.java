@@ -99,4 +99,10 @@ public class FdtController{
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/getzone/{codFDT}")
+    public ResponseEntity<String> getZoneODF(@PathVariable String codFDT){
+        codFDT = codFDT.toUpperCase();
+        return fdtService.getZoneODFByCodFDT(codFDT);
+    }
 }

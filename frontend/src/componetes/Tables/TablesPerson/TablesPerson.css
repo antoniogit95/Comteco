@@ -52,3 +52,17 @@
     background: #e04c4c7f;
 }
   
+.stylesButoon{
+    padding: 10px 20px;
+    background-color: brown;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: .3s;
+    margin-right: 1rem;
+}
+
+.stylesButoon:hover {
+    background-color: red;
+}

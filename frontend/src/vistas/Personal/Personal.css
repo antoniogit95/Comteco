@@ -1,10 +1,13 @@
 
-.stylesContentCardPersonal{
-    padding: 5px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: 5px;
-    justify-items: center;
+.stylesContentPersonal{
+    position: relative;
+    padding: 10px;
+    width: 100%;
+    top: 60px;
+    min-width: 1100px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-  
-  }
+    overflow: auto;
+    box-sizing: border-box;
+}
