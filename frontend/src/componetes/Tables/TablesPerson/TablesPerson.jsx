@@ -52,6 +52,7 @@ export const TablesPerson = () => {
                         <th className='stylesTh-Td'>ITEM</th>
                         <th className='stylesTh-Td'>NOMBRE</th>
                         <th className='stylesTh-Td'>APELLIDOS</th>
+                        <th className='stylesTh-Td'>VER INFORMACION</th>
                         <th className='stylesTh-Td'>VALIDAR/BLOQUEAR</th>
                         <th className='stylesTh-Td'>ESTADO</th>
                         <th className='stylesTh-Td'>ULTIMA CONEXION</th>

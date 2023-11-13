@@ -5,7 +5,7 @@ import axios from 'axios';
 export const SaveArchive = () => {
 
     const [archivo, setArchivo] = useState(null);
-    const endPoint = URL_API_private+"/files/Save"
+    const endPoint = URL_API_private+"/files/save"
     const token = JSON.parse(localStorage.getItem('user_data')).token;
 
     const handleFileChange = (e) => {
@@ -16,6 +16,7 @@ export const SaveArchive = () => {
     const subirArchivo = async () => {
         const formData = new FormData();
         formData.append('archive', archivo);
+        console.log(endPoint)
         try {
             const response = await axios.post(endPoint, formData, {
                 headers: {
@@ -23,9 +24,10 @@ export const SaveArchive = () => {
                     'Authorization': `Bearer ${token}`,
                 }
             });
+            console.log(response.data);
             alert('Archivo cargado con éxito.');
         } catch (error) {
-            console.error('Error al cargar el archivo:', error.response);
+            console.log('Error al cargar el archivo:', error.response);
         }
     };
 

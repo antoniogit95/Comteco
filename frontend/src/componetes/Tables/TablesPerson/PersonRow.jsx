@@ -70,6 +70,7 @@ export const PersonRow = ({person, onShowConnections}) =>{
             <td className='stylesTh-Td'>{person.item}</td>
             <td className='stylesTh-Td'>{person.nombre}</td>
             <td className='stylesTh-Td'>{person.apellidos}</td>
+            <td className='stylesTh-Td'></td>
             <td className='stylesTh-Td'>
                 {acepted ? (
                 <button className='stylesButoon' onClick={() => onValidate()}>Bloquear</button>
