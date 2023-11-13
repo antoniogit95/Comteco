@@ -37,6 +37,8 @@ export const Home = () => {
 
     return(<>
         <NavBar />
-        {buttons}       
+        <div className="stylesContentHome">
+            { buttons }
+        </div>       
     </>)
 }

@@ -142,7 +142,7 @@ export const Login = () => {
                     </div>
                     <div className="styleLinks">
                         <NavLink to="/singauth" className="styleLinksA">Crear cuenta</NavLink>
-                        <a className="styleLinksA">Olvide mi Contraseña</a>
+                        <NavLink to= '/forgenpassword' className="styleLinksA">Olvide mi Contraseña</NavLink>
                     </div>
                 </form>
                 )}

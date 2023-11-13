@@ -1,3 +1,11 @@
+.stylesContentHome{
+  position: relative;
+  padding: 10px;
+  width: 100%;
+  top: 60px;
+  overflow: auto;
+  box-sizing: border-box;
+}
 
 .stylesContentButtonsBig{
   padding: 5px;

@@ -17,11 +17,13 @@ export const Report = () => {
 
     return(<>
         <NavBar />
-        <NavBarReports showReport={showReport}/>
-        <div className="stylesContetnReport">
-            {activeReport === "david" && <Reports/>}
-            {activeReport === "jose" && <TableArchive/>}
-            {activeReport === "map" && <TablesMapRoutes/>}
+        <div className='styleContentGlobalReport'>
+            <NavBarReports showReport={showReport}/>
+            <div className="stylesContetnReport">
+                {activeReport === "david" && <Reports/>}
+                {activeReport === "jose" && <TableArchive/>}
+                {activeReport === "map" && <TablesMapRoutes/>}
+            </div>
         </div>
         {/**<SaveDataTecnico />*/}
     </>);

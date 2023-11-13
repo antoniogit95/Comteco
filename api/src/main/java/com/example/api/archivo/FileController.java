@@ -2,6 +2,7 @@ package com.example.api.archivo;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,10 @@ public class FileController {
 
     @PostMapping("/save")
     public ResponseEntity<String> cargarArchivo(@RequestParam("archive") MultipartFile archivo){
-        return archiveService.saveFile(archivo);
+        if(archivo != null){
+            return archiveService.saveFile(archivo);
+        }else{
+            return new ResponseEntity<>("el archivo esta vacio", HttpStatus.ACCEPTED);
+        }
     }
 }

@@ -99,4 +99,16 @@ public class FdtService {
         }
     }
 
+    public ResponseEntity<String> getZoneODFByCodFDT(String codFDT) {
+
+        System.out.println(codFDT+" ----------------------------------------- codifo FDT");
+        Optional<Fdt> optionalFDT = fdtRepository.findByCod(codFDT);
+        if(optionalFDT.isPresent()){
+            System.out.println("se Encontro el FDT: "+optionalFDT.get().getCod());
+            Odf odf = optionalFDT.get().getOdf();
+            return new ResponseEntity<>(odf.getNombre() + "-", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Sin Nombre", HttpStatus.BAD_REQUEST);
+    }
+
 }

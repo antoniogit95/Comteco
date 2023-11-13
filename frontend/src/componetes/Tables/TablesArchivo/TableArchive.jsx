@@ -169,6 +169,7 @@ export const  TableArchive = () => {
             <table className='excel-table'>
                 <thead className='table-header'>
                     <tr>
+                        <th className='white-color'>ID</th>
                         <th className='white-color'>FECHA_CREACION</th>
                         <th className='white-color'>COD_TIPO_SOL</th>
                         <th className='white-color'>TIPO_SOLICITUD</th>
@@ -197,6 +198,7 @@ export const  TableArchive = () => {
                 <tbody className='table-body'>
                     {datos.map((dato) => (
                         <tr key={dato.id}>
+                            <td>{dato.id}</td>
                             <td>{dato.fecha_CREACION}</td>
                             <td>{dato.cod_TIPO_SOL}</td>
                             <td>{dato.tipo_SOLICITUD}</td>

@@ -49,6 +49,20 @@ public class UserController {
         }
     }
 
+    @PutMapping("/desactive/{id_person}")
+    public ResponseEntity<String> desactiveUsuarioPorIdPersona(@PathVariable Long id_person) {
+        Person person = personService.getPersonById(id_person);
+        Optional<User> userOptional = userRepository.findByPerson(person);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setStatus(false);
+            user.setUpdate_at(getTimestamp());
+            userRepository.save(user);
+            return ResponseEntity.ok("Usuario Desactivado exitosamente");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     /**
      * Verifica si un usuario está activo por id_person de la persona.
      *

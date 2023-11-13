@@ -27,6 +27,7 @@ export const Reports = () => {
    
     const [mostrarColumnas, setMostrarColumnas] = useState(true);
     const endPoint = URL_API_private+"/datatecnico";
+    const endPointFdt = URL_API_private+"/fdt/getzone";
     const [dataTecnico, setDataTecnico] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
@@ -119,7 +120,57 @@ export const Reports = () => {
 
     function getMes(data){
         const dataObjest = new Date(data);
-        return dataObjest.getMonth() +1;
+        const mounth =  dataObjest.getMonth() +1;
+        switch (mounth) {
+            case 1:
+                return 'Enero';
+                break;
+            case 2:
+                return 'Febrero';
+                break;
+            case 3:
+                return 'Marzo';
+                break;
+            case 4:
+                return 'Abril';
+                break;
+            case 2:
+                return 'Febrero';
+                break;
+            case 3:
+                return 'Marzo';
+                break;
+            case 4:
+                return 'Abril';
+                break;
+            case 5:
+                return 'Mayo';
+                break;
+            case 6:
+                return 'Junio';
+                break;
+            case 7:
+                return 'Julio';
+                break;
+            case 8:
+                return 'Agosto';
+                break;
+            case 9:
+                return 'Septiembre';
+                break;
+            case 10:
+                return 'Octubre';
+                break;
+            case 11:
+                return 'Noviembre';
+                break;
+            case 12:
+                return 'Diciembre';
+                break;
+            default:
+                return '-------'
+                break;
+        }
     }
 
     function getDia(data){
@@ -135,6 +186,26 @@ export const Reports = () => {
     const toggleColumnas = () => {
         setMostrarColumnas(!mostrarColumnas); 
     };
+
+    const obtenerZona = (odf) => {
+        console.log("obtenienso zona");
+        const array = odf.split('-');
+        if(array.length === 4){
+            const codFDT = array[0] + '-'+ array[1];
+            try {
+                const response = axios.get(endPointFdt+'/'+codFDT, config);
+                return response.data;
+            } catch (error) {
+                return response.error;
+            }
+        }
+        return "Sin Zona";
+    }
+
+    function obtenerDataTecnicoAnterior(odf){
+        return 'Sin Dato Tecnico';
+    }
+
     return (
         <div>
             <div>
@@ -173,16 +244,16 @@ export const Reports = () => {
                         </tr>
                     </thead>
                     <tbody className="table-body">
-                       {dataTecnico.map(data => (
+                       {dataTecnico.map( data => (
                         <tr key={data.id_reg_data_tec}>
                             <td>{data.id_reg_data_tec}</td>
                             <td>{getMes(data.created_at)}</td>
                             <td>{getDia(data.created_at)}</td>
                             <td>{"----"}</td>
-                            <td>{"----"}</td>
+                            <td>{obtenerZona(data.caja_nap)}</td>
                             <td>{data.num_producto}</td>
                             <td>{data.caja_nap}</td>
-                            <td>{"----"}</td>
+                            <td>{obtenerDataTecnicoAnterior(data.num_producto)}</td>
                             <td>{getHora(data.created_at)}</td>
                             <td>{data.estadp_odt}</td>
                             <td>{data.obasrvaciones}</td>
