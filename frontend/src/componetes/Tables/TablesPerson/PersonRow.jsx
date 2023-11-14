@@ -4,7 +4,7 @@ import './TablesPerson.css'
 import axios from "axios";
 import { FcOk, FcCancel } from "react-icons/fc";
 
-export const PersonRow = ({person, onShowConnections}) =>{
+export const PersonRow = ({person, onShowConnections, onShowInformation}) =>{
     if(!person){
         return null;
     }
@@ -70,7 +70,9 @@ export const PersonRow = ({person, onShowConnections}) =>{
             <td className='stylesTh-Td'>{person.item}</td>
             <td className='stylesTh-Td'>{person.nombre}</td>
             <td className='stylesTh-Td'>{person.apellidos}</td>
-            <td className='stylesTh-Td'></td>
+            <td className='stylesTh-Td'>
+                <button className='stylesButoon' onClick={() => onShowInformation(person)}> Ver</button>
+            </td>
             <td className='stylesTh-Td'>
                 {acepted ? (
                 <button className='stylesButoon' onClick={() => onValidate()}>Bloquear</button>
@@ -87,7 +89,7 @@ export const PersonRow = ({person, onShowConnections}) =>{
                 </> )}</td>
             <td className='stylesTh-Td'>{isOnline? "": "2023/11/07 11:10"}</td>
             <td className='stylesTh-Td'>
-                <button className='stylesButoon' onClick={() => onShowConnections(person)}>ver</button>
+                <button className='stylesButoon' onClick={() => onShowConnections(person)}>Ver</button>
             </td>
         </tr>
     </>)

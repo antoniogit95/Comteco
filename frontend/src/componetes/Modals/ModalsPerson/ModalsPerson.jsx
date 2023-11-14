@@ -25,7 +25,7 @@ export const ModalPerson = ({ person, show, onHide, onChange }) => {
                 <p>Fecha de Creación: {person.created_at}</p>
             </Modal.Body>
             <Modal.Footer>
-                <button className = "stylesButoonModal" variant="secondary" onClick={onChange()}>
+                <button className = "stylesButoonModal" variant="secondary" onClick={onChange}>
                     Validar
                 </button>
             </Modal.Footer>

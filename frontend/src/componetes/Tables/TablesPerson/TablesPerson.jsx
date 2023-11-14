@@ -5,24 +5,30 @@ import { useState,useEffect } from "react";
 import axios from "axios";
 import { PersonRow } from "./PersonRow";
 import { ModalsCesion } from "../../Modals/ModalsCesion/ModalsCesion";
+import { ModalPerson } from "../../Modals/ModalsPerson/ModalsPerson";
 
 export const TablesPerson = () => {
 
     const endPoint = URL_API_private + "/person";
     const [data, setData] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
-    const [showModal, setShowModal] = useState(false);
-    const [selectedPerson, setSelectedPerson] = useState(null);
+    const [showModalCesion, setShowModalCesion] = useState(false);
+    const [showModalInformation, setShowModalInformation] = useState(false);
+    const [selectedPersonCesion, setSelectedPersonCesion] = useState(null);
+    const [selectedPersonInform, setSelectedPersonInform] = useState(null);
 
     useEffect(() => {
         getALLPerson();
     }, [])
 
     useEffect(() => {
-        if (selectedPerson) {
-            handleShowConnections(selectedPerson);
+        if (selectedPersonCesion) {
+            handleShowConnections(selectedPersonCesion);
         }
-    }, [selectedPerson]);
+        if(selectedPersonInform) {
+            handleShowInformation(selectedPersonInform)
+        }
+    }, [selectedPersonCesion, selectedPersonInform]);
 
     const config = {
         headers: {
@@ -31,9 +37,19 @@ export const TablesPerson = () => {
     };
 
     const handleShowConnections = (person) => {
-        setSelectedPerson(person);
-        setShowModal(true);
+        setSelectedPersonCesion(person);
+        setShowModalCesion(true);
     };
+
+    const handleShowInformation = (person) => {
+        setSelectedPersonInform(person);
+        setShowModalInformation(true);
+    };
+
+    const handleValidateUser = () => {
+        console.log(selectedPersonInform.id_person)
+        console.log("validar usuario")
+    }
 
     const getALLPerson = async () => {
         try {
@@ -65,11 +81,23 @@ export const TablesPerson = () => {
                             key={data.id_person}
                             person={data}
                             onShowConnections={() => handleShowConnections(data)}
+                            onShowInformation={() => handleShowInformation(data)}
                         />
                     ))}
                 </tbody>
             </table>
         </div>
-        <ModalsCesion person={selectedPerson} show={showModal} onHide={() => setShowModal(false)}/>
+        <div>
+            <ModalsCesion person={selectedPersonCesion} show={showModalCesion} onHide={() => setShowModalCesion(false)}/>
+        </div>
+        <div>
+            <ModalPerson 
+                person={selectedPersonInform} 
+                show={showModalInformation} 
+                onHide={() => setShowModalInformation(false)}
+                onChange={() => handleValidateUser()}
+            />
+        </div>
+        
     </>)
 }
