@@ -1,10 +1,18 @@
 package com.example.api.Person;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.example.api.User.User;
+import com.example.api.User.UserRepository;
 
 import lombok.AllArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Servicio que gestiona los servicios de la clase person.
@@ -14,6 +22,7 @@ import java.util.List;
 public class PersonService {
 
     private final PersonRepository personRepository;
+    private UserRepository userRepository;
 
     /**
      * Obtiene una entidad 'Person' por su ID.
@@ -60,5 +69,29 @@ public class PersonService {
             return true;
         }
         return false;
+    }
+
+    public ResponseEntity<String> ActivePersonAndUser(Long id) {
+        try {
+            Optional<Person> personOptional = personRepository.findById(id);
+            Person person = personOptional.get();
+            person.setStatus(true);
+            person.setUpdate_at(getTimestamp());
+            personRepository.save(person);
+            Optional<User> userOptional = userRepository.findByPerson(person);
+            User user = userOptional.get();
+            user.setStatus(true);
+            user.setUpdate_at(getTimestamp());
+            userRepository.save(user);
+            return new ResponseEntity<>("Usuario Validado Exitosamente", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al momento de validar", HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    private Timestamp getTimestamp(){
+        LocalDateTime now = LocalDateTime.now();
+        return Timestamp.valueOf(now);
     }
 }

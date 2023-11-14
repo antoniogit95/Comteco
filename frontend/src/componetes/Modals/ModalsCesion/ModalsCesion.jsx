@@ -52,7 +52,7 @@ export const ModalsCesion = ({ person, show, onHide }) => {
                         <p>{getDataPlusHour(cesion.createdAt) +" - "+ getDataPlusHour(cesion.finalyAt)}</p>
                     </div>
                 </>))}
-            </Modal.Body>
+            </Modal.Body>   
         </Modal>
     );
 };

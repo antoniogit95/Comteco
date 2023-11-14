@@ -22,12 +22,13 @@ export const ModalPerson = ({ person, show, onHide, onChange }) => {
                 <p>Fecha de Nacimiento: {person.fecha_nacimiento}</p>
                 <p>Email: {person.email}</p>
                 <p>Teléfono: {person.telefono}</p>
+                <p>Validado: {person.status? "Validado": "No validado"}</p>
                 <p>Fecha de Creación: {person.created_at}</p>
             </Modal.Body>
             <Modal.Footer>
-                <button className = "stylesButoonModal" variant="secondary" onClick={onChange()}>
+                {person.status?" ": ( <button className = "stylesButoonModal" variant="secondary" onClick={onChange}>
                     Validar
-                </button>
+                </button>) }
             </Modal.Footer>
         </Modal>
     );

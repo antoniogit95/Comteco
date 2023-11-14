@@ -35,6 +35,7 @@ public class Person {
     private Date fecha_nacimiento;
     private String email;
     private String telefono;
+    private boolean status;
     private Timestamp created_at;
     private Timestamp update_at;
 

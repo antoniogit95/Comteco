@@ -1,5 +1,45 @@
-.stylesModalMenu{
+.stylesModalMenu {
     position: absolute;
-    top: 60px;
-    right: 10px;
+    top: 40px;
+    width: 300px;
+    left: 34rem;
+}
+
+.stylesContetMenuUser{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.styleContentButoon{
+    width: 100%;
+    padding: 0px;
+}
+
+.stylesLinkMenuUser{
+    color: black;
+    padding: 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.stylesLinkMenuUser:hover {
+    background-color: #e04c4c7f;
+}
+
+.stylesContentImgMenuUser{ 
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;  
+}
+
+.styleIconUserMenu {
+    width: 145px;
+    height: 145px;
 }
