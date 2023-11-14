@@ -84,6 +84,7 @@ public class AuthService {
                 .fecha_nacimiento(request.getFecha_nacimiento())
                 .email(request.getEmail())
                 .telefono(request.getTelefono())
+                .status(false)
                 .created_at(getTimestamp())
                 .update_at(getTimestamp())
                 .build();

@@ -10,6 +10,7 @@ import { ModalPerson } from "../../Modals/ModalsPerson/ModalsPerson";
 export const TablesPerson = () => {
 
     const endPoint = URL_API_private + "/person";
+    const endPointValidate = URL_API_private + "/person/activate/"
     const [data, setData] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [showModalCesion, setShowModalCesion] = useState(false);
@@ -46,9 +47,25 @@ export const TablesPerson = () => {
         setShowModalInformation(true);
     };
 
-    const handleValidateUser = () => {
-        console.log(selectedPersonInform.id_person)
-        console.log("validar usuario")
+    const handleValidateUser = async () => {
+        try {
+            const response = await axios.put(endPointValidate+selectedPersonInform.id_person, {
+                id_person: selectedPersonInform.id_person,
+            }, config);
+            console.log(response.data);
+        } catch (error) {
+            console.error("error: " +error.response)
+        }
+    }
+
+    const closeModalCesion = () => {
+        setShowModalCesion(false)
+        setSelectedPersonCesion(null)
+    }
+
+    const closeModalInform = () => {
+        setShowModalInformation(false)
+        setSelectedPersonInform(null)
     }
 
     const getALLPerson = async () => {
@@ -88,13 +105,13 @@ export const TablesPerson = () => {
             </table>
         </div>
         <div>
-            <ModalsCesion person={selectedPersonCesion} show={showModalCesion} onHide={() => setShowModalCesion(false)}/>
+            <ModalsCesion person={selectedPersonCesion} show={showModalCesion} onHide={() => closeModalCesion()}/>
         </div>
         <div>
             <ModalPerson 
                 person={selectedPersonInform} 
                 show={showModalInformation} 
-                onHide={() => setShowModalInformation(false)}
+                onHide={() => closeModalInform()}
                 onChange={() => handleValidateUser()}
             />
         </div>
