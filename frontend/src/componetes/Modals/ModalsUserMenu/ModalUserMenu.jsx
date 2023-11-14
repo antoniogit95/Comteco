@@ -4,7 +4,7 @@ import { FaUserCircle } from "react-icons/fa"
 
 export const ModalsUserMenu = ({ onVerUsuario, onEditarUsuario, onChangeUsuario, onCerrarSesion, show, onHide }) => {
   return (
-    <Modal show={show} onHide={onHide} contentClassName='stylesModalMenu' centered>
+    <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
         <Modal.Title>Opciones de Usuario</Modal.Title>
       </Modal.Header>

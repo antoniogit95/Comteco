@@ -134,15 +134,6 @@ export const Reports = () => {
             case 4:
                 return 'Abril';
                 break;
-            case 2:
-                return 'Febrero';
-                break;
-            case 3:
-                return 'Marzo';
-                break;
-            case 4:
-                return 'Abril';
-                break;
             case 5:
                 return 'Mayo';
                 break;
