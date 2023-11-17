@@ -7,6 +7,20 @@ export const ModalPerson = ({ person, show, onHide, onChange }) => {
     if (!person) {
         return null;
     }
+    /** 
+     * id
+     * item
+     * nombre completo
+     * ci
+     * fecha nacimiento
+     * fecha de creacion 
+     * fecha de validacion o aceptacion
+     * telefono
+     * vpn numero corte de 4 digitos -> numero corporativos
+     * numero de whatsapp
+     * email
+     * grupo de trabajo
+    */
 
     return (
         <Modal show={show} onHide={onHide} centered>
