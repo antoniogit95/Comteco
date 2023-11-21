@@ -5,16 +5,24 @@ import { URL_API_private } from '../../../providerContext/EndPoint';
 
 export const  TableArchive = () => {
     const [datos, setDatos] = useState([]);
+    const [datosPlanes, setDatosPlanes] = useState([]);
     const [rescatarDatos, setRescatarDatos] = useState([])
     const [select, setSelectd] = useState("");
     const [buscar, setBuscar] = useState("");
     const endPoint = URL_API_private+"/files/get"
+    const endPointPlanes = URL_API_private+"/plancomercial"
     const token  = JSON.parse(localStorage.getItem('user_data')).token
     const [datosTranspuestos, setDatosTranspuestos] = useState([]);
-
+    const [datosPlanesFiltrados, setDatosPlanesFiltrados] = useState([]);
+    const [modoEdicion, setModoEdicion] = useState(false);
+    const [idEdicion, setIdEdicion] = useState(null);
+    const [posicionEditada, setPosicionEditada] = useState("");
 
     useEffect( () => {
         getAllDatos();
+        getAllDatosPlanes();
+
+        console.log(datosPlanes);
     }, [])
 
     const config = {
@@ -38,15 +46,72 @@ export const  TableArchive = () => {
         
     }
 
+    const getAllDatosPlanes = async () => {
+        try {
+            const response = await axios.get(endPointPlanes, config);
+            setDatosPlanes(response.data);
+            setRescatarDatos(response.data);
+            console.log("Datos de planes rescatados exitosamente");
+        } catch (error) {
+            console.log('Error al obtener datos de planes:', error.response);
+        }
+    }
+
+
+
+    const handleEditarPosicionClick = (id) => {
+        const datoEditar = datos.find((dato) => dato.id === id);
+        setPosicionEditada(datoEditar.posicion);
+        setModoEdicion(true);
+        setIdEdicion(id);
+     };
+     
+     const handleGuardarPosicionEdicion = async (id) => {
+        try {
+           // Realiza la lógica necesaria para obtener la nueva posición editada
+           const nuevaPosicion = posicionEditada;
+     
+           // Guarda la nueva posición en la base de datos
+           await guardarPosicionEnBD(id, nuevaPosicion);
+     
+           // Después de guardar, sal de la edición
+           setModoEdicion(false);
+           setIdEdicion(null);
+           setPosicionEditada("");
+           
+           // Recarga los datos para reflejar los cambios
+           getAllDatos();
+        } catch (error) {
+           console.error('Error al procesar la edición y guardar en la base de datos:', error);
+        }
+     };
+     
+     const guardarPosicionEnBD = async (id, nuevaPosicion) => {
+        try {
+           const response = await axios.put(
+              `${endPoint}/${id}`,
+              { posicion: nuevaPosicion },
+              config // Asegúrate de incluir cualquier configuración de encabezados necesaria
+           );
+     
+           // Manejar la respuesta del servidor según tus necesidades
+           console.log('Respuesta del servidor:', response.data);
+        } catch (error) {
+           console.error('Error al guardar en la base de datos:', error);
+        }
+     };
+
+
     const filtrar = (terminoBusqueda, busquedaPor) => {
         console.log(terminoBusqueda +" - "+ busquedaPor + "mostrando algo")
+        console.log("Filtrando...");
         if(terminoBusqueda !== ''){
-            var resultadoBusqueda = rescatarDatos.filter((elemento) => {
+            const resultadoBusqueda = rescatarDatos.filter((elemento) => {
                 if (select === 'cliente') {
                     return elemento.cliente.toString().toLowerCase().includes(terminoBusqueda.toLowerCase());
                 } else if (select === 'fecha_CREATION') {
                     const fechaEnFormato = elemento.fecha_CREACION.split('T')[0];
-                    return fechaEnFormato.includes(termino);
+                    return fechaEnFormato.includes(terminoBusqueda);
                 } else if (select === 'area_servicio') {
                     return elemento.area_SERVICIO.toString().toLowerCase().includes(terminoBusqueda.toLowerCase());
                 } else if (select === 'cod_tipo_sol') {
@@ -94,8 +159,11 @@ export const  TableArchive = () => {
                 } else if (select === 'unidad_operativa') {
                     return elemento.unidad_OPERATIVA.toString().toLowerCase().includes(terminoBusqueda.toLowerCase());
                 }
+                return true;
             });
             setDatos(resultadoBusqueda);
+           
+            
 
             // Transforma los datos para mostrarlos en una tabla transpuesta
             const transpuestos = resultadoBusqueda.reduce((acc, dato) => {
@@ -116,8 +184,31 @@ export const  TableArchive = () => {
             transpuestosArray[key] = Array.from(transpuestos[key]);
         });
 
-        // Asigna los datos transformados al estado
         setDatosTranspuestos(Object.entries(transpuestos));
+      
+        const datosPlanesFiltrados = datosPlanes.filter((datop) => {
+            const velocidadEnDatop = datop.codLab;
+            
+            return resultadoBusqueda.some((dato) => {
+                const primerosCuatro = dato.clase_SERVICIO.slice(0, 4);
+                //console.log('primeros cuatro',primerosCuatro);
+                const velocidadEnDatos = `${dato.cod_PLAN_COMERCIAL}-${primerosCuatro}`;
+                //console.log('velocidad en datos',velocidadEnDatop);
+                return velocidadEnDatos === velocidadEnDatop;
+            });
+        });
+    
+        setDatosPlanesFiltrados(datosPlanesFiltrados);
+
+
+        resultadoBusqueda.forEach((dato) => {
+            const velocidadEnDatos = dato.PLANES_VELOCIDAD.toString().toLowerCase();
+        });
+        
+        datosPlanes.forEach((datoPlan) => {
+            const velocidadEnDatop = datoPlan.cod_lab.toString().toLowerCase();
+        });
+
 
         }
     }
@@ -193,11 +284,19 @@ export const  TableArchive = () => {
                         <th className='white-color'>DIRECCION</th>
                         <th className='white-color'>COD_ESTADO_OT</th>
                         <th className='white-color'>UNIDAD_OPERATIVA</th>
+                        <th className='white-color'>PLANES_VELOCIDAD</th>
+                        <th className='white-color'>EDITAR</th>
                     </tr>
                 </thead>
                 <tbody className='table-body'>
-                    {datos.map((dato) => (
-                        <tr key={dato.id}>
+                {datos.map((dato) => {
+                const enModoEdicion = modoEdicion && idEdicion === dato.id;
+                const primerosCuatro = dato.clase_SERVICIO.slice(0, 4);
+                const planVelocidad = `${dato.cod_PLAN_COMERCIAL}-${primerosCuatro}`;
+
+                return (
+                        <tr key={dato.id} style={{ background: enModoEdicion ? 'yellow' : 'transparent' }}>
+
                             <td>{dato.id}</td>
                             <td>{dato.fecha_CREACION}</td>
                             <td>{dato.cod_TIPO_SOL}</td>
@@ -216,17 +315,40 @@ export const  TableArchive = () => {
                             <td>{dato.numero_SERVICIO}</td>
                             <td>{dato.estado_COMPONENTE}</td>
                             <td>{dato.nap}</td>
-                            <td>{dato.posicion}</td>
+                            <td>
+                                {enModoEdicion ? (
+                                <input
+                                    type="text"
+                                    value={posicionEditada}
+                                    onChange={(e) => setPosicionEditada(e.target.value)}
+                                />
+                                ) : (
+                                    dato.posicion
+                                )}
+                            </td>
                             <td>{dato.descripcion}</td>
                             <td>{dato.cliente}</td>
                             <td>{dato.direccion}</td>
                             <td>{dato.cod_ESTADO_OT}</td>
                             <td>{dato.unidad_OPERATIVA}</td>
+                            <td>{planVelocidad}</td>
+                            <td>
+                            {enModoEdicion ? (
+                                <div>
+                                    <button onClick={() => handleGuardarPosicionEdicion(dato.id)}>Guardar</button>
+                                    <button onClick={() => handleCancelarEdicion(dato.id)}>Cancelar</button>
+                                </div>
+                            ) : (
+                                <button onClick={() => handleEditarPosicionClick(dato.id)}>Editar</button>
+                            )}
+                            </td>
                         </tr>
-                    ))}
+                        );
+                         })}
                 </tbody>
             </table>
             </div>
+
         </div>
         <h2>Datos Campo / valor</h2>
         <div className='table-container'>
@@ -241,12 +363,65 @@ export const  TableArchive = () => {
             {datosTranspuestos.map((dato, index) => (
                 <tr key={index}>
                     <td>{dato[0]}</td>
-                    <td>{dato[1].join(', ')}</td> {/* Unir valores con coma */}
+                    <td>{dato[1].join(', ')}</td>
                 </tr>
             ))}
         </tbody>
     </table>
 </div>
+
+
+        
+            
+
+            <div className='table-container'>
+            <table className='excel-table'>
+                <thead className='table-header'>
+                    <tr>
+                        <th className='white-color'>ID</th>
+                        <th className='white-color'>corresponde_internet</th>
+                        <th className='white-color'>cod_lab</th>
+                        <th className='white-color'>codigo_alternativa</th>
+                        <th className='white-color'>codigo_help_desk</th>
+                        <th className='white-color'>codigo_plan_comercial</th>
+                        <th className='white-color'>fecha_creacion</th>
+                        <th className='white-color'>incremento_mbps</th>
+                        <th className='white-color'>notas</th>
+                        <th className='white-color'>nueva_tarifa</th>
+                        <th className='white-color'>nueva_velocidad</th>
+                        <th className='white-color'>nuevo_nombre</th>
+                        <th className='white-color'>plan_comercial</th>
+                        <th className='white-color'>plan_corto</th>
+                        <th className='white-color'>tarifa1</th>
+                        <th className='white-color'>tipo_equipo</th>
+                        <th className='white-color'>tipo_plan</th>
+                    </tr>
+                </thead>
+                <tbody className='table-body'>
+                    {datosPlanesFiltrados.map((datoPlan) =>  (
+                        <tr key={datoPlan.id}>
+                            <td>{datoPlan.id}</td>
+                            <td>{datoPlan.correspondeInternet}</td>
+                            <td>{datoPlan.codLab}</td>
+                            <td>{datoPlan.codigoAlternativa}</td>
+                            <td>{datoPlan.codigoHelpDesk}</td>
+                            <td>{datoPlan.codigoPlanComercial}</td>
+                            <td>{datoPlan.fechaCreacion}</td>
+                            <td>{datoPlan.incrementoMbps}</td>
+                            <td>{datoPlan.notas}</td>
+                            <td>{datoPlan.nuevaTarifa}</td>
+                            <td>{datoPlan.nuevaVelocidad}</td>
+                            <td>{datoPlan.nuevoNombre}</td>
+                            <td>{datoPlan.planComercial}</td>
+                            <td>{datoPlan.planCorto}</td>   
+                            <td>{datoPlan.tarifa1}</td>  
+                            <td>{datoPlan.tipoEquipo}</td>  
+                            <td>{datoPlan.tipoPlan}</td>  
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            </div>
 
 
         </div>
