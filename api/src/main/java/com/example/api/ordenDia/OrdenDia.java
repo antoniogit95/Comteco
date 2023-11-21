@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class OrdenDia {
     
     @Id
-    @GeneratedValue()
+    @GeneratedValue
     private Long id;
 
     private Timestamp fecha;
@@ -31,6 +31,6 @@ public class OrdenDia {
     private boolean estado;
     private Long idPos;
     private Long idCliente;
-    private String estadoOt;
+    private boolean estadoOt;
     private Long idTecnico;
 }
