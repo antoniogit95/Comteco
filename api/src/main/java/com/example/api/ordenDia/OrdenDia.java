@@ -27,7 +27,6 @@ public class OrdenDia {
     private Long idServicio;
     private Long idUbicacionTecnica;
     private Long producto;
-    private Long idEquipos;
     private boolean estado;
     private Long idPos;
     private Long idCliente;
