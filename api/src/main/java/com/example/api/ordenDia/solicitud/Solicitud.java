@@ -1,6 +1,6 @@
 package com.example.api.ordenDia.solicitud;
 
-import com.example.api.ordenDia.PlanComercial.PlanComercial;
+import com.example.api.ordenDia.planComercial.PlanComercial;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

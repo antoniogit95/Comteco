@@ -1,4 +1,4 @@
-package com.example.api.ordenDia.PlanComercial;
+package com.example.api.ordenDia.planComercial;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
