@@ -14,4 +14,14 @@ public class Equipo {
     @Id
     @GeneratedValue
     Long id;
+
+    private String macAddress;
+    private String tipo;
+    private String modelo;
+    private String fabricante;
+    private String wifi;
+    private String frecOperacion;
+    private String salidaTv;
+    private String caracteristicas;
+    private String terminacionSerie;
 }
