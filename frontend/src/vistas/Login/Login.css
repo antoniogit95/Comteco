@@ -8,6 +8,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: #ccc;
   }
   
   .stylesH2Login{
@@ -73,3 +74,16 @@
     align-items: center;
     justify-content: center;
   }
+
+body{
+  background-image: url('./comteco_central.jpg');
+  margin: 0;
+	padding: 0;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: sans-serif;
+	height: 100vh; 
+
+}

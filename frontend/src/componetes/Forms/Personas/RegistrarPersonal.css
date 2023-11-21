@@ -1,6 +1,9 @@
 .stylesRegistroPersonal{
     height: 100%;
-    display: flex;
+    width: 400px;
+    margin: 0 auto;
+    background-color: #ccc;
+    display: flex;  
     align-items: center;
     justify-content: center;   
     padding: 15px; 
@@ -50,9 +53,6 @@
     transition: .3s;
   }
 
-  .stylesButoon:hover {
-    background-color: ;
-  }
 .styleErrores{
     font-size: 0.8rem;
     color: #eb2929;

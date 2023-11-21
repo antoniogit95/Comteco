@@ -7,6 +7,7 @@ import { useAuth } from "../../providerContext/AuthProvider";
 import { URL_API_public } from "../../providerContext/EndPoint";
 import axios from "axios";
 
+
 export const Login = () => {
     const [login, setLogin] = useState();
     const navigate = useNavigate();
@@ -105,7 +106,7 @@ export const Login = () => {
             >
                 {({values, errors, touched, handleSubmit, handleChange, handleBlur, resetForm}) => (
                     <form onSubmit={handleSubmit}>
-                    <h2 className="stylesH2Login"> Iniciar Sesion</h2>
+                    <h2 className="stylesH2Login"> Iniciar Sesión</h2>
                     <div className={exisError? 'stylesErrosGeneral': ''}>
                         <label >{error}</label>
                     </div>
@@ -115,7 +116,7 @@ export const Login = () => {
                             type='text'
                             id='user'
                             name='user'
-                            placeholder='escribe tu nombre de usuario'
+                            placeholder='Escribe tu correo electronico'
                             value={values.user}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -128,7 +129,7 @@ export const Login = () => {
                             type='password'
                             id='pass'
                             name='pass'
-                            placeholder='escribe tu Contraseña'
+                            placeholder='Escribe tu contraseña'
                             value={values.pass}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -137,7 +138,7 @@ export const Login = () => {
                     </div>                   
                     <div className="stylesContenedorButton">
                         <button  className='stylesButoonLogin' type="submit">
-                            Iniciar Secion
+                            Iniciar Sesión
                         </button>
                     </div>
                     <div className="styleLinks">

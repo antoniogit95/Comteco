@@ -170,7 +170,7 @@ export const RegistrarPersonal = () => {
                             type='text'
                             id='ci'
                             name='ci'
-                            placeholder='escribe tu numero de carnet'
+                            placeholder='Escribe tu numero de carnet'
                             value={values.ci}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -184,7 +184,7 @@ export const RegistrarPersonal = () => {
                             type='text'
                             id='item'
                             name='item'
-                            placeholder='escribe tu numero de Item'
+                            placeholder='Escribe tu numero de Item'
                             value={values.item}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -192,13 +192,13 @@ export const RegistrarPersonal = () => {
                         {touched.item && errors.item && <div className='styleErrores'>{errors.item}</div>}
                     </div>
                     <div>
-                        <label htmlFor='nombre'>nombres</label>
+                        <label htmlFor='nombre'>Nombre</label>
                         <input 
                             className='stylesInput'
                             type='text'
                             id='nombre'
                             name='nombre'
-                            placeholder='escribe tu nombre'
+                            placeholder='Escribe tu nombre'
                             value={values.nombre}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -206,13 +206,13 @@ export const RegistrarPersonal = () => {
                         {touched.nombre && errors.nombre && <div className='styleErrores'>{errors.nombre}</div>}
                     </div>
                     <div>
-                        <label htmlFor='apellidos'>Apellido Paterno</label>
+                        <label htmlFor='apellidos'>Apellidos</label>
                         <input 
                             className='stylesInput'
                             type='text'
                             id='apellidos'    
                             name='apellidos'
-                            placeholder='escribe tus apellidos'
+                            placeholder='Escribe tu apellido paterno y materno'
                             value={values.apellidos}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -226,7 +226,7 @@ export const RegistrarPersonal = () => {
                             type='text'
                             id='telefono'
                             name='telefono'
-                            placeholder='escribe tu numero de Telefono Corporativo'
+                            placeholder='Escribe tu numero de Telefono Corporativo'
                             value={values.telefono}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -254,7 +254,7 @@ export const RegistrarPersonal = () => {
                             type='text'
                             id='email'
                             name='email'
-                            placeholder='escribe tu Correo Electronio'
+                            placeholder='Escribe tu Correo Electronio'
                             value={values.email}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -268,7 +268,7 @@ export const RegistrarPersonal = () => {
                             type='password'
                             id='password'
                             name='password'
-                            placeholder='escribe tu Contraseña'
+                            placeholder='Escribe tu Contraseña'
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -282,7 +282,7 @@ export const RegistrarPersonal = () => {
                             type='password'
                             id='confirmar_password'
                             name='confirmar_password'
-                            placeholder='escribe tu Contraseña'
+                            placeholder='Vuelva a escribir su Contraseña'
                             value={values.confirmar_password}
                             onChange={handleChange}
                             onBlur={handleBlur}

@@ -3,7 +3,7 @@ import './ForgenPassword.css'
 
 export const ForgenPassword = () => {
     return(<>
-        <h1>restablecer contraseña</h1>
+        <h1><center>Restablecer Contraseña</center></h1>
         <FromsForgenPassword/>
     </>)
 }

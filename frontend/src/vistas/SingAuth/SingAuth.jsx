@@ -3,7 +3,7 @@ import { RegistrarPersonal } from "../../componetes/Forms/Personas/RegistrarPers
 
 export const SingAuth = () => {
     return(<>
-        <h1>Registro personal</h1>
+        <h1><center>Registro personal</center></h1>
         <RegistrarPersonal/>
     </>);
 }
