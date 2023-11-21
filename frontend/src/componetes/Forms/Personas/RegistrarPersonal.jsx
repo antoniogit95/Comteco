@@ -165,18 +165,7 @@ export const RegistrarPersonal = () => {
                 {({values, errors, touched, handleSubmit, handleChange, handleBlur, resetForm}) => (
                     <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor='ci'>Celula de Identidad</label>
-                        <input 
-                            className='stylesInput'
-                            type='text'
-                            id='ci'
-                            name='ci'
-                            placeholder='Escribe tu numero de carnet'
-                            value={values.ci}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
-                        {touched.ci && errors.ci && <div className='styleErrores'>{errors.ci}</div>}
+                        <h3>Registro nuevo personal</h3>
                     </div>
                     <div>
                         <label htmlFor='item'>Numero de Item</label>
@@ -193,7 +182,21 @@ export const RegistrarPersonal = () => {
                         {touched.item && errors.item && <div className='styleErrores'>{errors.item}</div>}
                     </div>
                     <div>
-                        <label htmlFor='nombre'>Nombre</label>
+                        <label htmlFor='ci'>Celula de Identidad</label>
+                        <input 
+                            className='stylesInput'
+                            type='text'
+                            id='ci'
+                            name='ci'
+                            placeholder='escribe tu numero de carnet'
+                            value={values.ci}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        {touched.ci && errors.ci && <div className='styleErrores'>{errors.ci}</div>}
+                    </div>
+                    <div>
+                        <label htmlFor='nombre'>nombres</label>
                         <input 
                             className='stylesInput'
                             type='text'
@@ -247,6 +250,20 @@ export const RegistrarPersonal = () => {
                             onBlur={handleBlur}
                         />
                         {touched.fecha_nacimiento && errors.fecha_nacimiento && <div className='styleErrores'>{errors.fecha_nacimiento}</div>}
+                    </div>
+                    <div>
+                        <label htmlFor='nombre_cargo'>Cargo</label>
+                        <input 
+                            className='stylesInput'
+                            type='text'
+                            id='nombre_cargo'    
+                            name='nombre_cargo'
+                            placeholder='escribe tu cargo'
+                            value={values.nombre_cargo}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        />
+                        {touched.nombre_cargo && errors.nombre_cargo && <div className='styleErrores'>{errors.nombre_cargo}</div>}
                     </div>
                     <div>
                         <label htmlFor='email'>Correo Electronico</label>

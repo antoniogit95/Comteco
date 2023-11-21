@@ -28,16 +28,16 @@ export const ModalPerson = ({ person, show, onHide, onChange }) => {
                 <Modal.Title>Datos de la Persona</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>ID de la persona: {person.id_person}</p>
-                <p>Cédula de Identidad: {person.celula_identidad}</p>
-                <p>Nombre: {person.nombre}</p>
-                <p>Apellidos: {person.apellidos}</p>
                 <p>Item: {person.item}</p>
+                <p>Nombre: {person.nombre+ " " + person.apellidos}</p>
+                <p>Cédula de Identidad: {person.celula_identidad}</p>
                 <p>Fecha de Nacimiento: {person.fecha_nacimiento}</p>
-                <p>Email: {person.email}</p>
-                <p>Teléfono: {person.telefono}</p>
-                <p>Validado: {person.status? "Validado": "No validado"}</p>
                 <p>Fecha de Creación: {person.created_at}</p>
+                <p>Fecha de Validacion: {person.update_at}</p>
+                <p>Numero corporativos: {"agregar numero corporativo"}</p>    
+                <p>Teléfono: {person.telefono}</p>
+                <p>Email: {person.email}</p>
+                <p>Grupo de Trabajo: {"sin grupo de trabajo"}</p>
             </Modal.Body>
             <Modal.Footer>
                 {person.status?" ": ( <button className = "stylesButoonModal" variant="secondary" onClick={onChange}>
