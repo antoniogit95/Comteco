@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.datatype.jdk8.OptionalSerializer;
-
 import lombok.AllArgsConstructor;
 
 @Service
