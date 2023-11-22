@@ -1,6 +1,6 @@
 package com.example.api.ordenDia.planComercial;
 
-import com.example.api.ordenDia.equipos.Equipo;
+import com.example.api.ordenDia.equipo.Equipo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

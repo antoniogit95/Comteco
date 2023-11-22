@@ -1,4 +1,4 @@
-package com.example.api.ordenDia.equipos;
+package com.example.api.ordenDia.equipo;
 
 import java.util.List;
 
