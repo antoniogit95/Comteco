@@ -1,5 +1,6 @@
 package com.example.api.ordenDia.equipo;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
+@Entity
 public class Equipo {
     
     @Id
