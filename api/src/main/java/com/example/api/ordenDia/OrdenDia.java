@@ -3,6 +3,7 @@ package com.example.api.ordenDia;
 import java.sql.Timestamp;
 
 import com.example.api.Routes.Pos.Pos;
+import com.example.api.ordenDia.cliente.Cliente;
 import com.example.api.ordenDia.servicio.Servicio;
 import com.example.api.ordenDia.solicitud.Solicitud;
 import com.example.api.ordenDia.trabajo.Trabajo;
@@ -55,7 +56,10 @@ public class OrdenDia {
     @ManyToOne
     @JoinColumn(name = "id_pos")
     private Pos pos;
-    private Long idCliente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
     private boolean estadoOt;
     private Long idTecnico;
 }
