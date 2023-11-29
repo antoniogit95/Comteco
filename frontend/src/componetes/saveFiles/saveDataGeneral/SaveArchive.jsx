@@ -32,11 +32,14 @@ export const SaveArchive = () => {
     };
 
     return (
-        <div>
+
+        
+        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '15px', maxWidth: '300px' }}>
             <h1>Carga de Archivos</h1>
             <input type="file" onChange={handleFileChange} />
-            <button onClick={subirArchivo}>Subir Archivo</button>
+            <button className='stylesButoon' onClick={subirArchivo}>Subir Archivo</button>
         </div>
+        
     );
 };
 

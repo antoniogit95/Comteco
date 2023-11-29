@@ -5,6 +5,8 @@ import { Formik } from "formik";
 import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../providerContext/AuthProvider";
 import { URL_API_public } from "../../providerContext/EndPoint";
+import { Footer } from "../../componetes/Footer/Footer"
+
 import axios from "axios";
 
 export const Login = () => {
@@ -47,7 +49,7 @@ export const Login = () => {
           }, 3000);
     }
 
-    return (
+    return (<div>
         <div className='stylesLoginContainer'>
             <Formik
                 initialValues={{
@@ -148,6 +150,8 @@ export const Login = () => {
                 )}
             </Formik>
             
+        </div>
+        <Footer />
         </div>
     );
 }

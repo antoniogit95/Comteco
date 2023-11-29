@@ -128,6 +128,7 @@ export const RegistrarPersonal = () => {
                 onSubmit={ (valores) => {
                     const store = async (e) => {
                         console.log(valores)
+                        console.log("end point: "+endPoint)
                         e.preventDefault()
                         try {
                             await axios.post(endPoint, {
@@ -139,7 +140,7 @@ export const RegistrarPersonal = () => {
                                 item: valores.item,
                                 fecha_nacimiento: valores.fecha_nacimiento,
                                 email: valores.email,
-                                telefono: valores.telefono,
+                                telefono: valores.telefono
                             });
                             toast.success('Usuario registrado con éxito', {
                                 position: 'top-right',
