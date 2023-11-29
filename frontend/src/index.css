@@ -7,7 +7,7 @@
 
 
 body{
-  background-image: url('./comteco_central.jpg');
+  background-image: url('../src/assest/img/comteco_central.jpg');
   margin: 0;
 	padding: 0;
   background-repeat: no-repeat;
