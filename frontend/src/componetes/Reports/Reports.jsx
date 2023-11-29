@@ -33,7 +33,9 @@ export const Reports = () => {
     const [filtro, setFiltro] = useState('nombre'); 
     const [termino, setTermino] = useState('');
     const [dataPorMes, setDataPorMes] = useState({});
-    
+    const [datosEditados, setDatosEditados] = useState({});
+    const [editando, setEditando] = useState(null);  
+
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -78,6 +80,21 @@ export const Reports = () => {
         // Convierte el objeto a un array para Chart.js
         setDataPorMes(Object.values(dataPorMesCalculada));
     }, [dataTecnico]);
+
+    const manejarEdicion = (id) => {
+        setEditando(id);
+      };
+    
+      const manejarGuardar = (id) => {
+        // Guardar los datos editados y salir del modo de edición
+        setEditando(null);
+        // Aquí deberías enviar los datos editados al servidor o realizar la lógica necesaria para guardarlos
+      };
+
+      const manejarCancelar = () => {
+        setEditando(null);
+        setDatosEditados({});
+      };
 
     const meses = [
         "Octubre","Noviembre","Diciembre"
@@ -232,6 +249,7 @@ export const Reports = () => {
                             <th className="white-color">OBSERVACION</th>
                             <th className="white-color">TECNICO</th>
                             <th className="white-color">ANALISTA SOPORTE</th>
+                            <th className="white-color">ACCIONES</th>
                         </tr>
                     </thead>
                     <tbody className="table-body">
@@ -243,13 +261,39 @@ export const Reports = () => {
                             <td>{"----"}</td>
                             <td>{obtenerZona(data.caja_nap)}</td>
                             <td>{data.num_producto}</td>
-                            <td>{data.caja_nap}</td>
+                            <td>
+                            {editando === data.id ? (
+                            <input
+                            type="text"
+                            value={datosEditados[data.id]?.caja_nap || data.caja_nap}
+                            onChange={(e) =>
+                            setDatosEditados({
+                            ...datosEditados,
+                            [data.id]: { ...datosEditados[data.id], caja_nap: e.target.value },
+                            })
+                            }
+                            />
+                            ) : (
+                            data.caja_nap
+                            )}
+                            </td>
                             <td>{obtenerDataTecnicoAnterior(data.num_producto)}</td>
                             <td>{getHora(data.created_at)}</td>
                             <td>{data.estadp_odt}</td>
                             <td>{data.obasrvaciones}</td>
                             <td>{"----"}</td>
                             <td>{data.person.nombre + " "+ data.person.apellidos}</td>
+                            <td>
+                                {editando === data.id ? (
+                                <div>
+                                    <button className='stylesButoon'  onClick={() => manejarGuardar(data.id)}>Guardar</button>
+                                    <button className='stylesButoon'  onClick={manejarCancelar}>Cancelar</button>
+                                </div>  
+                                ) : (
+                                    <button className='stylesButoon'  onClick={() => manejarEdicion(data.id)}>Editar</button>
+                                )}
+                            </td>
+                            
                         </tr>
                        ))}
                     </tbody>

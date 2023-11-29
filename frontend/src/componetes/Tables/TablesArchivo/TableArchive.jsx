@@ -14,9 +14,9 @@ export const  TableArchive = () => {
     const token  = JSON.parse(localStorage.getItem('user_data')).token
     const [datosTranspuestos, setDatosTranspuestos] = useState([]);
     const [datosPlanesFiltrados, setDatosPlanesFiltrados] = useState([]);
-    const [modoEdicion, setModoEdicion] = useState(false);
-    const [idEdicion, setIdEdicion] = useState(null);
-    const [posicionEditada, setPosicionEditada] = useState("");
+    const [datosEditados, setDatosEditados] = useState({});
+    const [editando, setEditando] = useState(null);       
+
 
     useEffect( () => {
         getAllDatos();
@@ -57,50 +57,20 @@ export const  TableArchive = () => {
         }
     }
 
+    const manejarEdicion = (id) => {
+        setEditando(id);
+      };
+    
+      const manejarGuardar = (id) => {
+        // Guardar los datos editados y salir del modo de edición
+        setEditando(null);
+        // Aquí deberías enviar los datos editados al servidor o realizar la lógica necesaria para guardarlos
+      };
 
-
-    const handleEditarPosicionClick = (id) => {
-        const datoEditar = datos.find((dato) => dato.id === id);
-        setPosicionEditada(datoEditar.posicion);
-        setModoEdicion(true);
-        setIdEdicion(id);
-     };
-     
-     const handleGuardarPosicionEdicion = async (id) => {
-        try {
-           // Realiza la lógica necesaria para obtener la nueva posición editada
-           const nuevaPosicion = posicionEditada;
-     
-           // Guarda la nueva posición en la base de datos
-           await guardarPosicionEnBD(id, nuevaPosicion);
-     
-           // Después de guardar, sal de la edición
-           setModoEdicion(false);
-           setIdEdicion(null);
-           setPosicionEditada("");
-           
-           // Recarga los datos para reflejar los cambios
-           getAllDatos();
-        } catch (error) {
-           console.error('Error al procesar la edición y guardar en la base de datos:', error);
-        }
-     };
-     
-     const guardarPosicionEnBD = async (id, nuevaPosicion) => {
-        try {
-           const response = await axios.put(
-              `${endPoint}/${id}`,
-              { posicion: nuevaPosicion },
-              config // Asegúrate de incluir cualquier configuración de encabezados necesaria
-           );
-     
-           // Manejar la respuesta del servidor según tus necesidades
-           console.log('Respuesta del servidor:', response.data);
-        } catch (error) {
-           console.error('Error al guardar en la base de datos:', error);
-        }
-     };
-
+      const manejarCancelar = () => {
+        setEditando(null);
+        setDatosEditados({});
+      };
 
     const filtrar = (terminoBusqueda, busquedaPor) => {
         console.log(terminoBusqueda +" - "+ busquedaPor + "mostrando algo")
@@ -255,120 +225,153 @@ export const  TableArchive = () => {
                 <option value = 'cod_estado_ot'>COD_ESTADO_OT</option>
                 <option value = 'unidad_operativa'>UNIDAD_OPERATIVA</option>
             </select>
-            <button onClick={ () => filtrar(buscar, select)}>Buscar</button>
-            <div className='table-container'>
+            <button  className='stylesButoon' onClick={ () => filtrar(buscar, select)}>Buscar</button>
+            
+        </div>
+        <div className='tables-container'>
+        <div className='table-container'>
+            <table className='excel-table'>
+                <thead className='table-header'>
+                    <tr>
+                        <th className='white-color'>Campo</th>
+                        <th className='white-color'>Valor</th>
+                    </tr>
+                </thead>
+                <tbody className='table-body'>
+                    {datosTranspuestos.map((dato, index) => (
+                    <tr key={index}>
+                        <td>{dato[0]}</td>
+                        <td>{dato[1].join(', ')}</td>
+                    </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+        
+        <div className='table-container'>
             <table className='excel-table'>
                 <thead className='table-header'>
                     <tr>
                         <th className='white-color'>ID</th>
-                        <th className='white-color'>FECHA_CREACION</th>
-                        <th className='white-color'>COD_TIPO_SOL</th>
-                        <th className='white-color'>TIPO_SOLICITUD</th>
-                        <th className='white-color'>COD_TIPO</th>
-                        <th className='white-color'>TIPO_TRABAJO</th>
-                        <th className='white-color'>COD_PLAN_COMERCIAL</th>
-                        <th className='white-color'>PLAN_COMERCIAL</th>
-                        <th className='white-color'>COMPONENTE</th>
-                        <th className='white-color'>CLASE_SERVICIO</th>
-                        <th className='white-color'>AREA_SERVICIO</th>
-                        <th className='white-color'>UBICACION</th>
-                        <th className='white-color'>PRODUCTO</th>
-                        <th className='white-color'>ORDEN</th>
-                        <th className='white-color'>DESC_SERVICIO</th>
-                        <th className='white-color'>NUMERO_SERVICIO</th>
-                        <th className='white-color'>ESTADO_COMPONENTE</th>
-                        <th className='white-color'>NAP</th>
-                        <th className='white-color'>POSICION</th>
-                        <th className='white-color'>DESCRIPCION</th>
-                        <th className='white-color'>CLIENTE</th>
-                        <th className='white-color'>DIRECCION</th>
-                        <th className='white-color'>COD_ESTADO_OT</th>
-                        <th className='white-color'>UNIDAD_OPERATIVA</th>
-                        <th className='white-color'>PLANES_VELOCIDAD</th>
-                        <th className='white-color'>EDITAR</th>
+                        <th className='white-color'>cod_lab</th>
+                        <th className='white-color'>nueva_velocidad</th>
+                        <th className='white-color'>nuevo_nombre</th>
+                        <th className='white-color'>plan_comercial</th>
+                        <th className='white-color'>tipo_equipo</th>
+                        <th className='white-color'>tipo_plan</th>
                     </tr>
                 </thead>
                 <tbody className='table-body'>
-                {datos.map((dato) => {
-                const enModoEdicion = modoEdicion && idEdicion === dato.id;
-                const primerosCuatro = dato.clase_SERVICIO.slice(0, 4);
-                const planVelocidad = `${dato.cod_PLAN_COMERCIAL}-${primerosCuatro}`;
-
-                return (
-                        <tr key={dato.id} style={{ background: enModoEdicion ? 'yellow' : 'transparent' }}>
-
-                            <td>{dato.id}</td>
-                            <td>{dato.fecha_CREACION}</td>
-                            <td>{dato.cod_TIPO_SOL}</td>
-                            <td>{dato.tipo_SOLICITUD}</td>
-                            <td>{dato.cod_TIPO}</td>
-                            <td>{dato.tipo_TRABAJO}</td>
-                            <td>{dato.cod_PLAN_COMERCIAL}</td>
-                            <td>{dato.plan_COMERCIAL}</td>
-                            <td>{dato.componente}</td>
-                            <td>{dato.clase_SERVICIO}</td>
-                            <td>{dato.area_SERVICIO}</td>
-                            <td>{dato.ubicacion}</td>
-                            <td>{dato.producto}</td>
-                            <td>{dato.orden}</td>
-                            <td>{dato.desc_SERVICIO}</td>
-                            <td>{dato.numero_SERVICIO}</td>
-                            <td>{dato.estado_COMPONENTE}</td>
-                            <td>{dato.nap}</td>
-                            <td>
-                                {enModoEdicion ? (
-                                <input
-                                    type="text"
-                                    value={posicionEditada}
-                                    onChange={(e) => setPosicionEditada(e.target.value)}
-                                />
-                                ) : (
-                                    dato.posicion
-                                )}
-                            </td>
-                            <td>{dato.descripcion}</td>
-                            <td>{dato.cliente}</td>
-                            <td>{dato.direccion}</td>
-                            <td>{dato.cod_ESTADO_OT}</td>
-                            <td>{dato.unidad_OPERATIVA}</td>
-                            <td>{planVelocidad}</td>
-                            <td>
-                            {enModoEdicion ? (
-                                <div>
-                                    <button onClick={() => handleGuardarPosicionEdicion(dato.id)}>Guardar</button>
-                                    <button onClick={() => handleCancelarEdicion(dato.id)}>Cancelar</button>
-                                </div>
-                            ) : (
-                                <button onClick={() => handleEditarPosicionClick(dato.id)}>Editar</button>
-                            )}
-                            </td>
+                    {datosPlanesFiltrados.map((datoPlan) =>  (
+                        <tr key={datoPlan.id}>
+                            <td>{datoPlan.id}</td>
+                            <td>{datoPlan.codLab}</td>
+                            <td>{datoPlan.nuevaVelocidad}</td>
+                            <td>{datoPlan.nuevoNombre}</td>
+                            <td>{datoPlan.planComercial}</td>
+                            <td>{datoPlan.tipoEquipo}</td>  
+                            <td>{datoPlan.tipoPlan}</td>  
                         </tr>
-                        );
-                         })}
+                        )
+                         )}
                 </tbody>
             </table>
-            </div>
+        </div>
+        <div className="table-container">
+      <table className="excel-table">
+        <thead className="table-header">
+          <tr>
+            <th className="white-color">Componente</th>
+            <th className="white-color">Clase de Servicio</th>
+            <th className="white-color">Número de Servicio</th>
+            <th className="white-color">Estado Componente</th>
+            <th className="white-color">Acciones</th>
+          </tr>
+        </thead>
+        <tbody className="table-body">
+          {datos.map((dato) => (
+            <tr key={dato.id} style={{ background: editando === dato.id ? 'yellow' : 'transparent' }}>
+              <td>
+                {editando === dato.id ? (
+                  <input
+                    type="text"
+                    value={datosEditados[dato.id]?.componente || dato.componente}
+                    onChange={(e) =>
+                      setDatosEditados({
+                        ...datosEditados,
+                        [dato.id]: { ...datosEditados[dato.id], componente: e.target.value },
+                      })
+                    }
+                  />
+                ) : (
+                  dato.componente
+                )}
+              </td>
+              <td>
+                {editando === dato.id ? (
+                  <input
+                    type="text"
+                    value={datosEditados[dato.id]?.clase_SERVICIO || dato.clase_SERVICIO}
+                    onChange={(e) =>
+                      setDatosEditados({
+                        ...datosEditados,
+                        [dato.id]: { ...datosEditados[dato.id], clase_SERVICIO: e.target.value },
+                      })
+                    }
+                  />
+                ) : (
+                  dato.clase_SERVICIO
+                )}
+              </td>
+              <td>
+                {editando === dato.id ? (
+                  <input
+                    type="text"
+                    value={datosEditados[dato.id]?.numero_SERVICIO || dato.numero_SERVICIO}
+                    onChange={(e) =>
+                      setDatosEditados({
+                        ...datosEditados,
+                        [dato.id]: { ...datosEditados[dato.id], numero_SERVICIO: e.target.value },
+                      })
+                    }
+                  />
+                ) : (
+                  dato.numero_SERVICIO
+                )}
+              </td>
+              <td>
+                {editando === dato.id ? (
+                  <input
+                    type="text"
+                    value={datosEditados[dato.id]?.estado_COMPONENTE || dato.estado_COMPONENTE}
+                    onChange={(e) =>
+                      setDatosEditados({
+                        ...datosEditados,
+                        [dato.id]: { ...datosEditados[dato.id], estado_COMPONENTE: e.target.value },
+                      })
+                    }
+                  />
+                ) : (
+                  dato.estado_COMPONENTE
+                )}
+              </td>
+              <td>
+                {editando === dato.id ? (
+                  <div>
+                    <button className='stylesButoon'  onClick={() => manejarGuardar(dato.id)}>Guardar</button>
+                    <button className='stylesButoon'  onClick={manejarCancelar}>Cancelar</button>
+                  </div>  
+                ) : (
+                  <button className='stylesButoon'  onClick={() => manejarEdicion(dato.id)}>Editar</button>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
         </div>
-        <h2>Datos Campo / valor</h2>
-        <div className='table-container'>
-       <table className='excel-table'>
-        <thead className='table-header'>
-            <tr>
-                <th className='white-color'>Campo</th>
-                <th className='white-color'>Valor</th>
-            </tr>
-        </thead>
-        <tbody className='table-body'>
-            {datosTranspuestos.map((dato, index) => (
-                <tr key={index}>
-                    <td>{dato[0]}</td>
-                    <td>{dato[1].join(', ')}</td>
-                </tr>
-            ))}
-        </tbody>
-    </table>
-</div>
 
 
         
