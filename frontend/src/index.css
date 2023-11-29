@@ -4,17 +4,3 @@
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-
-body{
-  background-image: url('../src/assest/img/comteco_central.jpg');
-  margin: 0;
-	padding: 0;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
-  font-family: sans-serif;
-	height: 100vh; 
-
-}
