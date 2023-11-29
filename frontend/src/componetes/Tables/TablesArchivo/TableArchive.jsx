@@ -272,7 +272,8 @@ export const  TableArchive = () => {
                             <td>{datoPlan.tipoEquipo}</td>  
                             <td>{datoPlan.tipoPlan}</td>  
                         </tr>
-                    ))}
+                        )
+                         )}
                 </tbody>
             </table>
         </div>
@@ -371,6 +372,59 @@ export const  TableArchive = () => {
     </div>
 
         </div>
+
+
+        
+            
+
+            <div className='table-container'>
+            <table className='excel-table'>
+                <thead className='table-header'>
+                    <tr>
+                        <th className='white-color'>ID</th>
+                        <th className='white-color'>corresponde_internet</th>
+                        <th className='white-color'>cod_lab</th>
+                        <th className='white-color'>codigo_alternativa</th>
+                        <th className='white-color'>codigo_help_desk</th>
+                        <th className='white-color'>codigo_plan_comercial</th>
+                        <th className='white-color'>fecha_creacion</th>
+                        <th className='white-color'>incremento_mbps</th>
+                        <th className='white-color'>notas</th>
+                        <th className='white-color'>nueva_tarifa</th>
+                        <th className='white-color'>nueva_velocidad</th>
+                        <th className='white-color'>nuevo_nombre</th>
+                        <th className='white-color'>plan_comercial</th>
+                        <th className='white-color'>plan_corto</th>
+                        <th className='white-color'>tarifa1</th>
+                        <th className='white-color'>tipo_equipo</th>
+                        <th className='white-color'>tipo_plan</th>
+                    </tr>
+                </thead>
+                <tbody className='table-body'>
+                    {datosPlanesFiltrados.map((datoPlan) =>  (
+                        <tr key={datoPlan.id}>
+                            <td>{datoPlan.id}</td>
+                            <td>{datoPlan.correspondeInternet}</td>
+                            <td>{datoPlan.codLab}</td>
+                            <td>{datoPlan.codigoAlternativa}</td>
+                            <td>{datoPlan.codigoHelpDesk}</td>
+                            <td>{datoPlan.codigoPlanComercial}</td>
+                            <td>{datoPlan.fechaCreacion}</td>
+                            <td>{datoPlan.incrementoMbps}</td>
+                            <td>{datoPlan.notas}</td>
+                            <td>{datoPlan.nuevaTarifa}</td>
+                            <td>{datoPlan.nuevaVelocidad}</td>
+                            <td>{datoPlan.nuevoNombre}</td>
+                            <td>{datoPlan.planComercial}</td>
+                            <td>{datoPlan.planCorto}</td>   
+                            <td>{datoPlan.tarifa1}</td>  
+                            <td>{datoPlan.tipoEquipo}</td>  
+                            <td>{datoPlan.tipoPlan}</td>  
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            </div>
 
 
         </div>

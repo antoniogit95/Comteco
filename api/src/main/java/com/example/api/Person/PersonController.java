@@ -88,4 +88,9 @@ public class PersonController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("activate/{id}")
+    public ResponseEntity<String> putActivePersonAdnUSer(@PathVariable Long id) {
+        return personService.ActivePersonAndUser(id);
+    }
 }
