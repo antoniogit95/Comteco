@@ -10,6 +10,7 @@ import { Report } from "../vistas/Report/Report";
 import { Register } from "../vistas/Register/Register";
 import { ForgenPassword } from "../vistas/ForgenPassword/ForgenPassword";
 import { Equipos } from "../vistas/Equipos/Equipos";
+import { Footer } from "../componetes/Footer/Footer";
 //import { NavBar } from '../componetes/NavBar/NavBar';
 
 
@@ -18,7 +19,12 @@ export const Rutas = createBrowserRouter([
   { path:'/login', element:<Login /> },
   { path:'/singauth', element:<SingAuth /> },
   { path:'/forgenpassword', element:<ForgenPassword /> },
-  { path: "/", element: <ProtectedRoutes />,
+  { path: "/", element: (
+    <>
+      <ProtectedRoutes />
+      <Footer /> {/* Aquí agregamos el componente Footer */}
+    </>
+  ),
     children:[
       { path:'/home', element:<Home/> },
       { path:'/reportes', element:<Report /> },

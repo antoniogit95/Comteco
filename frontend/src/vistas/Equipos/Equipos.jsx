@@ -1,7 +1,6 @@
 import { NavBar } from "../../componetes/NavBar/NavBar"
 import { SaveArchive } from "../../componetes/saveFiles/saveDataGeneral/SaveArchive"
 import { SavePlanesVelocidad } from "../../componetes/saveFiles/savePlanesVelocidad/SavePlanesVelocidad"
-import { Footer } from "../../componetes/Footer/Footer"
 import './Equipos.css'
 
 export const Equipos = () => {
@@ -18,6 +17,6 @@ export const Equipos = () => {
         </div>
         </section>  
         </div>
-        <Footer/>
+        
     </>)
 }

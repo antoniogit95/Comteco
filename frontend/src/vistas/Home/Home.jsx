@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './Home.css'
 import { NavBar } from "../../componetes/NavBar/NavBar";
 import { Button } from "../../componetes/Button/Button"
-import { Footer } from "../../componetes/Footer/Footer"
+
 
 export const Home = () => {
     
@@ -41,6 +41,6 @@ export const Home = () => {
         <div className="stylesContentHome">
             { buttons }
         </div>  
-        <Footer/>     
+            
     </>)
 }

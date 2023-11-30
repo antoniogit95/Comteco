@@ -6,7 +6,7 @@ import { SaveDataTecnico } from "../../componetes/saveFiles/saveDataTecnico/Save
 import { NavBarReports } from "../../componetes/NavBar/NavBarReports/NavBarReports";
 import { TablesMapRoutes } from "../../componetes/Tables/TablesMapRoutes/TablesMapRoutes";
 import { TableArchive } from '../../componetes/Tables/TablesArchivo/TableArchive';
-import { Footer } from "../../componetes/Footer/Footer"
+
 
 export const Report = () => {
 
@@ -27,7 +27,7 @@ export const Report = () => {
             </div>
         </div>
         {/**<SaveDataTecnico />*/}
-        <Footer />
+        
     </>
     );
 }
