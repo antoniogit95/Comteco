@@ -173,6 +173,7 @@ export const FromsForgenPassword = () => {
                         />
                         {touched.confirmar_password && errors.confirmar_password && <div className='styleErrores'>{errors.confirmar_password}</div>}
                     </div>
+                    <br></br>
                     <div className="stylesContenedorButton">
                         <button  className='stylesButoon' type="submit">
                             Enviar

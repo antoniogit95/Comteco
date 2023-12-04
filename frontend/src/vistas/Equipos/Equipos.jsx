@@ -7,10 +7,16 @@ export const Equipos = () => {
     return(<>
         <NavBar />
         <div className="stylesContentEquipos">
-        <h1>Equipos</h1>  
+        <h1>Equipos</h1>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
         <section class="layout">
         <div>    
         <SaveArchive />
+        <br></br>
+        <br></br>
         </div>
         <div>
         <SavePlanesVelocidad />
