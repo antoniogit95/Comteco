@@ -10,6 +10,7 @@ import { Report } from "../vistas/Report/Report";
 import { Register } from "../vistas/Register/Register";
 import { ForgenPassword } from "../vistas/ForgenPassword/ForgenPassword";
 import { Equipos } from "../vistas/Equipos/Equipos";
+import { DarkMode } from "../vistas/TemaOscuro/DarkMode";
 //import { NavBar } from '../componetes/NavBar/NavBar';
 
 
@@ -18,6 +19,7 @@ export const Rutas = createBrowserRouter([
   { path:'/login', element:<Login /> },
   { path:'/singauth', element:<SingAuth /> },
   { path:'/forgenpassword', element:<ForgenPassword /> },
+  { path:'/darkmode', element:<DarkMode /> },
   { path: "/", element: <ProtectedRoutes />,
     children:[
       { path:'/home', element:<Home/> },
