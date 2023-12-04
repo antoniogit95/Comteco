@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 /**
 * Clase de configuración de seguridad que define la política de seguridad y la configuración de autenticación.
@@ -23,7 +22,7 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final CorsConfigurationSource corsConfigurationSource;
+    private final CorsConfig corsConfig;
 
      /**
      * Define una cadena de filtros de seguridad que gestiona la autenticación y autorización de las solicitudes.
@@ -46,9 +45,21 @@ public class SecurityConfig {
                         sessionManager
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
     
 }
+
+/**.authorizeHttpRequests(authReques ->
+                        authReques
+                                .requestMatchers("/auth/**").permitAll()
+                                .anyRequest().authenticated()
+                ) 
+.authorizeRequests( (authRequest) -> 
+                        authRequest
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                                .mvcMatchers("/auth/**").permitAll()
+                                .anyRequest().authenticated();
+                )*/

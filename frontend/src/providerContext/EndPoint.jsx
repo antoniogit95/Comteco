@@ -1,3 +1,4 @@
-//export const URL_API_public = "http://localhost:8080/auth"
-export const URL_API_public = "http://192.168.1.76:8080/backend/auth"
-export const URL_API_private = "http://localhost:8080/api/v1"
+const server = "http://192.168.1.76:8080/backend"
+const local = "http://localhost:8080"
+export const URL_API_public = server +"/auth"
+export const URL_API_private = server+"/api/v1"
