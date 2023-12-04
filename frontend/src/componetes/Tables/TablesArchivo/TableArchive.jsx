@@ -146,30 +146,36 @@ export const  TableArchive = () => {
               value={select}
               onChange={(e) => setSelectd(e.target.value)}
               >
-              <option value = 'fecha_CREACION' >Fecha</option>
+              <option value = '' >seleccione búsqueda</option>
+              <option value = 'fecha_CREACION' selected>Fecha</option>
               <option value = 'producto'>Producto</option>
           </select>
-          <input 
-              type='text'
-              id='buscar'
-              name='buscar'
-              placeholder='Elemento de búsqueda'
-              value={buscar}
-              onChange={ (e) => setBuscar(e.target.value) }
-          ></input>
-          <input 
-            type = 'date'
-            id = 'fecha_Inicio'
-            name = 'fecha_Inicio'
-            //value = {fecha_Inicio}
+          {select === 'producto' &&
+            <input 
+                type='text'
+                id='buscar'
+                name='buscar'
+                placeholder='Elemento de búsqueda'
+                value={buscar}
+                onChange={ (e) => setBuscar(e.target.value) }
             ></input>
-            
-          <input 
-            type = 'date'
-            id = 'fecha_Final'
-            name = 'fecha_Final'
-            //value = {fecha_Final}
+          }
+          {select === 'fecha_CREACION' &&
+            <input 
+                type = 'date'
+                id = 'fecha_Inicio'
+                name = 'fecha_Inicio'
+                //value = {fecha_Inicio}
             ></input>
+          }
+          {select === 'fecha_CREACION' &&
+            <input 
+                type = 'date'
+                id = 'fecha_Final'
+                name = 'fecha_Final'
+                //value = {fecha_Final}
+            ></input>
+          }
           <button  className='stylesButoon' onClick={ () => filtrar(buscar, select)}>Buscar</button>
         </div>
 
