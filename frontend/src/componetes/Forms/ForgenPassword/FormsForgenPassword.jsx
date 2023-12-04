@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Field } from "formik";
 import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './FormsForgenPassword.css'
 
 export const FromsForgenPassword = () => {
     
@@ -109,7 +110,7 @@ export const FromsForgenPassword = () => {
                             type='text'
                             id='ci'
                             name='ci'
-                            placeholder='escribe tu numero de carnet'
+                            placeholder='Escribe tu numero de carnet'
                             value={values.ci}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -119,11 +120,11 @@ export const FromsForgenPassword = () => {
                     <div>
                         <label htmlFor='item'>Numero de Item</label>
                         <Field 
-                            className='stylesInput'
+                            className='stylesInput' 
                             type='text'
                             id='item'
                             name='item'
-                            placeholder='escribe tu numero de Item'
+                            placeholder='Escribe tu numero de Item'
                             value={values.item}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -137,7 +138,7 @@ export const FromsForgenPassword = () => {
                             type='text'
                             id='email'
                             name='email'
-                            placeholder='escribe tu Correo Electronio'
+                            placeholder='Escribe tu Correo Electronio'
                             value={values.email}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -151,7 +152,7 @@ export const FromsForgenPassword = () => {
                             type='password'
                             id='password'
                             name='password'
-                            placeholder='escribe tu Contraseña'
+                            placeholder='Escribe tu Contraseña'
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -165,13 +166,14 @@ export const FromsForgenPassword = () => {
                             type='password'
                             id='confirmar_password'
                             name='confirmar_password'
-                            placeholder='escribe tu Contraseña'
+                            placeholder='Vuelva a escribir su Contraseña'
                             value={values.confirmar_password}
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
                         {touched.confirmar_password && errors.confirmar_password && <div className='styleErrores'>{errors.confirmar_password}</div>}
                     </div>
+                    <br></br>
                     <div className="stylesContenedorButton">
                         <button  className='stylesButoon' type="submit">
                             Enviar

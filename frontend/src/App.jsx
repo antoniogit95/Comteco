@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {  RouterProvider } from 'react-router-dom';
 import { Rutas } from './rutas/Rutas';
 import { AuthProvider } from './providerContext/AuthProvider';
-import { Footer } from "../src/componetes/Footer/Footer";
+import React from 'react';
 
 function App() {
 

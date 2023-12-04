@@ -8,6 +8,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background-color: #ccc;
   }
   
   .stylesH2Login{
@@ -35,7 +36,7 @@
     display: flex;
     justify-content: center;
     padding: 10px;
-    background-color: #ff2424;
+    background-color: #eb2929;
     color: white;
     border: none;
     border-radius: 10px;
@@ -44,7 +45,8 @@
   }
 
   .stylesButoonLogin:hover {
-    background-color: #fd0808;
+    background-color: #eb2929;
+    justify-content: center;
   }
 
   .styleLinks {
@@ -53,7 +55,7 @@
   }
   
   .styleLinksA {
-    color: #007bff;
+    color: #135DAD;
     display: block;
     padding: 3px;
     text-decoration: none;
@@ -73,3 +75,11 @@
     align-items: center;
     justify-content: center;
   }
+.stylesLoginContainer{
+  color: #D3D6E0;
+  background-color: #3A3F49;
+  border-radius: 20px;
+}
+.stylesH2Login{
+  color: #D3D6E0;
+}
