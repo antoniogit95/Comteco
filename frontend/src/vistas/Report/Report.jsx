@@ -7,6 +7,7 @@ import { NavBarReports } from "../../componetes/NavBar/NavBarReports/NavBarRepor
 import { TablesMapRoutes } from "../../componetes/Tables/TablesMapRoutes/TablesMapRoutes";
 import { TableArchive } from '../../componetes/Tables/TablesArchivo/TableArchive';
 
+
 export const Report = () => {
 
     const [activeReport, setActiveReport] = useState("")
@@ -26,5 +27,7 @@ export const Report = () => {
             </div>
         </div>
         {/**<SaveDataTecnico />*/}
-    </>);
+        
+    </>
+    );
 }

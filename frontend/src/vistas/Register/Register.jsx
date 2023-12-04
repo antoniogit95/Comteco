@@ -10,5 +10,6 @@ export const Register = () => {
             <h2>Registro Soporte</h2>
             <RegistroTecnico/>
         </div>
+        
     </>);
 }

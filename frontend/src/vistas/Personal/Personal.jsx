@@ -3,6 +3,7 @@ import { NavBar } from "../../componetes/NavBar/NavBar";
 import './Personal.css'
 import { TablesPerson } from "../../componetes/Tables/TablesPerson/TablesPerson";
 
+
 export const Personal = () => {
 
     return(<>
@@ -10,5 +11,6 @@ export const Personal = () => {
         <div className="stylesContentPersonal">
             <TablesPerson/>
         </div>
+       
     </>);
 }

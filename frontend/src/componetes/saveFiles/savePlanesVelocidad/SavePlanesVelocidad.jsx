@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import axios from 'axios';
+import './SavePlanesVelocidad.css'
 
 export const SavePlanesVelocidad = () => {
 
@@ -32,10 +33,12 @@ export const SavePlanesVelocidad = () => {
     };
 
     return (
-        <div>
+        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '15px', maxWidth: '300px' }}>
             <h1>Cargar Planes de Velocidad</h1>
             <input type="file" onChange={handleFileChange} />
-            <button onClick={subirArchivo}>Subir Archivo</button>
+            <div >
+            <button className='stylesButoon' onClick={subirArchivo}>Subir Archivo</button>
+            </div>
         </div>
     );
 };

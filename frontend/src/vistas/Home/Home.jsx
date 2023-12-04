@@ -3,6 +3,7 @@ import './Home.css'
 import { NavBar } from "../../componetes/NavBar/NavBar";
 import { Button } from "../../componetes/Button/Button"
 
+
 export const Home = () => {
     
     const role = JSON.parse(localStorage.getItem('user_data')).role;
@@ -39,6 +40,7 @@ export const Home = () => {
         <NavBar />
         <div className="stylesContentHome">
             { buttons }
-        </div>       
+        </div>  
+            
     </>)
 }

@@ -6,3 +6,15 @@
     overflow: auto;
     box-sizing: border-box;
 }
+
+.layout {
+    width: 650px;
+    height: 370px;
+  
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  
