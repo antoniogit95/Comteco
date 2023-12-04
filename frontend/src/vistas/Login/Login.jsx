@@ -77,6 +77,7 @@ export const Login = () => {
                 onSubmit={ (valores) => {
                     const store = async (e) => {
                         e.preventDefault()  
+                        console.log(endPoint)
                         try{
                             const response = await axios.post(endPoint, {
                                 username: valores.user,

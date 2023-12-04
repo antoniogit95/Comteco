@@ -18,10 +18,8 @@ export const Rutas = createBrowserRouter([
   { path:'/login', element:<Login /> },
   { path:'/singauth', element:<SingAuth /> },
   { path:'/forgenpassword', element:<ForgenPassword /> },
-  { path: "/", element: (
-    <>
-      <ProtectedRoutes />
-    </>
+  { path: "/", element: (<ProtectedRoutes />
+  { path: "/", element: (<ProtectedRoutes />
   ),
     children:[
       { path:'/home', element:<Home/> },
