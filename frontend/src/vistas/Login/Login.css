@@ -55,7 +55,7 @@
   }
   
   .styleLinksA {
-    color: #007bff;
+    color: #135DAD;
     display: block;
     padding: 3px;
     text-decoration: none;
@@ -75,3 +75,10 @@
     align-items: center;
     justify-content: center;
   }
+.stylesLoginContainer{
+  color: #D3D6E0;
+  background-color: #3A3F49;
+}
+.stylesH2Login{
+  color: #D3D6E0;
+}
