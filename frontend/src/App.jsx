@@ -10,6 +10,7 @@ function App() {
   return (
       <AuthProvider>
         <RouterProvider router={Rutas} />
+        
       </AuthProvider>
   );
 }
