@@ -1,3 +1,8 @@
+.stylesImgLogo {
+    width: 65px;  /* Ajusta el tamaño según tus necesidades */
+    height: auto;  /* Esto asegura que la proporción de la imagen se mantenga */
+  }
+
 .stylesNavBar{
     height: 60px;
     width: 100%;
@@ -9,8 +14,8 @@
     left: 0; 
     z-index: 1000; 
     padding: 0.5rem;
-    background-color: rgba(51, 51, 51, .9) ;
-    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.20);
+    background-color: rgba(238, 6, 6, 0.9) ;
+    box-shadow: 0 2px 2px 2px rgba(248, 1, 1, 0.938);
 }
 
 .stylesLogoContainer {
@@ -50,7 +55,7 @@
     padding: 0;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0);
-    color: red;
+    color: rgb(245, 242, 242);
 }
 
 .stylesIcon{
@@ -150,4 +155,21 @@
     .stylesA:hover{
         background-color: rgb(223, 31, 31);
     }
+
+    .cabecera { 
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f00909; 
+        padding: 10px; 
+        text-align: left; 
+        color: #ffffff;
+    }
+    .letrahora{
+        color: #ffffff;
+    }
+
+    
 }
+

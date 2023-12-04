@@ -6,17 +6,23 @@ import './Equipos.css'
 export const Equipos = () => {
     return(<>
         <NavBar />
-        <div className="stylesContentEquipos">
-        <h1>Equipos</h1>    
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <SaveArchive />
-        <br></br>
-        <br></br>
-        <SavePlanesVelocidad />
-        </div>
+            <div className="stylesContentEquipos">
+                <h1>Equipos</h1>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br
+                <SaveArchive />
+                <br></br>
+                <br></br
+            <div>    
+                <SaveArchive />
+                <br></br>
+                <br></br>
+            </div>
+            <div>
+                <SavePlanesVelocidad />
+            </div>
         
     </>)
 }
