@@ -68,7 +68,7 @@ export const NavBar = () => {
   />
 </div>
     <div className='cabecera'>
-      <p className="letrahora">Hora actual del Sistema: {currentTime.toLocaleTimeString()}</p>
+      <p className="letrahora">Hora actual del Sistema : {currentTime.toLocaleTimeString()}</p>
     </div>
         <button className="stylesImgContainerNavBar" onClick={() => {setIsNavExpanded(!isNavExpanded)}}>
             <GiHamburgerMenu className="stylesIcon"/>
