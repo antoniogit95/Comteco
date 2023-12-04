@@ -8,7 +8,13 @@ export const Equipos = () => {
         <NavBar />
         <div className="stylesContentEquipos">
         <h1>Equipos</h1>    
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
         <SaveArchive />
+        <br></br>
+        <br></br>
         <SavePlanesVelocidad />
         </div>
     </>)

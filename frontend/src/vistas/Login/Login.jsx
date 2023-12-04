@@ -136,6 +136,7 @@ export const Login = () => {
                         />
                         {touched.pass && errors.pass && <div className='styleErrores'>{errors.pass}</div>}
                     </div>                   
+                    <br></br>
                     <div className="stylesContenedorButton">
                         <button  className='stylesButoonLogin' type="submit">
                             Iniciar Sesión
