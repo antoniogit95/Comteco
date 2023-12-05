@@ -10,6 +10,7 @@ const AuthContext  = createContext({
 export const AuthProvider = ({ children }) =>{
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [accessToken, setAccessToekn] = useState("");
+    const [timeOut, setTimeOut] = useState("");
 
     function getAccessToken(){
         return accessToken;
@@ -31,23 +32,16 @@ export const AuthProvider = ({ children }) =>{
         return JSON.parse(jsonPayload);
     }
 
-    function saveToken(token, person, role, expirationTime){
+    function saveToken(token){
         setAccessToekn(token);
+        const decodedToken = parseJwt(token);
         localStorage.setItem("user_data", JSON.stringify({
             token: token,
-            person: {
-                id_person: person.id_person,
-                firstname: person.nombre,
-                lastname: person.apellidos,
-            },
-            role: role,
+            username: decodedToken.sub,
+            role: decodedToken.role
         }));
         setIsAuthenticated(true);
-        setTimeout(deletToken, expirationTime);
-        const decodedToken = parseJwt(token);
-        console.log(decodedToken)
-        const expDate = new Date(decodedToken.exp *1000);
-        console.log(expDate)
+        setTimeOut(decodedToken)
     }
 
     return <AuthContext.Provider value={{ isAuthenticated, getAccessToken, saveToken, deletToken }}>

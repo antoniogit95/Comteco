@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import axios from 'axios';
+import './SaveArchive.css'
 
 export const SaveArchive = () => {
 
@@ -34,9 +35,13 @@ export const SaveArchive = () => {
     return (
 
         
-        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '15px', maxWidth: '300px' }}>
+        <div className='stylesCardSaveFolder'>
             <h1>Carga de Archivos</h1>
-            <input type="file" onChange={handleFileChange} />
+            <input 
+                type="file"
+                onChange={handleFileChange}
+                placeholder='ingrese su archivo'
+                />
             <button className='stylesButoon' onClick={subirArchivo}>Subir Archivo</button>
         </div>
         
