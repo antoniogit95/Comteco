@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/ordendia")
+@RequestMapping("/api/v1/orden_dia")
 public class ORdenDiaController {
     private  OrdenDiaService ordenDiaService;
 

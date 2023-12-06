@@ -18,3 +18,11 @@
     padding: 10px;
 
 }
+
+.stylesInputGuardarFile{
+    display: block;
+}
+
+.stylesInputGuardarFile:hover{
+    cursor: pointer;
+}
