@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1/equipo")
+@RequestMapping("/api/v1/equipo")
 @AllArgsConstructor
 public class EquipoController {
     private EquipoService equipoService;

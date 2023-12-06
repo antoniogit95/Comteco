@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/trabajo")
+@RequestMapping("/api/v1/trabajo")
 public class TrabajoController {
     
     private TrabajoService trabajoService;

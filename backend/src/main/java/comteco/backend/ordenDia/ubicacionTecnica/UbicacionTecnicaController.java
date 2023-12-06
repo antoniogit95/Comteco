@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 
 @RestController
-@RequestMapping("api/v1/ubicacion_tecnica")
+@RequestMapping("/api/v1/ubicacion_tecnica")
 @AllArgsConstructor
 public class UbicacionTecnicaController {
     

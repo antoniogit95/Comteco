@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/plan_comercial")
+@RequestMapping("/api/v1/plan_comercial")
 public class PlanComercialController {
     
     private PlanComercialService planComercialService;
