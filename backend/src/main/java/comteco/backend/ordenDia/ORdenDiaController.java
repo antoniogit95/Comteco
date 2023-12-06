@@ -27,6 +27,7 @@ public class ORdenDiaController {
     @PostMapping("/save_file")
     public ResponseEntity<String> saveOrdenDiaFile(@RequestParam("file") MultipartFile file) {
         if(file != null){
+            System.err.println("recibiendo el archivo");
             return ordenDiaService.saveFile(file);
         }else{
             return new ResponseEntity<>("el archivo esta vacio", HttpStatus.ACCEPTED);

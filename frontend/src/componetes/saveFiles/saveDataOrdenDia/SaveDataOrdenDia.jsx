@@ -6,14 +6,21 @@ import '../saveDataGeneral/SaveArchive.css'
 
 export const SaveDataOrdenDia = () => {
     const [file, setFile] = useState([]);
-
-    const endPoint = URL_API_private+"/orden_dia"
+    const endPoint = URL_API_private+"/orden_dia/save_file"
     const token = JSON.parse(localStorage.getItem('user_data')).token;
 
     const subirArchivo = async () => {
+        if (file.length === 0) {
+            // Muestra un mensaje de error si no se ha seleccionado ningún archivo
+            toast.error('Por favor, selecciona un archivo antes de guardar.', {
+                position: 'top-right',
+                autoClose: 3000,
+            });
+            return;
+        }
         const formData = new FormData();
-        formData.append('file', file);
-        console.log(endPoint)
+        formData.append('file', file[0]);
+        console.log(formData.get)
         try {
             const response = await axios.post(endPoint, formData,{
                 headers: {
@@ -21,7 +28,7 @@ export const SaveDataOrdenDia = () => {
                     'Authorization': `Bearer ${token}`,
                 }
             });
-            toast.success('Usuario registrado con éxito', {
+            toast.success('Orden del dia  registrado con éxito', {
                 position: 'top-right',
                 autoClose: 3000,      
               });
@@ -42,7 +49,7 @@ export const SaveDataOrdenDia = () => {
                 className='stylesInputGuardarFile'
                 type="file"
                 name='file'
-                onChange={(e) => setFile(e.target.files)} />
+                onChange={(e) => e.target.files && setFile(e.target.files[0])} />
             <button className='stylesButoon' onClick={subirArchivo}>guardar</button>
         </div>
         <ToastContainer />
