@@ -2,6 +2,7 @@ package comteco.backend.ordenDia.solicitud;
 
 import comteco.backend.ordenDia.planComercial.PlanComercial;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class Solicitud {
     
     @Id
+    @GeneratedValue
     private Long id;
 
     private Long codTipoSol;

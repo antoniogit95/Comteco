@@ -2,6 +2,7 @@ package comteco.backend.ordenDia.planComercial;
 
 import comteco.backend.ordenDia.equipo.Equipo;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class PlanComercial {
     @Id
+    @GeneratedValue
     private Long id;
 
     private String codLab;
