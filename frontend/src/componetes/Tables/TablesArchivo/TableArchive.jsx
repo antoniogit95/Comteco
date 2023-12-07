@@ -149,6 +149,7 @@ export const  TableArchive = () => {
               <option value = 'fecha_CREACION' >Fecha</option>
               <option value = 'producto'>Producto</option>
           </select>
+          {select === 'producto' ? (
           <input 
               type='text'
               id='buscar'
@@ -157,6 +158,8 @@ export const  TableArchive = () => {
               value={buscar}
               onChange={ (e) => setBuscar(e.target.value) }
           ></input>
+          ) : (
+          <>
           <input 
             type = 'date'
             id = 'fecha_Inicio'
@@ -170,7 +173,11 @@ export const  TableArchive = () => {
             name = 'fecha_Final'
             //value = {fecha_Final}
             ></input>
-          <button  className='stylesButoon' onClick={ () => filtrar(buscar, select)}>Buscar</button>
+            
+            </>
+          )}
+          <button  className='stylesButoon2' onClick={ () => filtrar(buscar, select)}>Buscar</button>
+          <br></br>
         </div>
 
 

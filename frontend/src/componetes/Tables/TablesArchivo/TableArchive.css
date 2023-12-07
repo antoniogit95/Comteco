@@ -68,10 +68,10 @@
     background-color: #ffffff; /* Color para filas impares */
   }
 
-  .stylesButoon {
-    width: 100%;
+  .stylesButoon2 {
+    width: 70px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     padding: 10px;
     background-color: #eb2929;
     color: white;
