@@ -5,11 +5,23 @@
     left: 34rem;
 }
 
+.modalHeader{
+    background-color: #3A3F49;
+    color: #D3D6E0;
+    border-color: #eb2929;
+
+}
+
+.modalBody{
+    background-color: #3A3F49;
+}
+
 .stylesContetMenuUser{
     width: 100%;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    background-color: #3A3F49;
 }
 
 .styleContentButoon{
@@ -18,7 +30,7 @@
 }
 
 .stylesLinkMenuUser{
-    color: black;
+    color: #D3D6E0;
     padding: 2px;
     border-radius: 8px;
     cursor: pointer;
