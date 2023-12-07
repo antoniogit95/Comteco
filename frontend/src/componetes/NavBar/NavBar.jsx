@@ -87,12 +87,7 @@ export const NavBar = () => {
 
             {isAdmin && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/personal">Personas</NavLink></li>
-            )}
-            
-            {(isAdmin || isSoporte) && ( <li className="stylesLi">
-                <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
-                to="/registrar">Registrar</NavLink></li>
+                to="/personal">Personal</NavLink></li>
             )}
 
             {isAdmin && ( <li className="stylesLi">
