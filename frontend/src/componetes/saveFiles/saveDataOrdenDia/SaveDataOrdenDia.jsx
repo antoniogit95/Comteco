@@ -19,8 +19,8 @@ export const SaveDataOrdenDia = () => {
             return;
         }
         const formData = new FormData();
-        formData.append('file', file[0]);
-        console.log(formData.get)
+        formData.append('file', file);
+        console.log(formData)
         try {
             const response = await axios.post(endPoint, formData,{
                 headers: {
