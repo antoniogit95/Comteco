@@ -2,6 +2,7 @@ package comteco.backend.nap.posicion;
 
 import comteco.backend.nap.Nap;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class Posicion {
     
     @Id
+    @GeneratedValue
     private Long id;
     
     private String cod; // De 4 dígitos, rellenar con 0000
