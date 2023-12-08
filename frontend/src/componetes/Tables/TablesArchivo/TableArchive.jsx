@@ -12,7 +12,7 @@ export const  TableArchive = () => {
     const [rescatarDatos, setRescatarDatos] = useState([])
     const [select, setSelectd] = useState("");
     const [buscar, setBuscar] = useState("");
-    const endPoint = URL_API_private+"/files/get"
+    const endPoint = URL_API_private+"/orden_dia/resumido"
     const endPointPlanes = URL_API_private+"/plancomercial"
     const token  = JSON.parse(localStorage.getItem('user_data')).token
     const [datosTranspuestos, setDatosTranspuestos] = useState([]);
@@ -24,9 +24,9 @@ export const  TableArchive = () => {
 
     useEffect( () => {
         getAllDatos();
-        getAllDatosPlanes();
+        //getAllDatosPlanes();
 
-        console.log(datosPlanes);
+        //console.log(datosPlanes);
     }, [])
 
     const config = {
@@ -39,7 +39,6 @@ export const  TableArchive = () => {
         try {
 
             console.log(endPoint)
-            console.log(config.headers)
             const response = await axios.get(endPoint, config);
             setDatos(response.data);
             setRescatarDatos(response.data);

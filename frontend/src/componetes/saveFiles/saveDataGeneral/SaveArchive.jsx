@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import axios from 'axios';
+import './SaveArchive.css'
 
 export const SaveArchive = () => {
     const [archivo, setArchivo] = useState(null);
