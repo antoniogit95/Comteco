@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TableArchive.css'
 import { URL_API_private } from '../../../providerContext/EndPoint';
+import TablaAdicional from './DatosProducto';
+import botonmas from "../../../imagenes/botonmas.png"
+import botonmenos from "../../../imagenes/botonmenos.png"
 
 export const  TableArchive = () => {
     const [datos, setDatos] = useState([]);
@@ -16,7 +19,8 @@ export const  TableArchive = () => {
     const [datosPlanesFiltrados, setDatosPlanesFiltrados] = useState([]);
     const [datosEditados, setDatosEditados] = useState({});
     const [editando, setEditando] = useState(null);       
-
+    const [showAdditionalTable, setShowAdditionalTable] = useState(false);
+    const [imagenClicada, setImagenClicada] = useState(false);
 
     useEffect( () => {
         getAllDatos();
@@ -56,6 +60,11 @@ export const  TableArchive = () => {
             console.log('Error al obtener datos de planes:', error.response);
         }
     }
+
+    const toggleAdditionalTable = () => {
+        setShowAdditionalTable(!showAdditionalTable);
+        setImagenClicada(!imagenClicada);
+      };
 
     const manejarEdicion = (id) => {
         setEditando(id);
@@ -179,12 +188,7 @@ export const  TableArchive = () => {
           <button  className='stylesButoon2' onClick={ () => filtrar(buscar, select)}>Buscar</button>
           <br></br>
         </div>
-
-
-        
-            
-
-            <div className='table-container'>
+            <div className='table-container' >
             <table className='excel-table'>
                 <thead className='table-header'>
                     <tr>
@@ -199,19 +203,27 @@ export const  TableArchive = () => {
                     </tr>
                 </thead>
                 <tbody className='table-body'>
-                    {datosPlanesFiltrados.map((datoPlan) =>  (
-                        <tr key={datoPlan.id}>
-                          <td>{datoPlan.producto}</td>
-                          <td>{datoPlan.estado_Orden}</td>//Tiene este dato?
-                          <td>{datoPlan.planComercial}</td>
-                          <td>{datoPlan.tipo_Tramite}</td>//Tiene este dato?
-                          <td>{datoPlan.tipo_TRABAJO}</td>
-                          <td>{datoPlan.tipo_Cliente}</td>
-                          <td>{datoPlan.tectico}</td>
+                  
+                        <tr >
+                          <td>96214567
+                          <img
+                            src={imagenClicada ? botonmenos : botonmas}
+                            alt="Mostrar Detalles"
+                            onClick={toggleAdditionalTable}
+                            style={{ cursor: 'pointer', width: '40px', height: '40px' }}
+                          />
+                          </td>
+                          <td>Registrada</td>
+                          <td>FO comercial infinita pago a 1 mes</td>
+                          <td>Venta</td>
+                          <td>PEX Instalaciones polifuncionales N-PLAY</td>
+                          <td>Residencial</td>
+                          <td>Israel Sardan Rocha</td>
                        </tr>
-                ))}
+               
             </tbody>
           </table>
+          {showAdditionalTable && <TablaAdicional producto="96214567" />}
         </div>
       </div>
     );
