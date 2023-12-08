@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -140,6 +141,27 @@ public class OrdenDiaService {
             SimpleDateFormat formatFecha = new SimpleDateFormat("dd/MM/yyyy");
             Date fecha = formatFecha.parse(date);
             return new Timestamp(fecha.getTime());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<OrdenDiaResponse> getOrdenDiaResumido() {
+        try {
+            List<OrdenDia> ordenDias = ordenDiaRepository.findAll();
+            List<OrdenDiaResponse> responses = new ArrayList<>();
+            for (OrdenDia ordenDia : ordenDias) {
+                OrdenDiaResponse res = OrdenDiaResponse.builder()
+                    .producto(ordenDia.getProducto()+"")
+                    .estadoOrden(ordenDia.getEstadoOt())
+                    .planComercial(ordenDia.getSolicitud().getPlanComercial().getPlanCorto())
+                    .tipoTramite("S/N")
+                    .tipoTrabajo(ordenDia.getTrabajo().getTipoTrabajo())
+                    .tipoCliente(ordenDia.getTipoCliente())
+                    .build();
+                responses.add(res);
+            }
+            return responses;
         } catch (Exception e) {
             return null;
         }

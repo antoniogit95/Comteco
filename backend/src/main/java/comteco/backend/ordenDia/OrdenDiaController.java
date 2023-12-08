@@ -20,9 +20,19 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/orden_dia")
-public class ORdenDiaController {
+public class OrdenDiaController {
     
     private  OrdenDiaService ordenDiaService;
+
+    @GetMapping("/resumido")
+    public ResponseEntity<List<OrdenDiaResponse>> getOrdenDiaResponse(){
+        List<OrdenDiaResponse> ordenDiaResponses= ordenDiaService.getOrdenDiaResumido();
+        if(ordenDiaResponses != null){
+            return new ResponseEntity<>(ordenDiaResponses, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping("/save_file")
     public ResponseEntity<String> saveOrdenDiaFile(@RequestParam("file") MultipartFile file) {
