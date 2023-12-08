@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,7 +67,6 @@ public class OrdenDiaService {
                     continue;
                 }
                 String partes[] = linea.split(";");
-                System.out.println(partes.length);
                 if(partes.length == 29){
 
                     PlanComercial planComercial = PlanComercial.builder()
@@ -127,11 +127,12 @@ public class OrdenDiaService {
                     ordenDiaRepository.save(ordenDia);
                 }
             }
+            return new ResponseEntity<>("ARCHIVO REGISTARDA CON EXITO", HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
+            return new ResponseEntity<>("ERROR EN LA CARGA DE ARCHIVOS", HttpStatus.NOT_FOUND);
         }
 
-        return null;
     }
 
     private Timestamp getFecha(String date){

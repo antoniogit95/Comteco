@@ -5,9 +5,7 @@ import java.sql.Timestamp;
 import comteco.backend.nap.posicion.Posicion;
 import comteco.backend.ordenDia.servicio.Servicio;
 import comteco.backend.ordenDia.solicitud.Solicitud;
-import comteco.backend.ordenDia.trabajo.Trabajo;
-import comteco.backend.ordenDia.ubicacionTecnica.UbicacionTecnica;
-import jakarta.persistence.Column;
+import comteco.backend.ordenDia.trabajo.Trabajo;    
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -45,7 +43,6 @@ public class OrdenDia {
 
     private String ubicacion;
 
-    @Column (unique = true)
     private Long producto;
 
     private String contrato;
