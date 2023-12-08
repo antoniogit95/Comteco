@@ -24,4 +24,5 @@ public class Servicio {
     private String numeroServicio;
     private String componente;
     private String estado;
+    private String areaServicio;
 }

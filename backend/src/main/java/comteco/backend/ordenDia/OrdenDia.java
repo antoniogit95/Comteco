@@ -43,9 +43,7 @@ public class OrdenDia {
     @JoinColumn(name = "id_servicio")
     private Servicio servicio;
 
-    @OneToOne
-    @JoinColumn(name = "id_ubicacion_tencnica")
-    private UbicacionTecnica ubicacionTecnica;
+    private String ubicacion;
 
     @Column (unique = true)
     private Long producto;
@@ -57,8 +55,16 @@ public class OrdenDia {
     @OneToOne
     @JoinColumn(name = "id_posicion")
     private Posicion posicion;
+
+    private String descripcion;
+    private String actividad;
+    private String codUnidad;
+    private String unidadOperativa;
     private String cliente;
+    private String direccion;
+    private String tipoCliente; 
+    private String puntoVenta;
     private String estadoOt;
-    private String tecnico;
     private String vendedor;
+
 }
