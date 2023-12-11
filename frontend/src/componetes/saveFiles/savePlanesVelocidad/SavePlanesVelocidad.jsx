@@ -95,14 +95,14 @@ export const SavePlanesVelocidad = () => {
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
         >
-            <h1>Planes de velocidad</h1>
+            <h1>Subir planes de velocidad (opcional)</h1>
             <input
                 type="file"
                 onChange={handleFileChange}
                 style={{ display: 'none' }}
                 ref={fileInputRef}
             />
-            <p>Selecciona el archivo excel o arrastralo aqui</p>
+            <p>Seleccione el archivo csv a subir o arrastrelo aqui</p>
             <button className="stylesButoon" onClick={handleSelectFileClick}>
                 Seleccionar Archivo
             </button>   

@@ -24,8 +24,8 @@ export const Home = () => {
     function buttonsAdmin(){
         return (<div className="stylesContentButtonsBig">
             <Button name="Personal" link="/personal"/>
-            <Button name="Reportes" link="/reportes"/>
             <Button name="Equipos" link="/equipos"/>
+            <Button name="Reportes" link="/reportes"/>
         </div>)
     }
     

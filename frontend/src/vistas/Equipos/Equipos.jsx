@@ -13,8 +13,8 @@ export const Equipos = () => {
             <br></br>
             <div className='cargaArchivos'>
                 <SaveDataOrdenDia />                
-                <SaveArchive />
                 <SavePlanesVelocidad />
+                <SaveArchive />
             </div>
         </div>
     </>)
