@@ -155,7 +155,8 @@ public class OrdenDiaService {
                     .producto(ordenDia.getProducto()+"")
                     .estadoOrden(ordenDia.getEstadoOt())
                     .planComercial(ordenDia.getSolicitud().getPlanComercial().getPlanCorto())
-                    .tipoTramite("S/N")
+                    .fecha(ordenDia.getFecha())
+                    .tipoTramite(ordenDia.getSolicitud().getTipoSolicitud())
                     .tipoTrabajo(ordenDia.getTrabajo().getTipoTrabajo())
                     .tipoCliente(ordenDia.getTipoCliente())
                     .build();
