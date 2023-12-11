@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SesionService {
     
-    private SesionRepository cesionRepository;
+    private SesionRepository sesionRepository;
     private PersonService personService;
     private UserRepository userRepository;
     
@@ -36,13 +36,13 @@ public class SesionService {
     public Sesion saveCesion(User user){
         try {
             LocalDateTime finalyAt = LocalDateTime.now().plusMinutes(60);
-            Sesion cesion = Sesion.builder()
+            Sesion sesion = Sesion.builder()
                 .createdAt(getTimestamp())
                 .finalyAt(Timestamp.valueOf(finalyAt))
                 .user(user)
                 .build();
-            cesionRepository.save(cesion);
-            return cesion;  
+            sesionRepository.save(sesion);
+            return sesion;  
         } catch (Exception e) {
             return null;
         }
@@ -60,7 +60,7 @@ public class SesionService {
                 .finalyAt(Timestamp.valueOf(finalyAt))
                 .user(user)
                 .build();
-            cesionRepository.save(cesion);
+            sesionRepository.save(cesion);
             return cesion;  
         } catch (Exception e) {
             return null;
@@ -73,7 +73,7 @@ public class SesionService {
      * @return List<Cesiones> una lista de todas las cesiones activas.
      */
     public Optional<List<Sesion>> getCesionsActives(){
-        return cesionRepository.findByFinalyAtAfter(getTimestamp());
+        return sesionRepository.findByFinalyAtAfter(getTimestamp());
     }
 
     private Timestamp getTimestamp(){
@@ -92,7 +92,7 @@ public class SesionService {
         ResponseEntity<Boolean> response;
         try {
             System.out.println("Imprimiendo mensajes al intentar ver las cesiones: "+getTimestamp()+" "+ user.getId());
-            Optional<Sesion> optionaCesion = cesionRepository.findByFinalyAtAfterAndUser(getTimestamp(), user); 
+            Optional<Sesion> optionaCesion = sesionRepository.findByFinalyAtAfterAndUser(getTimestamp(), user); 
             if (optionaCesion.isPresent()) {
                 response =  new ResponseEntity<>(true, HttpStatus.OK);            
             } else {
@@ -118,7 +118,7 @@ public class SesionService {
             System.out.println("prueba de imprecion" + id);
             Person person = personService.getPersonById(id);
             Optional<User> user = userRepository.findByPerson(person);
-            Optional<List<Sesion>> optionalCesion = cesionRepository.findAllByUser(user.get());
+            Optional<List<Sesion>> optionalCesion = sesionRepository.findAllByUser(user.get());
             return new ResponseEntity<>(optionalCesion.get(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
