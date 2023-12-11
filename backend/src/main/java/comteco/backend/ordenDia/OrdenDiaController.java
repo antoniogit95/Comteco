@@ -35,9 +35,9 @@ public class OrdenDiaController {
     }
 
     @GetMapping("/producto/{producto}")
-    public ResponseEntity<List<OrdenDia>> getOrdenDiaByProducto(@PathVariable Long producto){
+    public ResponseEntity<List<OrdenDiaResponseByProducto>> getOrdenDiaByProducto(@PathVariable Long producto){
         System.out.println("Producto recibido: " + producto);
-        List<OrdenDia> ordenDias= ordenDiaService.getOrdenDiaByProducto(producto);
+        List<OrdenDiaResponseByProducto> ordenDias= ordenDiaService.getOrdenDiaByProducto(producto);
         if(ordenDias != null){
             return new ResponseEntity<>(ordenDias, HttpStatus.OK);
         }else{

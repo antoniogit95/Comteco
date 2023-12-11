@@ -168,7 +168,20 @@ public class OrdenDiaService {
         }
     }
 
-    public List<OrdenDia> getOrdenDiaByProducto(Long producto) {
-        return ordenDiaRepository.findAllByProducto(producto);
+    public List<OrdenDiaResponseByProducto> getOrdenDiaByProducto(Long producto) {
+        List<OrdenDia> ordenDias = ordenDiaRepository.findAllByProducto(producto);
+        List<OrdenDiaResponseByProducto> response = new ArrayList<>();
+        for (OrdenDia ordenDia : ordenDias) {
+            OrdenDiaResponseByProducto oByProducto = OrdenDiaResponseByProducto.builder()
+                .nap(ordenDia.getPosicion().getNap().getCod())
+                .posicion(ordenDia.getPosicion().getCod())
+                .datoTecnico(ordenDia.getPosicion().getNap().getCod()+"-"+ordenDia.getPosicion().getCod())
+                .zona(ordenDia.getUbicacion())
+                .ubicacion("sin ubicacion geografica")
+                .direccion(ordenDia.getDireccion())
+                .build();
+            response.add(oByProducto);
+        }
+        return response;
     }
 }
