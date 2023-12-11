@@ -167,4 +167,8 @@ public class OrdenDiaService {
             return null;
         }
     }
+
+    public List<OrdenDia> getOrdenDiaByProducto(Long producto) {
+        return ordenDiaRepository.findAllByProducto(producto);
+    }
 }
