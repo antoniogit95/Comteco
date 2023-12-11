@@ -10,21 +10,11 @@ export const Equipos = () => {
         <NavBar />
         <div className="stylesContentEquipos">
             <h1>Equipos</h1>
-            <div>
-                <br />
-                < SaveDataOrdenDia />
-                <br />
-            </div>
-            <div>    
-                <br></br>
+            <br></br>
+            <div className='cargaArchivos'>
+                <SaveDataOrdenDia />                
                 <SaveArchive />
-                <br></br>
-            </div>
-            <div>
-                <br></br>
-                <br></br>
                 <SavePlanesVelocidad />
-                <br></br>
             </div>
         </div>
     </>)
