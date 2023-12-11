@@ -25,7 +25,7 @@ export const Home = () => {
         return (<div className="stylesContentButtonsBig">
             <Button name="Personal" link="/personal"/>
             <Button name="Reportes" link="/reportes"/>
-            <Button name="Registrar" link="/registrar"/>
+            <Button name="Equipos" link="/equipos"/>
         </div>)
     }
     
