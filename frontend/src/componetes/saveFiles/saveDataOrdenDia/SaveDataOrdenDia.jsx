@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import axios from 'axios';
 import {ToastContainer, toast } from 'react-toastify';
-import '../saveDataGeneral/SaveArchive.css'
+import '../saveNaps/SaveNaps.css'
 
 export const SaveDataOrdenDia = () => {
     const [file, setFile] = useState([]);
