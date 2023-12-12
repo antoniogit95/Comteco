@@ -19,7 +19,11 @@ public class Nap {
     @GeneratedValue
     private Long id;
 
+    private String odf;
+    private String fdt;
+    private String nap;
     private String cod;
+    private String ubicacion;
     private String estado;
     private String descripcion;
 }

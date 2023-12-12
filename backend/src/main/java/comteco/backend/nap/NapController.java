@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -28,6 +30,15 @@ public class NapController {
     public ResponseEntity<List<Nap>> getAllNAPs() {
         List<Nap> naps = napService.getAllNAPs();
         return new ResponseEntity<>(naps, HttpStatus.OK);
+    }
+
+    @PostMapping("/save_file")
+    public ResponseEntity<String> saveNapsFile(@RequestParam("file") MultipartFile file) {
+        if(file != null){;
+            return napService.saveFile(file);
+        }else{
+            return new ResponseEntity<>("el archivo esta vacio", HttpStatus.ACCEPTED);
+        }
     }
 
     @GetMapping("/{id}")
