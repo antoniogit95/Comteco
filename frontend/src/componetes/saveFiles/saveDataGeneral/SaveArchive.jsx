@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import axios from 'axios';
+import {ToastContainer, toast } from 'react-toastify';
 import './SaveArchive.css'
 
 export const SaveArchive = () => {
@@ -18,7 +19,7 @@ export const SaveArchive = () => {
             setArchivo(file);
             setArchivoNombre(file.name);
         } else {
-            alert('Por favor, selecciona un archivo CSV.');
+            toast.error('Por favor, selecciona un archivo CSV.');
         }
     };
 
@@ -43,7 +44,7 @@ export const SaveArchive = () => {
             setArchivo(file);
             setArchivoNombre(file.name);
         } else {
-            alert('Por favor, selecciona un archivo CSV.');
+            toast.error('Por favor, selecciona un archivo CSV.');
         }
     };
 
@@ -66,7 +67,10 @@ export const SaveArchive = () => {
                 console.log('Error al cargar el archivo:', error.response);
             }
         } else {
-            alert('Por favor, selecciona un archivo antes de subirlo.');
+            toast.error('Por favor, selecciona un archivo antes de guardar.', {
+                position: 'top-right',
+                autoClose: 3000,
+            });
         }
     };
 
@@ -83,21 +87,22 @@ export const SaveArchive = () => {
                 border: `1px solid ${dragging ? 'blue' : '#ccc'}`,
                 borderRadius: '10px',
                 padding: '15px',
-                width: '380px',
+                width: '420px',
+                backgroundColor: '#3A3F49',
                 //maxWidth: '300px',*/
             }}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
         >
-            <h1>Carga de Archivos</h1>
+            <h1>NAPS-ODF</h1>
             <input
                 type="file"
                 onChange={handleFileChange}
                 style={{ display: 'none' }}
                 ref={fileInputRef}
             />
-            <p>Selecciona el archivo excel o arrastralo aqui</p>
+            <p>Seleccione el archivo csv a subir o arrastrelo aqui</p>
             <button className="stylesButoon" onClick={handleSelectFileClick}>
                 Seleccionar Archivo
             </button>   
