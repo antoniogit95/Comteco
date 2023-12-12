@@ -45,6 +45,7 @@ export const  TableArchive = () => {
             console.log("datos rescatados exitosamente")
         } catch (error) {
             console.log('Error al obtener datos:', error.response);
+            console.log('Error completo:', error);
         }
         
     }
@@ -202,23 +203,24 @@ export const  TableArchive = () => {
                     </tr>
                 </thead>
                 <tbody className='table-body'>
-                  
-                        <tr >
-                          <td>96214567
-                          <img
-                            src={imagenClicada ? botonmenos : botonmas}
-                            alt="Mostrar Detalles"
-                            onClick={toggleAdditionalTable}
-                            style={{ cursor: 'pointer', width: '40px', height: '40px' }}
-                          />
-                          </td>
-                          <td>Registrada</td>
-                          <td>FO comercial infinita pago a 1 mes</td>
-                          <td>Venta</td>
-                          <td>PEX Instalaciones polifuncionales N-PLAY</td>
-                          <td>Residencial</td>
-                          <td>Israel Sardan Rocha</td>
-                       </tr>
+                {datos.map((dato) => (
+                <tr key={dato.id}>
+                    <td>{dato.producto}
+                    <img
+                        src={imagenClicada ? botonmenos : botonmas}
+                        alt="Mostrar Detalles"
+                        onClick={toggleAdditionalTable}
+                        style={{ cursor: 'pointer', width: '40px', height: '40px' }}
+                    />
+                    </td>
+                    <td>{dato.estadoOrden}</td>
+                    <td>{dato.planComercial}</td>
+                    <td>{dato.tipoTramite}</td>
+                    <td>{dato.tipoTrabajo}</td>
+                    <td>{dato.tipoCliente}</td>
+                </tr>
+            ))}
+
                
             </tbody>
           </table>
