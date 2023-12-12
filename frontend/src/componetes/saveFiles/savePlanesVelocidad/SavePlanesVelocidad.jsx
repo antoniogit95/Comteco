@@ -81,7 +81,7 @@ export const SavePlanesVelocidad = () => {
         }
     };
 
-    return (
+    return (<>
         <div
             style={{
                 border: `1px solid ${dragging ? 'blue' : '#ccc'}`,
@@ -118,5 +118,6 @@ export const SavePlanesVelocidad = () => {
                 </p>
             )}
         </div>
-    );
+        <ToastContainer />
+    </>);
 };
