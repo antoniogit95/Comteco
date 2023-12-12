@@ -34,6 +34,17 @@ public class OrdenDiaController {
         }
     }
 
+    @GetMapping("/producto/{producto}")
+    public ResponseEntity<List<OrdenDiaResponseByProducto>> getOrdenDiaByProducto(@PathVariable Long producto){
+        System.out.println("Producto recibido: " + producto);
+        List<OrdenDiaResponseByProducto> ordenDias= ordenDiaService.getOrdenDiaByProducto(producto);
+        if(ordenDias != null){
+            return new ResponseEntity<>(ordenDias, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/save_file")
     public ResponseEntity<String> saveOrdenDiaFile(@RequestParam("file") MultipartFile file) {
         if(file != null){

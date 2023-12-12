@@ -155,7 +155,8 @@ public class OrdenDiaService {
                     .producto(ordenDia.getProducto()+"")
                     .estadoOrden(ordenDia.getEstadoOt())
                     .planComercial(ordenDia.getSolicitud().getPlanComercial().getPlanCorto())
-                    .tipoTramite("S/N")
+                    .fecha(ordenDia.getFecha())
+                    .tipoTramite(ordenDia.getSolicitud().getTipoSolicitud())
                     .tipoTrabajo(ordenDia.getTrabajo().getTipoTrabajo())
                     .tipoCliente(ordenDia.getTipoCliente())
                     .build();
@@ -165,5 +166,22 @@ public class OrdenDiaService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public List<OrdenDiaResponseByProducto> getOrdenDiaByProducto(Long producto) {
+        List<OrdenDia> ordenDias = ordenDiaRepository.findAllByProducto(producto);
+        List<OrdenDiaResponseByProducto> response = new ArrayList<>();
+        for (OrdenDia ordenDia : ordenDias) {
+            OrdenDiaResponseByProducto oByProducto = OrdenDiaResponseByProducto.builder()
+                .nap(ordenDia.getPosicion().getNap().getCod())
+                .posicion(ordenDia.getPosicion().getCod())
+                .datoTecnico(ordenDia.getPosicion().getNap().getCod()+"-"+ordenDia.getPosicion().getCod())
+                .zona(ordenDia.getUbicacion())
+                .ubicacion("sin ubicacion geografica")
+                .direccion(ordenDia.getDireccion())
+                .build();
+            response.add(oByProducto);
+        }
+        return response;
     }
 }
