@@ -47,6 +47,7 @@ export const  TableArchive = () => {
             console.log("datos rescatados exitosamente")
         } catch (error) {
             console.log('Error al obtener datos:', error.response);
+            console.log('Error completo:', error);
         }
         
     }
