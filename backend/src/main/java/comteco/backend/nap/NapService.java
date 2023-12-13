@@ -50,4 +50,12 @@ public class NapService {
             return null;
         }
     }
+
+    /**
+     * 
+     * @return devuelve una lista de todos los cod --> codigos de la tabla naps
+     */
+    public List<String> getAllCods(){
+        return napRepository.findAllCod();
+    }
 }
