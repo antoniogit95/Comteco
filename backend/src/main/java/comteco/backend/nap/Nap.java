@@ -24,6 +24,6 @@ public class Nap {
     private String nap;
     private String cod;
     private String ubicacion;
-    private String estado;
+    private boolean estado;
     private String descripcion;
 }
