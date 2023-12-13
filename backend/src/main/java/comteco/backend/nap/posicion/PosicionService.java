@@ -64,6 +64,7 @@ public class PosicionService {
                     Posicion posicion = Posicion.builder()
                         .cod(generatePosFosEspace(partes[4]+""))
                         .nap(responseNap)
+                        .estado(false)
                         .build();
                     Posicion responsePos = posicionRepository.save(posicion);
                     response += " Posicion cargada con exito: "+ responsePos.getCod()+"\n";
