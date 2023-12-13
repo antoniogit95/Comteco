@@ -1,15 +1,9 @@
 package comteco.backend.nap;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.AllArgsConstructor;
 
 @Service
@@ -17,6 +11,7 @@ import lombok.AllArgsConstructor;
 public class NapService {
 
     private NapRepository napRepository;
+
 
     public List<Nap> getAllNAPs() {
         return napRepository.findAll();
@@ -34,22 +29,43 @@ public class NapService {
         napRepository.deleteById(id);
     }
 
-    public ResponseEntity<String> saveFile(@RequestParam("file") MultipartFile file) {
+    /**
+     * @param cod es el codigo de una caja nap para preguntar si existe en la base de datos
+     * @return en caso que exista retornara con un verdadero en caso de no existir retornara con falso
+     */
+    public boolean isExistCodNap(String cod){
+        return napRepository.existsByCod(cod);
+    }
+
+
+    /**
+     * 
+     * @param cod buscar una caja nap por su codigo
+     * @return una nap en caso de no encontrar retornar null
+     */
+    public Nap getNapByCod(String cod) {
+        Optional<Nap> nOptional= napRepository.findByCod(cod);
+        if(nOptional.isPresent()){
+            return nOptional.get();
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * 
+     * @return devuelve una lista de todos los cod --> codigos de la tabla naps
+     */
+    public List<String> getAllCods(){
+        List<String> response = new ArrayList<>();
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
-            String linea;
-            boolean firstLine = true;
-            while ((linea = br.readLine()) != null) {
-                if(firstLine){
-                    firstLine = false;
-                    continue;
-                }
-                String partes[] = linea.split("[,;|]");
-                System.out.println(partes.length);
+            List<Nap> naps = napRepository.findAll(); 
+            for (Nap nap : naps) {
+                response.add(nap.getCod());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            response.add(e+"");
         }
-        return null;
+        return response;
     }
 }

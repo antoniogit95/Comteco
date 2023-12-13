@@ -3,7 +3,16 @@ package comteco.backend.nap.posicion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import comteco.backend.nap.Nap;
+
 @Repository
 public interface PosicionRepository extends JpaRepository<Posicion, Long>{
     
+    /**
+     * 
+     * @param cod a preguntar si existe en la caja nap.
+     * @param nap caja nap de donde se preguntra si existe alguna posicion.
+     * @return en caso que existan ambos componentes retornara true caso contrario false.
+     */
+    boolean existsByCodAndNap(String cod, Nap nap);
 }
