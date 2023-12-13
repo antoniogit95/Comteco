@@ -37,6 +37,11 @@ public class PosicionService {
         posicionRepository.deleteById(id);
     }
 
+    /**
+     * 
+     * @param file recive un file de tipo csv que contriene todos los datos de la nap
+     * @return una cadena con el historial de los datos guardados y los errores que tubo
+     */
     public String saveFile(@RequestParam("file") MultipartFile file) {
         String response = "";
         try {
@@ -59,11 +64,16 @@ public class PosicionService {
                         .cod(partes[3].toUpperCase())
                         .estado(true)
                         .build();
-                    Nap responseNap = napService.saveNAP(nap);
-                    response += "fila: "+i+"nap cargada con exito: "+responseNap.getCod();
+                    if(napService.isExistCodNap(nap.getCod())){
+                        nap = napService.getNapByCod(nap.getCod());
+                        response += "fila: "+i+"nap ya existe: "+nap.getCod();
+                    }else{
+                        nap = napService.saveNAP(nap);
+                        response += "fila: "+i+"nap cargada con exito: "+nap.getCod();
+                    }
                     Posicion posicion = Posicion.builder()
                         .cod(generatePosFosEspace(partes[4]+""))
-                        .nap(responseNap)
+                        .nap(nap)
                         .estado(false)
                         .build();
                     Posicion responsePos = posicionRepository.save(posicion);
@@ -95,7 +105,7 @@ public class PosicionService {
      */
     private String generatePosFosEspace(String pos){
         while (pos.length() < 4) {
-            pos += "0"+pos;
+            pos = "0"+pos;
         }   
         return pos;
     }
