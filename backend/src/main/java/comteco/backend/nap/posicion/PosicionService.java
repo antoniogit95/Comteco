@@ -109,7 +109,7 @@ public class PosicionService {
      * @return en caso que existan ambos componentes retornara true caso contrario false.
      */
     public boolean isExistCodNapAndPosicion( String codPosicion, Nap nap){
-        return false;
+        return posicionRepository.existsByCodAndNap(codPosicion, nap);
     }
 
     /**

@@ -14,5 +14,5 @@ public interface PosicionRepository extends JpaRepository<Posicion, Long>{
      * @param nap caja nap de donde se preguntra si existe alguna posicion.
      * @return en caso que existan ambos componentes retornara true caso contrario false.
      */
-    boolean exexistsByCodAndNap(String cod, Nap nap);
+    boolean existsByCodAndNap(String cod, Nap nap);
 }
