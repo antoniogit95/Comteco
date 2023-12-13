@@ -76,8 +76,12 @@ public class PosicionService {
                         .nap(nap)
                         .estado(false)
                         .build();
-                    Posicion responsePos = posicionRepository.save(posicion);
-                    response += " Posicion cargada con exito: "+ responsePos.getCod()+"\n";
+                    if(isExistCodNapAndPosicion(posicion.getCod(), nap)){
+                        response += " Posicion ya existe: "+ posicion.getCod()+"\n";
+                    }else{
+                        posicion = posicionRepository.save(posicion);
+                        response += " Posicion cargada con exito: "+ posicion.getCod()+"\n";
+                    }
                 }
             }
         } catch (Exception e) {
@@ -98,6 +102,15 @@ public class PosicionService {
         return s;
     }
 
+    /**
+     * 
+     * @param codPosicion a preguntar si existe en la caja nap.
+     * @param nap caja nap de donde se preguntra si existe alguna posicion.
+     * @return en caso que existan ambos componentes retornara true caso contrario false.
+     */
+    public boolean isExistCodNapAndPosicion( String codPosicion, Nap nap){
+        return false;
+    }
 
     /**
      * @param pos se ingresea una cadena que es una posicion y debe tener una longitud igual a 4 
