@@ -1,5 +1,6 @@
 package comteco.backend.nap;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,15 @@ public class NapService {
      * @return devuelve una lista de todos los cod --> codigos de la tabla naps
      */
     public List<String> getAllCods(){
-        return napRepository.findAllCod();
+        List<String> response = new ArrayList<>();
+        try {
+            List<Nap> naps = napRepository.findAll(); 
+            for (Nap nap : naps) {
+                response.add(nap.getCod());
+            }
+        } catch (Exception e) {
+            response.add(e+"");
+        }
+        return response;
     }
 }
