@@ -21,6 +21,8 @@ export const  TableArchive = () => {
     const [editando, setEditando] = useState(null);       
     const [showAdditionalTable, setShowAdditionalTable] = useState(false);
     const [imagenClicada, setImagenClicada] = useState(false);
+    const [productoSeleccionado, setProductoSeleccionado] = useState('');
+    const [selectedRowPosition, setSelectedRowPosition] = useState(null);
 
     useEffect( () => {
         getAllDatos();
@@ -60,9 +62,12 @@ export const  TableArchive = () => {
         }
     }
 
-    const toggleAdditionalTable = () => {
+    const toggleAdditionalTable = (producto) => {
         setShowAdditionalTable(!showAdditionalTable);
         setImagenClicada(!imagenClicada);
+        setProductoSeleccionado(producto);
+        setSelectedRowPosition(position);
+        console.log(producto);
       };
 
     const manejarEdicion = (id) => {
@@ -145,7 +150,9 @@ export const  TableArchive = () => {
         }
 
     }
-    
+ 
+    const productosUnicos = new Set(datos.map((dato) => dato.producto));
+
     return (
 
       <div>
@@ -202,27 +209,42 @@ export const  TableArchive = () => {
                     </tr>
                 </thead>
                 <tbody className='table-body'>
-                  
-                        <tr >
-                          <td>96214567
-                          <img
-                            src={imagenClicada ? botonmenos : botonmas}
-                            alt="Mostrar Detalles"
-                            onClick={toggleAdditionalTable}
-                            style={{ cursor: 'pointer', width: '40px', height: '40px' }}
-                          />
-                          </td>
-                          <td>Registrada</td>
-                          <td>FO comercial infinita pago a 1 mes</td>
-                          <td>Venta</td>
-                          <td>PEX Instalaciones polifuncionales N-PLAY</td>
-                          <td>Residencial</td>
-                          <td>Israel Sardan Rocha</td>
-                       </tr>
-               
-            </tbody>
+        {[...productosUnicos].map((productoUnico, index) => {
+          const primerDatoProducto = datos.find((dato) => dato.producto === productoUnico);
+          return (
+            <tr key={primerDatoProducto.id}>
+              <td>
+                {primerDatoProducto.producto}
+                <img
+                  src={imagenClicada ? botonmenos : botonmas}
+                  alt='Mostrar Detalles'
+                  onClick={() => toggleAdditionalTable(primerDatoProducto.producto, index)}
+                  style={{ cursor: 'pointer', width: '40px', height: '40px' }}
+                />
+              </td>
+              <td>{primerDatoProducto.estadoOrden}</td>
+              <td>{primerDatoProducto.planComercial}</td>
+              <td>{primerDatoProducto.tipoTramite}</td>
+              <td>{primerDatoProducto.tipoTrabajo}</td>
+              <td>{primerDatoProducto.tipoCliente}</td>
+            </tr>
+          );
+        })}
+      </tbody>
           </table>
-          {showAdditionalTable && <TablaAdicional producto="96214567" />}
+          {showAdditionalTable && (
+  <div
+    className='additional-table-container'
+    style={{
+      top: selectedRowPosition * 50 + 375 + 'px',
+      position: 'absolute',
+      zIndex: 1000, // Ajusta el valor según sea necesario
+    }}
+  >
+    <TablaAdicional producto={productoSeleccionado} />
+  </div>
+)}
+
         </div>
       </div>
     );
