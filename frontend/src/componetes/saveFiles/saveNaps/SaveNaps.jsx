@@ -8,7 +8,7 @@ export const SaveNaps = () => {
     const [archivo, setArchivo] = useState(null);
     const [dragging, setDragging] = useState(false);
     const [archivoNombre, setArchivoNombre] = useState('');
-    const endPoint = URL_API_private + "/naps/save_file";
+    const endPoint = URL_API_private + "/naps/pos/save_file";
     const token = JSON.parse(localStorage.getItem('user_data')).token;
 
     const fileInputRef = useRef(null);
