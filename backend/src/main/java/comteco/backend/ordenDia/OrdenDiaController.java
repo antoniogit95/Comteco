@@ -75,6 +75,12 @@ public class OrdenDiaController {
         return new ResponseEntity<>(savedOrdenDia, HttpStatus.CREATED);
     }
 
+    @PostMapping("/txt")
+    public ResponseEntity<String> saveOrdenDia(@RequestBody String ordenDia) {
+        String savedOrdenDia = ordenDiaService.saveOrdenDia(ordenDia);
+        return new ResponseEntity<>(savedOrdenDia, HttpStatus.CREATED);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrdenDia(@PathVariable Long id) {
         ordenDiaService.deleteOrdenDia(id);
