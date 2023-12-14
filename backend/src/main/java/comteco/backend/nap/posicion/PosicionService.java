@@ -38,6 +38,70 @@ public class PosicionService {
     }
 
     /**
+     * @param napAndPos dato un String que tenga los datos de la nap y pos guardarlos
+     * @return retorna el objeto creado 
+     */
+    public Posicion saveNapAndPos(String napAndPos) {
+        Posicion posicion = null;
+        if(napAndPos != null){
+            String partes[] = napAndPos.split("[-/]");
+                System.out.println(napAndPos+"tiene: "+partes.length);
+                if(partes.length == 4){
+                    Nap nap = Nap.builder()
+                        .odf(partes[0].toUpperCase())
+                        .fdt(verificarValor(partes[1]).toUpperCase())
+                        .nap(verificarValor(partes[2].toUpperCase()))
+                        .cod((partes[0]+"-"+partes[1]+"-"+partes[2]).toUpperCase())
+                        .estado(true)
+                        .build();
+                    if(napService.isExistCodNap(nap.getCod())){
+                        nap = napService.getNapByCod(nap.getCod());
+                    }else{
+                        nap = napService.saveNAP(nap);
+                    }
+
+                    posicion = Posicion.builder()
+                        .cod(generatePosFosEspace(partes[3]+""))
+                        .nap(nap)
+                        .estado(true)
+                        .build();
+                    if(isExistCodNapAndPosicion(posicion.getCod(), nap)){
+                        System.out.println("posicion y nap existentes");
+                    }else{
+                        posicion = posicionRepository.save(posicion);
+                    }
+                }else if(partes.length == 2){
+                    Nap nap = Nap.builder()
+                        .cod((partes[0]).toUpperCase())
+                        .estado(true)
+                        .build();
+                    if(napService.isExistCodNap(nap.getCod())){
+                        nap = napService.getNapByCod(nap.getCod());
+                    }else{
+                        nap = napService.saveNAP(nap);
+                    }
+                    posicion = Posicion.builder()
+                        .cod(generatePosFosEspace(partes[1]+""))
+                        .nap(nap)
+                        .estado(true)
+                        .build();
+                    if(isExistCodNapAndPosicion(posicion.getCod(), nap)){
+                        System.out.println("POSICION YA EXISTENTE");
+                        Optional<Posicion> pOptional = posicionRepository.findByCodAndNap(posicion.getCod(), nap);
+                        if(pOptional.isPresent()){
+                            posicion = pOptional.get();
+                        }
+                    }else{
+                        System.out.println("GAURDADNDO POSICION");
+                        posicion = posicionRepository.save(posicion);
+                    }
+                }
+        }
+        System.out.println(posicion.getNap().getCod()+"-"+posicion.getCod());
+        return posicion;
+    }
+
+    /**
      * 
      * @param file recive un file de tipo csv que contriene todos los datos de la nap
      * @return una cadena con el historial de los datos guardados y los errores que tubo
