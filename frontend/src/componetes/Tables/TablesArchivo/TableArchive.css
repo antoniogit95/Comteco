@@ -23,6 +23,7 @@
   
   .white-color {
     color: #f2f2f2;
+    width: 200px;
   }
   
   .tables-container {
@@ -79,4 +80,9 @@
     border-radius: 10px;
     cursor: pointer; 
     transition: .3s;
+}
+
+.autoCompleteBox{
+  background-color: #D6D6D6;
+  width: 200px;
 }

@@ -198,7 +198,6 @@ export const  TableArchive = () => {
                       <th className='white-color'>Tipo de Tramite</th>
                       <th className='white-color'>Tipo de Trabajo</th>
                       <th className='white-color'>Tipo de Cliente</th>
-                      <th className='white-color'>Técnico</th>
                     </tr>
                 </thead>
                 <tbody className='table-body'>
@@ -217,7 +216,6 @@ export const  TableArchive = () => {
                           <td>Venta</td>
                           <td>PEX Instalaciones polifuncionales N-PLAY</td>
                           <td>Residencial</td>
-                          <td>Israel Sardan Rocha</td>
                        </tr>
                
             </tbody>

@@ -52,6 +52,9 @@
 
 .graph{
   width:"450px";
-  height:"230px";
-  
+  height:"230px"; 
+}
+
+.graf{
+  background-color: #D6D6D6;
 }

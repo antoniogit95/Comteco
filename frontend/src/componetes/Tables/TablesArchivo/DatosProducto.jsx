@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import { URL_API_private } from "../../../providerContext/EndPoint"
+import React, { useState, useEffect } from 'react';
 import TablaAdicional from './DastosNap';
+import axios from 'axios';
 import './TableArchive.css'
 import botonmas from "../../../imagenes/botonmas.png"
 import botonmenos from "../../../imagenes/botonmenos.png"
@@ -8,6 +10,38 @@ const ExcelTable = () => {
   const [showAdditionalTable, setShowAdditionalTable] = useState(false);
   const [imagenClicada, setImagenClicada] = useState(false);
   const [texto, setTexto] = useState('');
+  const [napCods, setNapCods] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  //const token = JSON.parse(localStorage.getItem('nap_cod')).token;
+
+  useEffect(() => {
+    // Llama a la función para obtener los codigos de la tabla "nap"
+    getNapCods();
+  }, []); // Se ejecuta solo una vez al montar el componente
+
+  const getNapCods = async () => {
+    const napEndpoint = URL_API_private + "/nap";
+    try { 
+      const response = await axios.get(napEndpoint); //aqui sale el error de restriccion
+
+      // Extrae los IDs de la respuesta y almacénalos en el estado
+      const cods = response.data.map(nap => nap.cods);
+      setNapCods(cods);
+    } catch (error) {
+      console.log('Error obteniendo los codigos de la tabla "nap": ' + error);
+    }
+    };
+
+  const handleInputChange = (e) => {
+    const inputText = e.target.value;
+    setTexto(inputText);
+    // Filtra las sugerencias basadas en el texto de entrada
+    const filteredSuggestions = napCods.filter((cod) =>
+      cod.toLowerCase().includes(inputText.toLowerCase())
+    );
+    setSuggestions(filteredSuggestions);
+  };
+
 
   const data = [
     {
@@ -60,11 +94,17 @@ const ExcelTable = () => {
             <td>3</td>
             <td>
             <input
-                type="text"
-                value={texto}
-                onChange={(e) => setTexto(e.target.value)}
-                placeholder="Ingrese dato"
+              type="text"
+              value={texto}
+              onChange={handleInputChange}
+              list="suggestionsList"
+              placeholder="Ingrese texto"
             />
+            <datalist id="suggestionsList">
+              {suggestions.map((cod) => (
+            < option key={cod} value={cod} />
+            ))}
+            </datalist>
                 <button className='stylesButoon' onClick={guardarDato}>Guardar</button>
             </td>
             <td>SMA-07-04-03</td>
