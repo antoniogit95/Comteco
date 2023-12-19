@@ -91,7 +91,7 @@ public class OrdenDiaService {
                 .fecha(getFecha(partes[0]))
                 .solicitud(solicitud)
                 .trabajo(trabajo)
-                .servicio(servicio)
+                //.servicio(servicio)
                 .ubicacion(partes[10])
                 .contrato(partes[11])
                 .producto(Long.parseLong(partes[12]))

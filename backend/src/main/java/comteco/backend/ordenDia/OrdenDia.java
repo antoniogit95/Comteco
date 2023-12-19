@@ -1,15 +1,18 @@
 package comteco.backend.ordenDia;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import comteco.backend.nap.posicion.Posicion;
 import comteco.backend.ordenDia.servicio.Servicio;
 import comteco.backend.ordenDia.solicitud.Solicitud;
-import comteco.backend.ordenDia.trabajo.Trabajo;    
+import comteco.backend.ordenDia.trabajo.Trabajo;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,10 +40,6 @@ public class OrdenDia {
     @JoinColumn(name = "id_trabajo")
     private Trabajo trabajo;
 
-    @OneToOne
-    @JoinColumn(name = "id_servicio")
-    private Servicio servicio;
-
     private String ubicacion;
 
     private Long producto;
@@ -64,4 +63,6 @@ public class OrdenDia {
     private String estadoOt;
     private String vendedor;
 
+    @OneToMany(mappedBy = "ordenDia", cascade = CascadeType.ALL)
+    private List<Servicio> servicio;
 }
