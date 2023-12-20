@@ -1,5 +1,6 @@
 package comteco.backend.nap;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -19,7 +20,14 @@ public class Nap {
     @GeneratedValue
     private Long id;
 
+    private String odf;
+    private String fdt;
+    private String nap;
+
+    @Column(unique = true)
     private String cod;
-    private String estado;
+    
+    private String ubicacion;
+    private boolean estado;
     private String descripcion;
 }

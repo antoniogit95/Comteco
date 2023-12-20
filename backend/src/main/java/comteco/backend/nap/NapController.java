@@ -10,12 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import lombok.AllArgsConstructor;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
 
 @RestController
 @RequestMapping("/api/v1/naps")
@@ -48,4 +44,15 @@ public class NapController {
         napService.deleteNAP(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    /**
+     * 
+     * @return devuelve una lista de todos los cod --> codigos de la tabla naps
+     */
+    @GetMapping("/cods")
+    public ResponseEntity<List<String>> getAllNapsByCod() {
+        List<String> napCods  = napService.getAllCods();
+        return new ResponseEntity<>(napCods, HttpStatus.OK);
+     }
+    
 }

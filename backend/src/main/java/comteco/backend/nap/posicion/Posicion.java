@@ -23,7 +23,7 @@ public class Posicion {
     private Long id;
     
     private String cod; // De 4 dígitos, rellenar con 0000
-    private String estado;
+    private boolean estado;
 
     @ManyToOne
     @JoinColumn(name = "id_nap")

@@ -1,5 +1,5 @@
 import { NavBar } from "../../componetes/NavBar/NavBar"
-import { SaveArchive } from "../../componetes/saveFiles/saveDataGeneral/SaveArchive"
+import { SaveNaps } from "../../componetes/saveFiles/saveNaps/SaveNaps"
 import { SaveDataOrdenDia } from "../../componetes/saveFiles/saveDataOrdenDia/SaveDataOrdenDia"
 import { SavePlanesVelocidad } from "../../componetes/saveFiles/savePlanesVelocidad/SavePlanesVelocidad"
 import './Equipos.css'
@@ -14,7 +14,7 @@ export const Equipos = () => {
             <div className='cargaArchivos'>
                 <SaveDataOrdenDia />                
                 <SavePlanesVelocidad />
-                <SaveArchive />
+                <SaveNaps />
             </div>
         </div>
     </>)

@@ -2,13 +2,13 @@ import React, { useState, useRef } from 'react';
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import axios from 'axios';
 import {ToastContainer, toast } from 'react-toastify';
-import './SaveArchive.css'
+import './SaveNaps.css'
 
-export const SaveArchive = () => {
+export const SaveNaps = () => {
     const [archivo, setArchivo] = useState(null);
     const [dragging, setDragging] = useState(false);
     const [archivoNombre, setArchivoNombre] = useState('');
-    const endPoint = URL_API_private + "/files/save";
+    const endPoint = URL_API_private + "/naps/pos/save_file";
     const token = JSON.parse(localStorage.getItem('user_data')).token;
 
     const fileInputRef = useRef(null);
@@ -51,7 +51,7 @@ export const SaveArchive = () => {
     const subirArchivo = async () => {
         if (archivo) {
             const formData = new FormData();
-            formData.append('archive', archivo);
+            formData.append('file', archivo);
             try {
                 const response = await axios.post(endPoint, formData, {
                     headers: {
@@ -81,7 +81,7 @@ export const SaveArchive = () => {
         }
     };
 
-    return (
+    return (<>
         <div
             style={{
                 border: `1px solid ${dragging ? 'blue' : '#ccc'}`,
@@ -118,5 +118,6 @@ export const SaveArchive = () => {
                 </p>
             )}
         </div>
-    );
+        <ToastContainer />
+    </>);
 };
