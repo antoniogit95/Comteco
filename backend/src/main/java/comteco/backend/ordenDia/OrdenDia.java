@@ -4,10 +4,13 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import comteco.backend.nap.posicion.Posicion;
+import comteco.backend.ordenDia.cliente.Cliente;
 import comteco.backend.ordenDia.servicio.Servicio;
 import comteco.backend.ordenDia.solicitud.Solicitud;
 import comteco.backend.ordenDia.trabajo.Trabajo;
+import comteco.backend.ordenDia.vendedor.Vendedor;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -31,6 +34,7 @@ public class OrdenDia {
     private Long id;
 
     private Timestamp fecha;
+    private String ubicacion;
 
     @OneToOne
     @JoinColumn(name = "id_solicitud")
@@ -40,28 +44,26 @@ public class OrdenDia {
     @JoinColumn(name = "id_trabajo")
     private Trabajo trabajo;
 
-    private String ubicacion;
-
+    @Column(unique = true)
     private Long producto;
 
     private String contrato;
-    private boolean estado;
+    private boolean estadoOt; //estado_ot
     private String orden;
 
     @OneToOne
     @JoinColumn(name = "id_posicion")
     private Posicion posicion;
 
-    private String descripcion;
     private String actividad;
-    private String codUnidad;
-    private String unidadOperativa;
-    private String cliente;
-    private String direccion;
-    private String tipoCliente; 
-    private String puntoVenta;
-    private String estadoOt;
-    private String vendedor;
+
+    @OneToOne
+    @JoinColumn(name = "id_vendedor")
+    private Vendedor vendedor;
+
+    @OneToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 
     @OneToMany(mappedBy = "ordenDia", cascade = CascadeType.ALL)
     private List<Servicio> servicio;

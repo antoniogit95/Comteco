@@ -186,4 +186,16 @@ public class PosicionService {
         }   
         return pos;
     }
+    /**
+     * 
+     * @param ruta_nap ruta para ser guardado en la caja nao
+     * @param descripcion descriprion de la ruta o ubicacion
+     * @return la misma posicion ya creada.
+     */
+    public Posicion saveNapAndPos(String ruta_nap, String descripcion) {
+        Posicion pos = saveNapAndPos(ruta_nap);
+        pos.getNap().setDescripcion(descripcion);
+        System.out.println("imprmiendo la posicion"+ pos.getCod());
+        return posicionRepository.save(pos);
+    }
 }
