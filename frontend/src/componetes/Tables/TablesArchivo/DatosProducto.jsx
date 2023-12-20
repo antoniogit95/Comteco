@@ -12,18 +12,29 @@ const ExcelTable = () => {
   const [texto, setTexto] = useState('');
   const [napCods, setNapCods] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
-  //const token = JSON.parse(localStorage.getItem('nap_cod')).token;
+  const token = JSON.parse(localStorage.getItem('user_data')).token;
 
   useEffect(() => {
+
     // Llama a la función para obtener los codigos de la tabla "nap"
     getNapCods();
+
   }, []); // Se ejecuta solo una vez al montar el componente
 
-  const getNapCods = async () => {
-    const napEndpoint = URL_API_private + "/nap";
-    try { 
-      const response = await axios.get(napEndpoint); //aqui sale el error de restriccion
+  const config = {
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
+  };
 
+  const getNapCods = async () => {
+    const napEndpoint = URL_API_private + "/naps";
+
+    //const napEndPointValidate = URL_API_private + "/nap/"
+
+    try { 
+      console.log("Endpoint: "+napEndpoint, "\n Token: "+config.headers)
+      const response = await axios.get(napEndpoint, config); //aqui sale el error de restriccion
       // Extrae los IDs de la respuesta y almacénalos en el estado
       const cods = response.data.map(nap => nap.cods);
       setNapCods(cods);
@@ -55,6 +66,7 @@ const ExcelTable = () => {
     },
     // Puedes agregar más filas según sea necesario
   ];
+  
   const toggleAdditionalTable = () => {
     setShowAdditionalTable(!showAdditionalTable);
     setImagenClicada(!imagenClicada);
@@ -97,7 +109,7 @@ const ExcelTable = () => {
               type="text"
               value={texto}
               onChange={handleInputChange}
-              list="suggestionsList"
+              list="suggetionsList"
               placeholder="Ingrese texto"
             />
             <datalist id="suggestionsList">
