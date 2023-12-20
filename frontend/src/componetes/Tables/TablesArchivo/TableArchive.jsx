@@ -206,7 +206,6 @@ export const  TableArchive = () => {
                       <th className='white-color'>Tipo de Tramite</th>
                       <th className='white-color'>Tipo de Trabajo</th>
                       <th className='white-color'>Tipo de Cliente</th>
-                      <th className='white-color'>Técnico</th>
                     </tr>
                 </thead>
                 <tbody className='table-body'>

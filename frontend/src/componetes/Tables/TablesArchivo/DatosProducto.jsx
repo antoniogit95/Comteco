@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TablaAdicional from './DastosNap';
 import axios from 'axios';
 import './TableArchive.css'
@@ -10,36 +10,19 @@ const ExcelTable = ({ producto }) => {
   const [showAdditionalTable, setShowAdditionalTable] = useState(false);
   const [imagenClicada, setImagenClicada] = useState(false);
   const [texto, setTexto] = useState('');
-  const endPoint = URL_API_private+"/orden_dia/producto/"+producto;
-  const [datosTablaAdicional, setDatos] = useState([]);
-  const token  = JSON.parse(localStorage.getItem('user_data')).token
 
-  useEffect(() => {
-    getAllDatos();
-}, []);
-
-const config = {
-    headers:{
-        Authorization: `Bearer ${token}`,
-    }
-}
-
-const getAllDatos = async () => {
-  try {
-
-    
-      const response = await axios.get(endPoint, config);
-      setDatos(response.data);
-      console.log("datos rescatados exitosamente")
-  } catch (error) {
-      console.log('Error al obtener datos:', error.response);
-  }
-  
-}
-
-
-  console.log("reciviendo:",producto);
-  console.log("este es el endpoint:", endPoint);
+  const data = [
+    {
+      NAP: 'NAP1',
+      Posicion: 'Posicion1',
+      'NAP utilizado': 'NAP Utilizado1',
+      'Datos Tecnicos': 'Datos Tecnicos1',
+      Zona: 'Zona1',
+      Ubicacion: 'Ubicacion1',
+      Direccion: 'Direccion1',
+    },
+    // Puedes agregar más filas según sea necesario
+  ];
   const toggleAdditionalTable = () => {
     setShowAdditionalTable(!showAdditionalTable);
     setImagenClicada(!imagenClicada);
@@ -68,41 +51,32 @@ const getAllDatos = async () => {
           <th className='white-color'>Direccion</th>
         </tr>
       </thead>
-      <tbody className="table-body">
-          {[...napSet].map((nap, index) => {
-            const filteredData = datosTablaAdicional.filter((dato) => dato.nap === nap);
-            const firstData = filteredData[0]; // Tomar solo la primera fila para evitar repeticiones
-            return (
-              <tr key={index}>
-                <td>
-                  {firstData.nap}
-                  <img
-                    src={imagenClicada ? botonmenos : botonmas}
-                    alt="Mostrar Detalles"
-                    onClick={toggleAdditionalTable}
-                    style={{ cursor: 'pointer', width: '40px', height: '40px' }}
-                  />
-                </td>
-                <td>{firstData.posicion}</td>
-                <td>
-                  <input
-                    type="text"
-                    value={texto}
-                    onChange={(e) => setTexto(e.target.value)}
-                    placeholder="Ingrese dato"
-                  />
-                  <button className="stylesButoon" onClick={guardarDato}>
-                    Guardar
-                  </button>
-                </td>
-                <td>{firstData.datoTecnico}</td>
-                <td>{firstData.ubicacion}</td>
-                <td>°1888432465-ds6d5a4wead</td>
-                <td>{firstData.direccion}</td>
-              </tr>
-            );
-          })}
-        </tbody>
+      <tbody className='table-body'>
+          <tr>
+            <td>SMA-07-04
+            <img
+                src={imagenClicada ? botonmenos : botonmas}
+                alt="Mostrar Detalles"
+                onClick={toggleAdditionalTable}
+                style={{ cursor: 'pointer', width: '40px', height: '40px' }}
+            />
+            </td>
+            <td>3</td>
+            <td>
+            <input
+                type="text"
+                value={texto}
+                onChange={(e) => setTexto(e.target.value)}
+                placeholder="Ingrese dato"
+            />
+                <button className='stylesButoon' onClick={guardarDato}>Guardar</button>
+            </td>
+            <td>SMA-07-04-03</td>
+            <td>Aeropuerto</td>
+            <td>°1888432465-ds6d5a4wead</td>
+            <td>Avenida Ingavi esquina Cap. M. Waya</td>
+          </tr>
+      </tbody>
     </table>
     {showAdditionalTable && <TablaAdicional producto="SMA-07-04" />}
     </div>

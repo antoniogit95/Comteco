@@ -306,7 +306,7 @@ export const Reports = () => {
             
             <div>
                 <p className="m-2"><b>Gráfico de Líneas: Cantidad de Datos por Mes</b></p>
-                <div style={{ width: "450px", height: "230px" }}>
+                <div className="graf" style={{ width: "450px", height: "230px",}}>
                     <Line data={midata} />
                 </div>
             </div>
