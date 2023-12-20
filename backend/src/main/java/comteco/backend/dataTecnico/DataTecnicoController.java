@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +25,12 @@ public class DataTecnicoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DataTecnico> getDataTecnicoById(@PathVariable Long id) {
-        return dataTecnicoService.getDataTecnicoById(id)
-            .map(servicio -> new ResponseEntity<>(servicio, HttpStatus.OK))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Optional<DataTecnico> dOptional = dataTecnicoService.getDataTecnicoById(id);
+        if(dOptional.isPresent()){
+            return new ResponseEntity<>(dOptional.get(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping()
