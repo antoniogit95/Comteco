@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TablaAdicional from './DastosNap';
 import axios from 'axios';
 import './TableArchive.css'
@@ -10,19 +10,31 @@ const ExcelTable = ({ producto }) => {
   const [showAdditionalTable, setShowAdditionalTable] = useState(false);
   const [imagenClicada, setImagenClicada] = useState(false);
   const [texto, setTexto] = useState('');
+  const [napsCod, setNapsCod] = useState([]);
+  const [sugesNapsCod, setSugesNapsCod] = useState([]);
+  const token  = JSON.parse(localStorage.getItem('user_data')).token;
+  const endPoint = URL_API_private+ "/naps"
 
-  const data = [
-    {
-      NAP: 'NAP1',
-      Posicion: 'Posicion1',
-      'NAP utilizado': 'NAP Utilizado1',
-      'Datos Tecnicos': 'Datos Tecnicos1',
-      Zona: 'Zona1',
-      Ubicacion: 'Ubicacion1',
-      Direccion: 'Direccion1',
-    },
-    // Puedes agregar más filas según sea necesario
-  ];
+  useEffect(() => {
+    getAlLCods();
+  }, []);
+
+  const config = {
+    headers:{
+        Authorization: `Bearer ${token}`,
+    }
+  }
+
+  const getAlLCods = async () => {
+    try {
+        const response = await axios.get(endPoint, config);
+        setNapsCod(response.data);
+        console.log("NAPs Recuperados exitosamente")
+    } catch (error) {
+        console.error("Error del servidor: "+error.response);
+    }
+  }
+  
   const toggleAdditionalTable = () => {
     setShowAdditionalTable(!showAdditionalTable);
     setImagenClicada(!imagenClicada);
@@ -35,7 +47,17 @@ const ExcelTable = ({ producto }) => {
     
   };
 
-  const napSet = new Set(datosTablaAdicional.map((dato) => dato.nap));
+  const handleSearch = async (searchValue) => {
+    if (searchValue) {
+      const filterSuges = napsCod.filter((nap) =>
+        nap.cod.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setSugesNapsCod(filterSuges);
+    } else {
+      setSugesNapsCod([]);
+    }
+  }
+  //const napSet = new Set(datosTablaAdicional.map((dato) => dato.nap));
 
   return (
     <div>
@@ -64,12 +86,21 @@ const ExcelTable = ({ producto }) => {
             <td>3</td>
             <td>
             <input
-                type="text"
-                value={texto}
-                onChange={(e) => setTexto(e.target.value)}
-                placeholder="Ingrese dato"
+              type="text"
+              value={texto}
+              onChange={(e) => {
+                const searchValue = e.target.value;
+                handleSearch(searchValue);
+                setTexto(searchValue);
+              }}
+              placeholder="Ingrese dato"
             />
                 <button className='stylesButoon' onClick={guardarDato}>Guardar</button>
+                <div className='stylesSugesstionNaps'>
+                  {sugesNapsCod.map(nap => (
+                    <li key={nap.id}>{nap.cod}</li>
+                  ))}
+                </div>
             </td>
             <td>SMA-07-04-03</td>
             <td>Aeropuerto</td>
