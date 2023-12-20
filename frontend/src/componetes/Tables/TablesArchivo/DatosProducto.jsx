@@ -57,6 +57,11 @@ const ExcelTable = ({ producto }) => {
       setSugesNapsCod([]);
     }
   }
+
+  const handleSuggestionClick = (suggestion) => {
+    setTexto(suggestion);
+    setSugesNapsCod([]); // Oculta la lista de sugerencias después de hacer clic
+  };
   //const napSet = new Set(datosTablaAdicional.map((dato) => dato.nap));
 
   return (
@@ -94,13 +99,14 @@ const ExcelTable = ({ producto }) => {
                 setTexto(searchValue);
               }}
               placeholder="Ingrese dato"
+              list="suggestionsList"
             />
-                <button className='stylesButoon' onClick={guardarDato}>Guardar</button>
-                <div className='stylesSugesstionNaps'>
-                  {sugesNapsCod.map(nap => (
-                    <li key={nap.id}>{nap.cod}</li>
+                <datalist id="suggestionsList">
+                  {sugesNapsCod.map((nap) => (
+                    <option key={nap.id} value={nap.cod} onClick={() => handleSuggestionClick(nap.cod)} />
                   ))}
-                </div>
+                </datalist>
+                <button className='stylesButoon' onClick={guardarDato}>Guardar</button>
             </td>
             <td>SMA-07-04-03</td>
             <td>Aeropuerto</td>
