@@ -13,10 +13,15 @@ const ExcelTable = ({ producto }) => {
   const [napsCod, setNapsCod] = useState([]);
   const [sugesNapsCod, setSugesNapsCod] = useState([]);
   const token  = JSON.parse(localStorage.getItem('user_data')).token;
+  const user_loguin  = JSON.parse(localStorage.getItem('user_data')).username;
   const endPoint = URL_API_private+ "/naps"
+  const endPointDtaProduct = URL_API_private+"/orden_dia/producto/"+producto
+  const endPointDataTecnico = URL_API_private +"/data_tecnico"
+  const [dataProduct, setDataProdcut] = useState([]);
 
   useEffect(() => {
     getAlLCods();
+    getProductos();
   }, []);
 
   const config = {
@@ -25,6 +30,17 @@ const ExcelTable = ({ producto }) => {
     }
   }
 
+  const getProductos = async () => {
+    try {
+      console.log(endPointDtaProduct+" "+config.headers)
+      const response = await axios.get(endPointDtaProduct, config);
+      setDataProdcut(response.data);
+      console.log(dataProduct);
+      console.log("Products Recuperados exitosamente")
+  } catch (error) {
+      console.error("Error del servidor: "+error.response);
+  }
+  }
   const getAlLCods = async () => {
     try {
         const response = await axios.get(endPoint, config);
@@ -42,9 +58,22 @@ const ExcelTable = ({ producto }) => {
   };
 
   const guardarDato = () => {
-    
-    console.log('Guardando dato:', texto);
-    
+    console.log(texto+" "+producto+" "+user_loguin);
+    try {
+      const response = axios.post(endPointDataTecnico, {
+        nuevoNap: texto,
+        antogupNap: dataProduct[0].datoTecnico,
+        producto: dataProduct[0].producto,
+        username: user_loguin,
+        observaciones: "Sin Observaciones"
+      }, {
+          headers: config.headers,
+      });
+      console.log("Registro Tecnico Registrado exitosamente")
+  }catch (error) {
+      console.error("Error del Servidor: "+ error.response)
+      console.error('Error Inesperado: '+error)
+  }
   };
 
   const handleSearch = async (searchValue) => {
@@ -65,22 +94,24 @@ const ExcelTable = ({ producto }) => {
   //const napSet = new Set(datosTablaAdicional.map((dato) => dato.nap));
 
   return (
-    <div>
-    <table className='excel-table'>
-      <thead className='table-header'>
+    <div className='styleContentTable'>
+    <table className='styleTable'>
+      <thead className='stylesHead'>
         <tr>
-          <th className='white-color'>NAP</th>
-          <th className='white-color'>Posicion</th>
-          <th className='white-color'>NAP Utilizado</th>
-          <th className='white-color'>Datos Tecnicos</th>
-          <th className='white-color'>Zona</th>
-          <th className='white-color'>Ubicacion</th>
-          <th className='white-color'>Direccion</th>
+          <tr></tr>
+          <th className='stylesTh-Td'>NAP</th>
+          <th className='stylesTh-Td'>Posicion</th>
+          <th className='stylesTh-Td'>NAP Utilizado</th>
+          <th className='stylesTh-Td'>Datos Tecnicos</th>
+          <th className='stylesTh-Td'>Zona</th>
+          <th className='stylesTh-Td'>Ubicacion</th>
+          <th className='stylesTh-Td'>Direccion</th>
         </tr>
       </thead>
       <tbody className='table-body'>
-          <tr>
-            <td>SMA-07-04
+        {dataProduct.length > 0 && (
+          <tr className='stylesTr'>
+            <td>
             <img
                 src={imagenClicada ? botonmenos : botonmas}
                 alt="Mostrar Detalles"
@@ -88,8 +119,9 @@ const ExcelTable = ({ producto }) => {
                 style={{ cursor: 'pointer', width: '40px', height: '40px' }}
             />
             </td>
-            <td>3</td>
-            <td>
+            <td className='stylesTh-Td'>{dataProduct[0].nap}</td>
+            <td className='stylesTh-Td' >{dataProduct[0].posicion}</td>
+            <td className='stylesTh-Td' >
             <input
               type="text"
               value={texto}
@@ -108,11 +140,12 @@ const ExcelTable = ({ producto }) => {
                 </datalist>
                 <button className='stylesButoon' onClick={guardarDato}>Guardar</button>
             </td>
-            <td>SMA-07-04-03</td>
-            <td>Aeropuerto</td>
-            <td>°1888432465-ds6d5a4wead</td>
-            <td>Avenida Ingavi esquina Cap. M. Waya</td>
+            <td className='stylesTh-Td' >{dataProduct[0].datoTecnico}</td>
+            <td className='stylesTh-Td' >{dataProduct[0].zona}</td>
+            <td className='stylesTh-Td' >{dataProduct[0].ubicacion}</td>
+            <td className='stylesTh-Td' >{dataProduct[0].direccion}</td>
           </tr>
+          )}
       </tbody>
     </table>
     {showAdditionalTable && <TablaAdicional producto="SMA-07-04" />}
