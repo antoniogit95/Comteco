@@ -63,7 +63,7 @@ const ExcelTable = ({ producto }) => {
       const response = axios.post(endPointDataTecnico, {
         nuevoNap: texto,
         antogupNap: dataProduct[0].datoTecnico,
-        producto: dataProduct[0].producto,
+        producto: producto,
         username: user_loguin,
         observaciones: "Sin Observaciones"
       }, {

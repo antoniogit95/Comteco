@@ -37,7 +37,7 @@ public class DataTecnicoService {
             System.out.println("nueva posicion Rescatado");
             Posicion antiguaPosicion = posicionService.saveNapAndPos(dataTecnicoRequest.getAntogupNap());
             System.out.println("Antogua Posicion Rescatado");
-            System.out.println("PRODUCTO"+ dataTecnicoRequest.getProducto());
+            System.out.println("PRODUCTO: "+ dataTecnicoRequest.getProducto());
             DataTecnico dataTecnico = DataTecnico.builder()
                 .producto(dataTecnicoRequest.getProducto())
                 .user(user.get())
@@ -52,6 +52,7 @@ public class DataTecnicoService {
             System.out.println("dato tecnico Guardado");
             return saveDataTecnico;
         } catch (Exception e) {
+            System.out.println(e);
             return null;
         }
     }
