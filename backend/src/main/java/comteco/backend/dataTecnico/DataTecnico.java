@@ -41,8 +41,15 @@ public class DataTecnico {
      * Relacion con la tabla posicion que tiene todos los datos de la caja nap 
      */
     @ManyToOne
-    @JoinColumn(name = "id_posicion")
-    private Posicion posicion;
+    @JoinColumn(name = "id_nueva_posicion")
+    private Posicion nuevaPosicion;
+
+    /**
+     * Relacion con la tabla posicion que tiene todos los datos de la caja nap 
+     */
+    @ManyToOne
+    @JoinColumn(name = "id_antigua_posicion")
+    private Posicion antiguaPosicion;
 
     private String obeservaciones;
     private Timestamp created_at;

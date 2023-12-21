@@ -1,9 +1,17 @@
 package comteco.backend.dataTecnico;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import comteco.backend.nap.posicion.Posicion;
+import comteco.backend.nap.posicion.PosicionService;
+import comteco.backend.ordenDia.OrdenDia;
+import comteco.backend.ordenDia.OrdenDiaRepository;
+import comteco.backend.user.User;
+import comteco.backend.user.UserRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -11,13 +19,57 @@ import lombok.AllArgsConstructor;
 public class DataTecnicoService {
 
     private DataTecnicoRepository dataTecnicoRepository;
+    private UserRepository userRepository;
+    private PosicionService posicionService;
+    private OrdenDiaRepository ordenDiaRepository;
 
     public Optional<DataTecnico> getDataTecnicoById(Long id) {
         return dataTecnicoRepository.findById(id);
     }
 
-    public DataTecnico saveDataTecnico(DataTecnico dataTecnico) {
-        return dataTecnicoRepository.save(dataTecnico);
+    /**
+     * Guarda el nuevo dato tecnico 
+     * @param dataTecnicoRequest
+     * @return
+     */
+    public DataTecnico saveDataTecnico(DatoTecnicoRequest dataTecnicoRequest) {
+        try {
+            Optional<User> user = userRepository.findByUsername(dataTecnicoRequest.getUsername());
+            System.out.println("Usuario Rescatado");
+            Posicion nuevaPosicion = posicionService.saveNapAndPos(dataTecnicoRequest.getNuevoNap());
+            System.out.println("nueva posicion Rescatado");
+            Posicion antiguaPosicion = posicionService.saveNapAndPos(dataTecnicoRequest.getAntogupNap());
+            System.out.println("Antogua Posicion Rescatado");
+            System.out.println("PRODUCTO: "+ dataTecnicoRequest.getProducto());
+            DataTecnico dataTecnico = DataTecnico.builder()
+                .producto(dataTecnicoRequest.getProducto())
+                .user(user.get())
+                .nuevaPosicion(nuevaPosicion)
+                .antiguaPosicion(antiguaPosicion)
+                .obeservaciones(dataTecnicoRequest.getObservaciones())
+                .created_at(getTimestamp())
+                .update_at(getTimestamp())
+                .build();
+            System.out.println("dato tecnico CREADO");
+            DataTecnico saveDataTecnico = dataTecnicoRepository.save(dataTecnico);
+            System.out.println("dato tecnico Guardado");
+            //Actulizar la Direccion Nap a la Orden Dia
+            OrdenDia ordenDia = ordenDiaRepository.findByProducto(dataTecnicoRequest.getProducto()).get();
+            ordenDia.setPosicion(nuevaPosicion);
+            ordenDiaRepository.save(ordenDia);
+            return saveDataTecnico;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
     }
     
+    /**
+     * @return Obtine la hora actual del sistema
+     */
+    private Timestamp getTimestamp(){
+        LocalDateTime now = LocalDateTime.now();
+        return Timestamp.valueOf(now);
+    }
+
 }

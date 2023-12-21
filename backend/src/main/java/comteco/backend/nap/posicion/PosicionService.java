@@ -67,6 +67,7 @@ public class PosicionService {
                         .build();
                     if(isExistCodNapAndPosicion(posicion.getCod(), nap)){
                         System.out.println("posicion y nap existentes");
+                        posicion = posicionRepository.findByCodAndNap(posicion.getCod(), nap).get();
                     }else{
                         posicion = posicionRepository.save(posicion);
                     }
