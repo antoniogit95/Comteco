@@ -1,3 +1,6 @@
+.stylesTableArchiveJose{
+  width: 100%;
+}
 .stylesContentDatas{
     border: 2px solid black;
 }
@@ -5,9 +8,11 @@
     margin: 20px;
   }
   
-  .excel-table {
-    border-collapse: collapse;
-    width: 400px;
+  .stylesHead{
+    width: 100%;
+    background: #c91b0e;
+    position: sticky;
+    top: 0;
   }
   
   .excel-table th, .excel-table td {
@@ -15,7 +20,15 @@
     padding: 10px;
     text-align: center;
   }
-  
+ 
+  .stylesTh-Td{
+    padding: 8px;
+  }
+
+  .stylesBody{
+    overflow-y: auto;
+  }
+
   .excel-table th {
     background-color: rgba(225, 0, 0, 0.3);
     font-weight: bold;
@@ -31,13 +44,10 @@
     gap: 20px; /* Espacio entre las tablas */
   }
 
-  .table-container {
-    max-height: max-content; /* Establece la altura deseada */
-    width: min-content;
-    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
-    border: #c91b0e;
-    overflow-x: auto; /* Permite el desplazamiento horizontal */
-    max-width: 100%; /* Asegura que no exceda el ancho del contenedor */
+  .styleContentTable{
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 15px;
   }
   
   .table-header {

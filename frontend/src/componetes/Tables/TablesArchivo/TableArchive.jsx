@@ -156,7 +156,7 @@ export const  TableArchive = () => {
 
     return (
 
-      <div>
+      <div className='stylesTableArchiveJose'>
         <div>
           <select 
               value={select}
@@ -195,24 +195,24 @@ export const  TableArchive = () => {
           <button  className='stylesButoon2' onClick={ () => filtrar(buscar, select)}>Buscar</button>
           <br></br>
         </div>
-            <div className='table-container' >
-            <table className='excel-table'>
-                <thead className='table-header'>
-                    <tr>
+        <div className='styleContentTable' >
+          <table className='styleTable'>
+                <thead className='stylesHead'>
+                    <tr className='stylesHead'>
                       
-                      <th className='white-color'>Prodcuto</th>
-                      <th className='white-color'>Estado Orden</th>
-                      <th className='white-color'>Plan Comercial</th>
-                      <th className='white-color'>Tipo de Tramite</th>
-                      <th className='white-color'>Tipo de Trabajo</th>
-                      <th className='white-color'>Tipo de Cliente</th>
+                      <th className='stylesTh-Td'>Prodcuto</th>
+                      <th className='stylesTh-Td'>Estado Orden</th>
+                      <th className='stylesTh-Td'>Plan Comercial</th>
+                      <th className='stylesTh-Td'>Tipo de Tramite</th>
+                      <th className='stylesTh-Td'>Tipo de Trabajo</th>
+                      <th className='stylesTh-Td'>Tipo de Cliente</th>
                     </tr>
                 </thead>
-                <tbody className='table-body'>
+                <tbody className='stylesBody'>
         {[...productosUnicos].map((productoUnico, index) => {
           const primerDatoProducto = datos.find((dato) => dato.producto === productoUnico);
           return (
-            <tr key={primerDatoProducto.id}>
+            <tr className='stylesTr' key={primerDatoProducto.id}>
               <td>
                 {primerDatoProducto.producto}
                 <img
@@ -222,11 +222,11 @@ export const  TableArchive = () => {
                   style={{ cursor: 'pointer', width: '40px', height: '40px' }}
                 />
               </td>
-              <td>{primerDatoProducto.estadoOrden}</td>
-              <td>{primerDatoProducto.planComercial}</td>
-              <td>{primerDatoProducto.tipoTramite}</td>
-              <td>{primerDatoProducto.tipoTrabajo}</td>
-              <td>{primerDatoProducto.tipoCliente}</td>
+              <td className='stylesTh-Td'>{primerDatoProducto.estadoOrden}</td>
+              <td className='stylesTh-Td'>{primerDatoProducto.planComercial}</td>
+              <td className='stylesTh-Td'>{primerDatoProducto.tipoTramite}</td>
+              <td className='stylesTh-Td'>{primerDatoProducto.tipoTrabajo}</td>
+              <td className='stylesTh-Td'>{primerDatoProducto.tipoCliente}</td>
             </tr>
           );
         })}
