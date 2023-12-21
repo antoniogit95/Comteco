@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import comteco.backend.nap.posicion.Posicion;
 import comteco.backend.nap.posicion.PosicionService;
+import comteco.backend.ordenDia.OrdenDia;
+import comteco.backend.ordenDia.OrdenDiaRepository;
 import comteco.backend.user.User;
 import comteco.backend.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ public class DataTecnicoService {
     private DataTecnicoRepository dataTecnicoRepository;
     private UserRepository userRepository;
     private PosicionService posicionService;
+    private OrdenDiaRepository ordenDiaRepository;
 
     public Optional<DataTecnico> getDataTecnicoById(Long id) {
         return dataTecnicoRepository.findById(id);
@@ -50,6 +53,10 @@ public class DataTecnicoService {
             System.out.println("dato tecnico CREADO");
             DataTecnico saveDataTecnico = dataTecnicoRepository.save(dataTecnico);
             System.out.println("dato tecnico Guardado");
+            //Actulizar la Direccion Nap a la Orden Dia
+            OrdenDia ordenDia = ordenDiaRepository.findByProducto(dataTecnicoRequest.getProducto()).get();
+            ordenDia.setPosicion(nuevaPosicion);
+            ordenDiaRepository.save(ordenDia);
             return saveDataTecnico;
         } catch (Exception e) {
             System.out.println(e);
