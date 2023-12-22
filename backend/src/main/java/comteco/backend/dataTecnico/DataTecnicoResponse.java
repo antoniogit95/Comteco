@@ -23,7 +23,7 @@ public class DataTecnicoResponse {
     private String nuevaPosicion;
     private String antiguaPosicion;
     private String obeservaciones;
-    private Timestamp created_at;
-    private Timestamp update_at;   
-    private String message;
+    private Timestamp createdAt;
+    private Timestamp updateAt;   
+    private String message; //poner algun error
 }

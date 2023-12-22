@@ -2,6 +2,8 @@ package comteco.backend.dataTecnico;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -72,8 +74,8 @@ public class DataTecnicoService {
                     .producto(saveDataTecnico.getProducto())
                     .nuevaPosicion(saveDataTecnico.getNuevaPosicion().getNap().getCod()+"-"+saveDataTecnico.getNuevaPosicion().getCod())
                     .antiguaPosicion(saveDataTecnico.getAntiguaPosicion().getNap().getCod()+"-"+saveDataTecnico.getAntiguaPosicion().getCod())
-                    .created_at(saveDataTecnico.getCreated_at())
-                    .update_at(saveDataTecnico.getUpdate_at())
+                    .createdAt(saveDataTecnico.getCreated_at())
+                    .updateAt(saveDataTecnico.getUpdate_at())
                     .build();
                 return new ResponseEntity<>(dataTecnicoResponse, HttpStatus.CREATED);
             }
@@ -91,6 +93,29 @@ public class DataTecnicoService {
     private Timestamp getTimestamp(){
         LocalDateTime now = LocalDateTime.now();
         return Timestamp.valueOf(now);
+    }
+
+    /**
+     * Metodo para obtener todos los datos tecnicos de la base de datos;
+     * @return
+     */
+    public List<DatoTecnicoReportResponse> getAllDatoTecnico() {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                .id(dt.getId())
+                .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                .producto(dt.getProducto())
+                .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                .createdAt(dt.getCreated_at())
+                .updateAt(dt.getUpdate_at())
+                .build();
+            responses.add(dtrr);
+        }
+
+        return responses;
     }
 
 }
