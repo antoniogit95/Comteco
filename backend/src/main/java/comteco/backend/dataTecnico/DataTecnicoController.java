@@ -34,9 +34,8 @@ public class DataTecnicoController {
     }
 
     @PostMapping()
-    public ResponseEntity<DataTecnico> saveDataTecnico(@RequestBody DatoTecnicoRequest dataTecnicoRequest) {
-        DataTecnico savedDataTecnico = dataTecnicoService.saveDataTecnico(dataTecnicoRequest);
-        return new ResponseEntity<>(savedDataTecnico, HttpStatus.CREATED);
+    public ResponseEntity<DataTecnicoResponse> saveDataTecnico(@RequestBody DatoTecnicoRequest dataTecnicoRequest) {
+        return dataTecnicoService.saveDataTecnico(dataTecnicoRequest);
     }
     
     

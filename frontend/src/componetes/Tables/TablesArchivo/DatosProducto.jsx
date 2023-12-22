@@ -57,10 +57,10 @@ const ExcelTable = ({ producto }) => {
     
   };
 
-  const guardarDato = () => {
-    console.log(texto+" "+producto+" "+user_loguin);
+  const guardarDato = async (e) => {
+    e.preventDefault()  
     try {
-      const response = axios.post(endPointDataTecnico, {
+      const response = await axios.post(endPointDataTecnico, {
         nuevoNap: texto,
         antogupNap: dataProduct[0].datoTecnico,
         producto: producto,
@@ -69,11 +69,14 @@ const ExcelTable = ({ producto }) => {
       }, {
           headers: config.headers,
       });
-      console.log("Registro Tecnico Registrado exitosamente")
-  }catch (error) {
-      console.error("Error del Servidor: "+ error.response)
-      console.error('Error Inesperado: '+error)
-  }
+      console.log("Respuesta del Servidor: ", response.data);
+      console.log("Registro Tecnico Registrado exitosamente.");
+    }catch (error) {
+      if(error.response.data){
+        console.error("Error del Servidor: "+ error.response.data.message)
+        
+      }
+    }
   };
 
   const handleSearch = async (searchValue) => {
@@ -138,7 +141,7 @@ const ExcelTable = ({ producto }) => {
                     <option key={nap.id} value={nap.cod} onClick={() => handleSuggestionClick(nap.cod)} />
                   ))}
                 </datalist>
-                <button className='stylesButoon' onClick={guardarDato}>Guardar</button>
+                <button className='stylesButoon' onClick={() => guardarDato(event)}>Guardar</button>
             </td>
             <td className='stylesTh-Td' >{dataProduct[0].datoTecnico}</td>
             <td className='stylesTh-Td' >{dataProduct[0].zona}</td>
