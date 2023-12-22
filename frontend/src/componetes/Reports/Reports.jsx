@@ -232,24 +232,20 @@ export const Reports = () => {
                 />
                 <button onClick={() => buscarDatos()}>Buscar</button>
             </div> 
+        <br></br>
         <div className="table-container">
                 <table className="excel-table">
                     <thead className="table-header">
                         <tr>
-                            <th className="white-color">ID</th>
-                            <th className="white-color">MES</th>
-                            <th className="white-color">FECHA</th>
-                            <th className="white-color">TIPO DE ORDEN</th>
-                            <th className="white-color">ZONA</th>
-                            <th className="white-color">PRODUCTO</th>
-                            <th className="white-color">DATO TECNICO ACTUAL</th>
-                            <th className="white-color">DATO TECNICO ANTERIOR</th>
-                            <th className="white-color">HORA</th>
-                            <th className="white-color">ESTADO DATO TECNICO</th>
-                            <th className="white-color">OBSERVACION</th>
-                            <th className="white-color">TECNICO</th>
-                            <th className="white-color">ANALISTA SOPORTE</th>
-                            <th className="white-color">ACCIONES</th>
+                            
+                        <th className="white-color">NAP</th>
+                        <th className="white-color">Dato tecnico anterior</th>
+                        <th className="white-color">Dato tecnico nuevo</th>
+                        <th className="white-color">Fecha de cambio</th>
+                        <th className="white-color">Hora</th>
+                        <th className="white-color">Tecnico</th>
+                        <th className="white-color">Analista</th>
+                        <th className="white-color">Observaciones</th>
                         </tr>
                     </thead>
                     <tbody className="table-body">
@@ -300,7 +296,7 @@ export const Reports = () => {
                 </table>
             
         </div>
-        
+        <br></br>
         <div>
             
             
