@@ -5,6 +5,8 @@ import './TableArchive.css'
 import botonmas from "../../../imagenes/botonmas.png"
 import botonmenos from "../../../imagenes/botonmenos.png"
 import { URL_API_private } from '../../../providerContext/EndPoint';
+import {ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ExcelTable = ({ producto }) => {
   const [showAdditionalTable, setShowAdditionalTable] = useState(false);
@@ -71,10 +73,11 @@ const ExcelTable = ({ producto }) => {
       });
       console.log("Respuesta del Servidor: ", response.data);
       console.log("Registro Tecnico Registrado exitosamente.");
+      toast.success("Registro Tecnico Registrado exitosamente");
     }catch (error) {
       if(error.response.data){
-        console.error("Error del Servidor: "+ error.response.data.message)
-        
+        console.error("Error del Servidor: "+ error.response.data.message);
+        toast.error(`Error del Servidor: ${error.response.data.message}`);
       }
     }
   };
@@ -152,6 +155,7 @@ const ExcelTable = ({ producto }) => {
       </tbody>
     </table>
     {showAdditionalTable && <TablaAdicional producto="SMA-07-04" />}
+    <ToastContainer/>
     </div>
   );
 };
