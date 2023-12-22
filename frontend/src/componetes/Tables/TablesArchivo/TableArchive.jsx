@@ -3,8 +3,7 @@ import axios from 'axios';
 import './TableArchive.css'
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import TablaAdicional from './DatosProducto';
-import botonmas from "../../../imagenes/botonmas.png"
-import botonmenos from "../../../imagenes/botonmenos.png"
+import { ProdcutRow } from './ProductRow';
 
 export const  TableArchive = () => {
     const [datos, setDatos] = useState([]);
@@ -20,15 +19,11 @@ export const  TableArchive = () => {
     const [datosEditados, setDatosEditados] = useState({});
     const [editando, setEditando] = useState(null);       
     const [showAdditionalTable, setShowAdditionalTable] = useState(false);
-    const [imagenClicada, setImagenClicada] = useState(false);
     const [productoSeleccionado, setProductoSeleccionado] = useState('');
     const [selectedRowPosition, setSelectedRowPosition] = useState(null);
 
     useEffect( () => {
         getAllDatos();
-        //getAllDatosPlanes();
-
-        //console.log(datosPlanes);
     }, [])
 
     const config = {
@@ -51,41 +46,7 @@ export const  TableArchive = () => {
         }
         
     }
-
-    const getAllDatosPlanes = async () => {
-        try {
-            const response = await axios.get(endPointPlanes, config);
-            setDatosPlanes(response.data);
-            setRescatarDatos(response.data);
-            console.log("Datos de planes rescatados exitosamente");
-        } catch (error) {
-            console.log('Error al obtener datos de planes:', error.response);
-        }
-    }
-
-    const toggleAdditionalTable = (producto) => {
-        setShowAdditionalTable(!showAdditionalTable);
-        setImagenClicada(!imagenClicada);
-        setProductoSeleccionado(producto);
-        setSelectedRowPosition(position);
-        console.log(producto);
-      };
-
-    const manejarEdicion = (id) => {
-        setEditando(id);
-      };
-      const manejarGuardar = (id) => {
-        // Guardar los datos editados y salir del modo de edición
-        setEditando(null);
-        // Aquí deberías enviar los datos editados al servidor o realizar la lógica necesaria para guardarlos
-      };
-
-      const manejarCancelar = () => {
-        setEditando(null);
-        setDatosEditados({});
-      };
-
-
+    
     const filtrar = (terminoBusqueda, busquedaPor) => {
         console.log(terminoBusqueda +" - "+ busquedaPor + "mostrando algo")
         console.log("Filtrando...");
@@ -102,9 +63,6 @@ export const  TableArchive = () => {
                 return true;
             });
             setDatos(resultadoBusqueda);
-           
-            
-
             // Transforma los datos para mostrarlos en una tabla transpuesta
             const transpuestos = resultadoBusqueda.reduce((acc, dato) => {
                 Object.keys(dato).forEach(key => {
@@ -151,12 +109,10 @@ export const  TableArchive = () => {
         }
 
     }
- 
-    const productosUnicos = new Set(datos.map((dato) => dato.producto));
 
     return (
 
-      <div>
+      <div className='stylesTableArchiveJose'>
         <div>
           <select 
               value={select}
@@ -195,56 +151,27 @@ export const  TableArchive = () => {
           <button  className='stylesButoon2' onClick={ () => filtrar(buscar, select)}>Buscar</button>
           <br></br>
         </div>
-            <div className='table-container' >
-            <table className='excel-table'>
-                <thead className='table-header'>
-                    <tr>
-                      
-                      <th className='white-color'>Prodcuto</th>
-                      <th className='white-color'>Estado Orden</th>
-                      <th className='white-color'>Plan Comercial</th>
-                      <th className='white-color'>Tipo de Tramite</th>
-                      <th className='white-color'>Tipo de Trabajo</th>
-                      <th className='white-color'>Tipo de Cliente</th>
+        <div className='styleContentTable' >
+          <table className='styleTable'>
+                <thead className='stylesHead'>
+                    <tr className='stylesHead'>
+                      <th className='stylesTh-Td'></th>
+                      <th className='stylesTh-Td'>Prodcuto</th>
+                      <th className='stylesTh-Td'>Estado Orden</th>
+                      <th className='stylesTh-Td'>Plan Comercial</th>
+                      <th className='stylesTh-Td'>Tipo de Tramite</th>
+                      <th className='stylesTh-Td'>Tipo de Trabajo</th>
+                      <th className='stylesTh-Td'>Tipo de Cliente</th>
                     </tr>
                 </thead>
-                <tbody className='table-body'>
-        {[...productosUnicos].map((productoUnico, index) => {
-          const primerDatoProducto = datos.find((dato) => dato.producto === productoUnico);
-          return (
-            <tr key={primerDatoProducto.id}>
-              <td>
-                {primerDatoProducto.producto}
-                <img
-                  src={imagenClicada ? botonmenos : botonmas}
-                  alt='Mostrar Detalles'
-                  onClick={() => toggleAdditionalTable(primerDatoProducto.producto, index)}
-                  style={{ cursor: 'pointer', width: '40px', height: '40px' }}
-                />
-              </td>
-              <td>{primerDatoProducto.estadoOrden}</td>
-              <td>{primerDatoProducto.planComercial}</td>
-              <td>{primerDatoProducto.tipoTramite}</td>
-              <td>{primerDatoProducto.tipoTrabajo}</td>
-              <td>{primerDatoProducto.tipoCliente}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-          </table>
-          {showAdditionalTable && (
-  <div
-    className='additional-table-container'
-    style={{
-      top: selectedRowPosition * 50 + 375 + 'px',
-      position: 'absolute',
-      zIndex: 1000, // Ajusta el valor según sea necesario
-    }}
-  >
-    <TablaAdicional producto={productoSeleccionado} />
-  </div>
-)}
-
+                <tbody className='stylesBody'>
+                {datos.map((data) => (
+                  <ProdcutRow
+                    product={data}
+                  />
+                ))}
+                </tbody>
+            </table>
         </div>
       </div>
     );
