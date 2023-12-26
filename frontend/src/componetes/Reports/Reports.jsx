@@ -216,97 +216,59 @@ export const Reports = () => {
 
     return (
         <div>
-            <div>
-                <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
-                    <option value="nombre">Nombre Analista Soporte</option>
-                    <option value="producto">Producto</option>
-                    <option value="EstadoDt">Estado Dt</option>
-                    <option value="CajaNap">Caja Nap -Dato Tecnico Actual-</option>
-                    <option value="fecha">Fecha - formato aaaa-mm-dd -</option>
-                </select>
+            <div classname='styleBusquedas'>
                 <input 
                     type="text"
                     value={termino}
                     onChange={(e) => setTermino(e.target.value)}
                     placeholder="Ingrese el término de búsqueda"
                 />
-                <button onClick={() => buscarDatos()}>Buscar</button>
+                <input 
+                    type = 'date'
+                    id = 'fecha_Inicio'
+                    name = 'fecha_Inicio'
+                    //value = {fecha_Inicio}
+                    ></input>
+                    
+                <input 
+                    type = 'date'
+                    id = 'fecha_Final'
+                    name = 'fecha_Final'
+                    //value = {fecha_Final}
+                ></input>
+
+                <button className="stylessButoon" onClick={() => buscarDatos()}>Buscar</button>
+            </div>
+            <br></br>
+            <div>
+                <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
+                    <option value="nombre">Dato tecnico</option>
+                    <option value="producto">Posicion</option>
+                    <option value="EstadoDt">NAP</option>
+                    <option value="CajaNap">FDT</option>
+                    <option value="fecha">ODF</option>D
+                </select>
             </div> 
         <br></br>
         <div className="table-container">
                 <table className="excel-table">
                     <thead className="table-header">
                         <tr>
-                            
-                        <th className="white-color">NAP</th>
                         <th className="white-color">Dato tecnico anterior</th>
                         <th className="white-color">Dato tecnico nuevo</th>
                         <th className="white-color">Fecha de cambio</th>
                         <th className="white-color">Hora</th>
-                        <th className="white-color">Tecnico</th>
                         <th className="white-color">Analista</th>
                         <th className="white-color">Observaciones</th>
                         </tr>
                     </thead>
                     <tbody className="table-body">
-                       {dataTecnico.map( data => (
-                        <tr key={data.id_reg_data_tec}>
-                            <td>{data.id_reg_data_tec}</td>
-                            <td>{getMes(data.created_at)}</td>
-                            <td>{getDia(data.created_at)}</td>
-                            <td>{"----"}</td>
-                            <td>{obtenerZona(data.caja_nap)}</td>
-                            <td>{data.num_producto}</td>
-                            <td>
-                            {editando === data.id ? (
-                            <input
-                            type="text"
-                            value={datosEditados[data.id]?.caja_nap || data.caja_nap}
-                            onChange={(e) =>
-                            setDatosEditados({
-                            ...datosEditados,
-                            [data.id]: { ...datosEditados[data.id], caja_nap: e.target.value },
-                            })
-                            }
-                            />
-                            ) : (
-                            data.caja_nap
-                            )}
-                            </td>
-                            <td>{obtenerDataTecnicoAnterior(data.num_producto)}</td>
-                            <td>{getHora(data.created_at)}</td>
-                            <td>{data.estadp_odt}</td>
-                            <td>{data.obasrvaciones}</td>
-                            <td>{"----"}</td>
-                            <td>{data.person.nombre + " "+ data.person.apellidos}</td>
-                            <td>
-                                {editando === data.id ? (
-                                <div>
-                                    <button className='stylesButoon'  onClick={() => manejarGuardar(data.id)}>Guardar</button>
-                                    <button className='stylesButoon'  onClick={manejarCancelar}>Cancelar</button>
-                                </div>  
-                                ) : (
-                                    <button className='stylesButoon'  onClick={() => manejarEdicion(data.id)}>Editar</button>
-                                )}
-                            </td>
-                            
-                        </tr>
-                       ))}
+                       
                     </tbody>
                 </table>
             
         </div>
         <br></br>
-        <div>
-            
-            
-            <div>
-                <p className="m-2"><b>Gráfico de Líneas: Cantidad de Datos por Mes</b></p>
-                <div className="graf" style={{ width: "450px", height: "230px",}}>
-                    <Line data={midata} />
-                </div>
-            </div>
-        </div>
       </div>  
     );
 };
