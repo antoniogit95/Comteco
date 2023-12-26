@@ -56,5 +56,9 @@ public class DataTecnicoController {
         return dataTecnicoService.saveDataTecnico(dataTecnicoRequest);
     }
     
+    @GetMapping("/")
+    public ResponseEntity<DataTecnicoResponse> getCambiosPos(){
+
+    }
     
 }
