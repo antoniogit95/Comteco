@@ -26,7 +26,8 @@ export const Report = () => {
                 {activeReport === "map" && <TablesMapRoutes/>}
             </div>
         </div>
-        {/**<SaveDataTecnico />*/}
+        {/**<SaveDataTecnico />*/
+    }
         
     </>
     );
