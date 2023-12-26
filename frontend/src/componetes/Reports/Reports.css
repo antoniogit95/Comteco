@@ -1,84 +1,102 @@
-.excel-table-container {
-  margin: 20px;
-}
-
-.excel-table {
-  border-collapse: collapse;
-  width: 400px;
-}
-
-.excel-table th, .excel-table td {
-  border: 1px solid #000000;
-  padding: 10px;
-  text-align: center;
-}
-
-.excel-table th {
-  background-color: rgba(225, 0, 0, 0.3);
-  font-weight: bold;
-}
-
-.white-color {
-  color: #f2f2f2;
-}
-
-.stylessButoon {
-  width: 70px;
-  display: flex;
-  justify-content: left;
-  padding: 10px;
-  background-color: #eb2929;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer; 
-  transition: .3s;
-}
-
-
-.styleBusquedas{
-  position: relative;
-  padding: 10px;
+.stylesTableArchiveJose{
   width: 100%;
-  top: 60px;
-  overflow: auto;
-  box-sizing: border-box;
+}
+.stylesContentDatas{
+    border: 2px solid black;
+}
+.excel-table-container {
+    margin: 20px;
+  }
+  
+  .stylesHead{
+    width: 100%;
+    background: #c91b0e;
+    position: sticky;
+    top: 0;
+  }
+  
+  .excel-table th, .excel-table td {
+    border: 1px solid #fffefe;
+    padding: 10px;
+    text-align: center;
+  }
+ 
+  .stylesTh-Td{
+    padding: 8px;
+  }
+
+  .stylesBody{
+    overflow-y: auto;
+  }
+
+  .excel-table th {
+    background-color: rgba(225, 0, 0, 0.3);
+    font-weight: bold;
+  }
+  
+  .white-color {
+    color: #f2f2f2;
+    width: 200px;
+  }
+  
+  .tables-container {
+    display: flex;
+    gap: 20px; /* Espacio entre las tablas */
+  }
+
+  .styleContentTable{
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 15px;
+  }
+  
+  .table-header {
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8;
+    z-index: 1;
+    background-color: #c91b0e;
+    /* Otros estilos de encabezado */
+  }
+  
+  .table-body {
+    background-color: rgb(30, 31, 31);
+    width: min-content;
+    /* Estilos para el cuerpo de la tabla (opcional) */
+    /* Otros estilos de cuerpo */
+  }
+  
+  .first-column {
+    background-color: #007bff; /* Cambia esto al color de fondo que desees */
+    color: white;
+  }
+
+  .even-row {
+    background-color: #f2f2f2; /* Color para filas pares */
+  }
+  
+  .odd-row {
+    background-color: #ffffff; /* Color para filas impares */
+  }
+
+  .stylesButoon2 {
+    width: 70px;
+    display: flex;
+    justify-content: left;
+    padding: 10px;
+    background-color: #eb2929;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: .3s;
 }
 
-
-.table-container {
-  max-height: 375px; /* Establece la altura deseada */
-  width: min-content;
-  overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
-  border: #c91b0e;
-}
-
-.table-header {
-  /* Estilos para el encabezado de la tabla (opcional) */
-  background-color: #c91b0e;
-  /* Otros estilos de encabezado */
-}
-
-.table-body {
-  background-color: azure;
-  width: min-content;
-  /* Estilos para el cuerpo de la tabla (opcional) */
-  /* Otros estilos de cuerpo */
-}
-
-.even-row {
-  background-color: #f2f2f2; /* Color para filas pares */
-}
-
-.odd-row {
-  background-color: #ffffff; /* Color para filas impares */
-}
-
-.graph{
-  width:"450px";
-  height:"230px"; 
-}
-
-.graf{
+.autoCompleteBox{
   background-color: #D6D6D6;
+  width: 200px;
+}
+
+.stylesSugesstionNaps{
+  height: 30px;
 }

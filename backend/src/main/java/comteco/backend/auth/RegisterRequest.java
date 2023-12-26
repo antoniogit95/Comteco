@@ -2,6 +2,7 @@ package comteco.backend.auth;
 
 import java.sql.Date;
 
+import comteco.backend.user.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +25,5 @@ public class RegisterRequest {
     private Date fecha_nacimiento;
     private String email;
     private String telefono;
+    private Role role;
 }

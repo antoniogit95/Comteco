@@ -4,7 +4,6 @@ import comteco.backend.sesion.SesionService;
 import comteco.backend.jwt.JwtService;
 import comteco.backend.person.Person;
 import comteco.backend.person.PersonRepository;
-import comteco.backend.user.Role;
 import comteco.backend.user.User;
 import comteco.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -88,7 +87,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .status(false)
-                .role(Role.ADMIN)
+                .role(request.getRole())
                 .created_at(getTimestamp())
                 .update_at(getTimestamp())
                 .person(person)

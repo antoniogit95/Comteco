@@ -16,9 +16,15 @@ export const Home = () => {
             case "SOPORTE":
                 return buttonsSoporte();
             default:
-                setError(nameErrors);
+                return sinTrabajo();
                 break;
         }
+    }
+
+    function sinTrabajo(){
+        return (<>
+            No tienes trabajo asignado...
+        </>)
     }
 
     function buttonsAdmin(){
@@ -32,6 +38,7 @@ export const Home = () => {
     function buttonsSoporte(){
         return (<div className="stylesContentButtonsBig">
             <Button name="Registrar" link="/registrar"/>
+            <Button name="Reportes" link="/reportes"/>
         </div>)
     }
     
