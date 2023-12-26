@@ -22,6 +22,30 @@
   color: #f2f2f2;
 }
 
+.stylessButoon {
+  width: 70px;
+  display: flex;
+  justify-content: left;
+  padding: 10px;
+  background-color: #eb2929;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer; 
+  transition: .3s;
+}
+
+
+.styleBusquedas{
+  position: relative;
+  padding: 10px;
+  width: 100%;
+  top: 60px;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+
 .table-container {
   max-height: 375px; /* Establece la altura deseada */
   width: min-content;
