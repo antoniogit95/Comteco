@@ -1,7 +1,7 @@
 import './RegistrarPersonal.css';
 import React from "react";
 import { useState } from 'react';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import axios from 'axios';
 import { URL_API_public } from '../../../providerContext/EndPoint';
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +33,13 @@ export const RegistrarPersonal = () => {
     function emailExistente(dato){
         return false;
     }
+
+    const sugesRole = [
+        {id: 1, role: "ADMIN"},
+        {id: 2, role: "SOPORTE"},
+        {id: 3, role: "EQUIPOS"},
+        {id: 4, role: "SUPERVISOR"}
+    ];
 
     return(
         <div className='stylesRegistroPersonal'>
@@ -140,7 +147,8 @@ export const RegistrarPersonal = () => {
                                 item: valores.item,
                                 fecha_nacimiento: valores.fecha_nacimiento,
                                 email: valores.email,
-                                telefono: valores.telefono
+                                telefono: valores.telefono,
+                                role: valores.nombre_cargo
                             });
                             toast.success('Usuario registrado con éxito', {
                                 position: 'top-right',
@@ -253,16 +261,19 @@ export const RegistrarPersonal = () => {
                     </div>
                     <div>
                         <label htmlFor='nombre_cargo'>Cargo</label>
-                        <input 
+                        <Field
+                            as='select'
                             className='stylesInput'
-                            type='text'
-                            id='nombre_cargo'    
+                            id='nombre_cargo'
                             name='nombre_cargo'
-                            placeholder='escribe tu cargo'
-                            value={values.nombre_cargo}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
+                         >
+                            <option value='' disabled>Selecciona un cargo</option>
+                                {sugesRole.map((cargo) => (
+                                    <option key={cargo.id} value={cargo.role}>
+                                        {cargo.role}
+                                    </option>
+                                ))}
+                        </Field>
                         {touched.nombre_cargo && errors.nombre_cargo && <div className='styleErrores'>{errors.nombre_cargo}</div>}
                     </div>
                     <div>
