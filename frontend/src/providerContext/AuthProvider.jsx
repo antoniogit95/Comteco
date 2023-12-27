@@ -1,4 +1,4 @@
-import React, {useContext, useState, createContext, useEffect} from "react";
+import React, {useContext, useState, createContext, useEffect, useRef} from "react";
 import axios from "axios";
 import { URL_API_private } from "./EndPoint";
 
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) =>{
     const [accessToken, setAccessToekn] = useState("");
     const [timeOut, setTimeOut] = useState("");
     const endPoint = URL_API_private+"/refresh_token"
-
+    const lastRefreshTime = useRef({ current: Date.now() });
     const INACTIVITY_TIMEOUT = 31 * 60 * 1000; // 31 minutos en milisegundos
     const REFRESH_INTERVAL = 10*60*1000 //20 en milisegundos
 
@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }) =>{
 
     useEffect(() => {
         const handleUserActivity = async () => {
+            const now = Date.now();
             if(getAccessToken() && now - lastRefreshTime.current >= REFRESH_INTERVAL){
                 try {
                     const username  = JSON.parse(localStorage.getItem('user_data')).username;
