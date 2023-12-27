@@ -15,6 +15,7 @@ import { Footer } from "../componetes/Footer/Footer";
 
 
 export const Rutas = createBrowserRouter([
+  
   { path: "/", element: <Login /> },
   { path:'/login', element:<Login /> },
   { path:'/singauth', element:<SingAuth /> },
@@ -28,4 +29,5 @@ export const Rutas = createBrowserRouter([
       { path:'/equipos', element:<Equipos/> },
     ]
   },
+  
 ]); 

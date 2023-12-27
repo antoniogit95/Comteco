@@ -8,13 +8,39 @@ const AuthContext  = createContext({
 })
 
 export const AuthProvider = ({ children }) =>{
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        const storedData = localStorage.getItem("user_data");
+
+        return storedData ? true : false;
+    });
     const [accessToken, setAccessToekn] = useState("");
     const [timeOut, setTimeOut] = useState("");
 
     function getAccessToken(){
         return accessToken;
     }
+
+    useEffect(() => {
+        const checkTokenExpiration = () => {
+            if (timeOut && new Date() > timeOut) {
+                handleLogout();
+            }
+        };
+    
+        checkTokenExpiration();
+        const intervalId = setInterval(checkTokenExpiration, 5000); // Verificar cada segundo
+    
+        return () => {
+            clearInterval(intervalId);
+        };
+
+    }, [timeOut]);
+
+    const handleLogout = () => {
+        setAccessToekn("");
+        localStorage.removeItem('user_data');
+        setIsAuthenticated(false);
+    };
 
     function deletToken(){
         setAccessToekn("");
@@ -38,10 +64,10 @@ export const AuthProvider = ({ children }) =>{
         localStorage.setItem("user_data", JSON.stringify({
             token: token,
             username: decodedToken.sub,
-            role: decodedToken.role
+            role: decodedToken.role,
         }));
         setIsAuthenticated(true);
-        setTimeOut(decodedToken)
+        setTimeOut(new Date(decodedToken.exp * 1000));
     }
 
     return <AuthContext.Provider value={{ isAuthenticated, getAccessToken, saveToken, deletToken }}>
