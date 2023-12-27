@@ -6,15 +6,11 @@ import './Reports.css'
 
 export const Reports = () => {
    
-   
-    const [mostrarColumnas, setMostrarColumnas] = useState(true);
     const endPoint = URL_API_private+"/data_tecnico";
-    const endPointFdt = URL_API_private+"/fdt/getzone";
     const [dataTecnico, setDataTecnico] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
     const [termino, setTermino] = useState('');
-    const [dataPorMes, setDataPorMes] = useState({}); 
 
     useEffect(() => {
         getAllDataTecnico();
@@ -56,7 +52,69 @@ export const Reports = () => {
         return dataObjest.getHours()+":"+minute;
     }
 
-    
+    const filtrarDatos = () => {
+        switch (filtro) {
+            case 'posicicion':
+                cambiosPosicion();
+                break;
+            case 'nap':
+                cambiosNap();
+                break;
+            case 'fdt':
+                cambiosFdt();
+                break;
+            case 'odf':
+                cambiosOdf();
+                break;
+            default:
+                break;
+        }
+    }
+
+    const cambiosPosicion = async () => {
+        console.log("Obteniendo los cambios de la posicion..")
+        try {
+            const response = await axios.get(endPoint+"/cambios_pos", config)
+            setDataTecnico(response.data);
+            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const cambiosNap = async () => {
+        console.log("Obteniendo los cambios de la posicion..")
+        try {
+            const response = await axios.get(endPoint+"/cambios_nap", config)
+            setDataTecnico(response.data);
+            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const cambiosFdt = async () => {
+        console.log("Obteniendo los cambios de la posicion..")
+        try {
+            const response = await axios.get(endPoint+"/cambios_fdt", config)
+            setDataTecnico(response.data);
+            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const cambiosOdf = async () => {
+        console.log("Obteniendo los cambios de la posicion..")
+        try {
+            const response = await axios.get(endPoint+"/cambios_odf", config)
+            setDataTecnico(response.data);
+            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     return (
         <div>
             <div classname='styleBusquedas'>
@@ -86,13 +144,12 @@ export const Reports = () => {
             <div>
                 <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
                     <option value="nombre">Dato tecnico</option>
-                    <option value="producto">Posicion</option>
-                    <option value="EstadoDt">NAP</option>
-                    <option value="CajaNap">FDT</option>
-                    <option value="fecha">ODF</option>D
+                    <option value="posicicion">Posicion</option>
+                    <option value="nap">NAP</option>
+                    <option value="fdt">FDT</option>
+                    <option value="odf">ODF</option>D
                 </select>
-                <br></br>
-                <button className="stylesButoon2" onClick={() => buscarDatos()}>Buscar</button>
+                <button className="stylessButoon" onClick={() => filtrarDatos()}>Buscar</button>
             </div> 
         <br></br>
         <div className="styleContentTable">
