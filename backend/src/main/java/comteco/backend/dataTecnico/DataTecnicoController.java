@@ -69,14 +69,14 @@ public class DataTecnicoController {
     }
 
     @GetMapping("/cambios_fdt")
-    public ResponseEntity<List<DataTecnicoResponse>> getAllCambiosFd(){
-        List<DataTecnicoResponse> responses = dataTecnicoService.getAllCambiosFdt();
+    public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosFd(){
+        List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosFdt();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
     @GetMapping("/cambios_odf")
-    public ResponseEntity<List<DataTecnicoResponse>> getAllCambiosOdf(){
-        List<DataTecnicoResponse> responses = dataTecnicoService.getAllCambiosOdf();
+    public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosOdf(){
+        List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosOdf();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 }
