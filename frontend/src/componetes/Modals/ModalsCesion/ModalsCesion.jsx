@@ -43,10 +43,10 @@ export const ModalsCesion = ({ person, show, onHide }) => {
 
     return (
         <Modal show={show} onHide={onHide} centered>
-            <Modal.Header closeButton>
+            <Modal.Header closeButton className='mHeader2'>
                 <Modal.Title> Historial de Conexion del Usuario: {person && person.nombre}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className='mBody2'>
                 {cesion.map((cesion) => (<>
                     <div className='stylesModalCesionList' key={cesion.id_person}>
                         <p>{getDataPlusHour(cesion.createdAt) +" - "+ getDataPlusHour(cesion.finalyAt)}</p>

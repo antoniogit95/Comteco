@@ -24,10 +24,10 @@ export const ModalPerson = ({ person, show, onHide, onChange }) => {
 
     return (
         <Modal show={show} onHide={onHide} centered>
-            <Modal.Header closeButton>
+            <Modal.Header closeButton className='mheader'>
                 <Modal.Title>Datos de la Persona</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className='mBody'>
                 <p>Item: {person.item}</p>
                 <p>Nombre: {person.nombre+ " " + person.apellidos}</p>
                 <p>Cédula de Identidad: {person.celula_identidad}</p>
@@ -39,7 +39,7 @@ export const ModalPerson = ({ person, show, onHide, onChange }) => {
                 <p>Email: {person.email}</p>
                 <p>Grupo de Trabajo: {"sin grupo de trabajo"}</p>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className='mFooter'>
                 {person.status?" ": ( <button className = "stylesButoonModal" variant="secondary" onClick={onChange}>
                     Validar
                 </button>) }
