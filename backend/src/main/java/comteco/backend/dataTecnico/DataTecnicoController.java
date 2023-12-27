@@ -56,9 +56,27 @@ public class DataTecnicoController {
         return dataTecnicoService.saveDataTecnico(dataTecnicoRequest);
     }
     
-    @GetMapping("/")
-    public ResponseEntity<DataTecnicoResponse> getCambiosPos(){
-
+    @GetMapping("/cambios_pos")
+    public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosPos(){
+        List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosPos();
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
     
+    @GetMapping("/cambios_nap")
+    public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosNap(){
+        List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosNap();
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping("/cambios_fdt")
+    public ResponseEntity<List<DataTecnicoResponse>> getAllCambiosFd(){
+        List<DataTecnicoResponse> responses = dataTecnicoService.getAllCambiosFdt();
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping("/cambios_odf")
+    public ResponseEntity<List<DataTecnicoResponse>> getAllCambiosOdf(){
+        List<DataTecnicoResponse> responses = dataTecnicoService.getAllCambiosOdf();
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
 }
