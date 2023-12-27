@@ -118,4 +118,103 @@ public class DataTecnicoService {
         return responses;
     }
 
+    public List<DatoTecnicoReportResponse> getAllCambiosPos() {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            if(dt.getAntiguaPosicion().getNap().getCod().equals(dt.getNuevaPosicion().getNap().getCod()) && !dt.getAntiguaPosicion().getCod().equals(dt.getNuevaPosicion().getCod())){
+                DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                .id(dt.getId())
+                .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                .producto(dt.getProducto())
+                .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                .createdAt(dt.getCreated_at())
+                .updateAt(dt.getUpdate_at())
+                .build();
+                responses.add(dtrr);
+            }
+        }
+        return responses;
+    }
+
+    public List<DatoTecnicoReportResponse> getAllCambiosNap() {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            if(dt.getAntiguaPosicion().getNap().getNap() == null || dt.getNuevaPosicion().getNap().getNap() == null){
+            }else{
+                String anCodFdt = dt.getAntiguaPosicion().getNap().getOdf()+"-"+dt.getAntiguaPosicion().getNap().getFdt();
+                String nuCodFdt = dt.getNuevaPosicion().getNap().getOdf()+"-"+dt.getNuevaPosicion().getNap().getFdt();
+                String anCodNap = dt.getAntiguaPosicion().getNap().getNap();
+                String nuCodNap = dt.getNuevaPosicion().getNap().getNap();
+                if(anCodFdt.equals(nuCodFdt) && !anCodNap.equals(nuCodNap)){
+                    DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                    .id(dt.getId())
+                    .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                    .producto(dt.getProducto())
+                    .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                    .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                    .createdAt(dt.getCreated_at())
+                    .updateAt(dt.getUpdate_at())
+                    .build();
+                    responses.add(dtrr);
+                }
+            }
+        }
+        return responses;
+    }
+
+    public List<DatoTecnicoReportResponse> getAllCambiosFdt() {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            if(dt.getAntiguaPosicion().getNap().getNap() == null || dt.getNuevaPosicion().getNap().getNap() == null){
+            }else{
+                String anCodOdf = dt.getAntiguaPosicion().getNap().getOdf();
+                String nuCodOdf = dt.getNuevaPosicion().getNap().getOdf();
+                String anCodFdt = dt.getAntiguaPosicion().getNap().getFdt();
+                String nuCodFdt = dt.getNuevaPosicion().getNap().getFdt();
+                if(anCodOdf.equals(nuCodOdf) && !anCodFdt.equals(nuCodFdt)){
+                    DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                    .id(dt.getId())
+                    .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                    .producto(dt.getProducto())
+                    .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                    .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                    .createdAt(dt.getCreated_at())
+                    .updateAt(dt.getUpdate_at())
+                    .build();
+                    responses.add(dtrr);
+                }
+            }
+        }
+        return responses;
+    }
+
+    public List<DatoTecnicoReportResponse> getAllCambiosOdf() {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            if(dt.getAntiguaPosicion().getNap().getNap() == null || dt.getNuevaPosicion().getNap().getNap() == null){
+            }else{
+                String anCodOdf = dt.getAntiguaPosicion().getNap().getOdf();
+                String nuCodOdf = dt.getNuevaPosicion().getNap().getOdf();
+                if(!anCodOdf.equals(nuCodOdf)){
+                    DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                    .id(dt.getId())
+                    .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                    .producto(dt.getProducto())
+                    .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                    .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                    .createdAt(dt.getCreated_at())
+                    .updateAt(dt.getUpdate_at())
+                    .build();
+                    responses.add(dtrr);
+                }
+            }
+        }
+        return responses;
+    }
+
 }

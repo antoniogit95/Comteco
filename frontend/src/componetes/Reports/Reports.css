@@ -100,3 +100,18 @@
 .stylesSugesstionNaps{
   height: 30px;
 }
+
+
+.stylesButoon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: #eb2929;
+  color: white;
+  position:inherit;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer; 
+  transition: .3s;
+}
