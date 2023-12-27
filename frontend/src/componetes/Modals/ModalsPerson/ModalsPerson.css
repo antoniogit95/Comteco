@@ -14,3 +14,15 @@
   .stylesButoonModal:hover {
     background-color: rgb(133, 11, 11);
   }
+  .mheader{
+    background-color: #3A3F49;
+    color: #D3D6E0;
+    border-color: #eb2929;
+  }
+  .mBody{
+    background-color: #3A3F49;
+  }
+  .mFooter{
+    background-color: #3A3F49;
+    border-color: #eb2929;
+  }

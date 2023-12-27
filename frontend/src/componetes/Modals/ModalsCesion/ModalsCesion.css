@@ -2,3 +2,14 @@
     display: flex;
     flex-direction: row;
 }
+.mHeader2{
+    background-color: #3A3F49;
+    color: #D3D6E0;
+    border-color: #eb2929;   
+}
+
+.mBody2{
+    background-color: #3A3F49;
+    border-color: #eb2929;
+}
+

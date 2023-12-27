@@ -80,7 +80,7 @@ export const Reports = () => {
                     //value = {fecha_Final}
                 ></input>
 
-                <button className="stylessButoon" onClick={() => buscarDatos()}>Buscar</button>
+                <button className="stylesButoon2" onClick={() => buscarDatos()}>Buscar</button>
             </div>
             <br></br>
             <div>
@@ -91,6 +91,8 @@ export const Reports = () => {
                     <option value="CajaNap">FDT</option>
                     <option value="fecha">ODF</option>D
                 </select>
+                <br></br>
+                <button className="stylesButoon2" onClick={() => buscarDatos()}>Buscar</button>
             </div> 
         <br></br>
         <div className="styleContentTable">
