@@ -103,4 +103,20 @@ public class AuthService {
         LocalDateTime now = LocalDateTime.now();
         return Timestamp.valueOf(now);
     }
+
+    public AuthResponse refreshToken(String username) {
+        try {
+            UserDetails user = userRepository.findByUsername(username).orElseThrow();
+            String token = jwtService.getToken(user);
+            cesionService.updateCesion((User) user);
+            return AuthResponse.builder()
+                .token(token)
+                .message("refres token, con exito.")
+                .build();
+        } catch (Exception e) {
+            return AuthResponse.builder()
+                .message("Error:" +e)
+                .build();
+        }
+    }
 }
