@@ -154,7 +154,7 @@ const ExcelTable = ({ producto }) => {
           )}
       </tbody>
     </table>
-    {showAdditionalTable && <TablaAdicional producto={dataProduct[0].nap} />}
+    {showAdditionalTable && <TablaAdicional nap={dataProduct[0].nap} product={producto}/>}
     <ToastContainer/>
     </div>
   );

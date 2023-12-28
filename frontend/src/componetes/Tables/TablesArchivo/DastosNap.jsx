@@ -3,10 +3,10 @@ import { URL_API_private } from '../../../providerContext/EndPoint';
 import './TableArchive.css'
 import axios from 'axios';
 
-const ExcelTablenap = (nap) => {
+const ExcelTablenap = ({product, nap}) => {
   const [dataProduct, setDatos] = useState([]);
   const [rescatarDatos, setRescatarDatos] = useState([])
-  const endPointNap = URL_API_private+"/servicio";
+  const endPointNap = URL_API_private+"/servicio/producto/"+product;
   const token  = JSON.parse(localStorage.getItem('user_data')).token
 
   useEffect( () => {
@@ -22,11 +22,14 @@ const config = {
 const getAllDatos = async () => {
     try {
 
-        console.log(endPointNap)
+        console.log("Entpoint:  "+endPointNap);
+        console.log("token:  "+token);
+        
         const response = await axios.get(endPointNap, config);
         setDatos(response.data);
         setRescatarDatos(response.data);
         console.log("datos rescatados exitosamente")
+        console.log(response.data)
     } catch (error) {
         console.log('Error al obtener datos:', error.response);
         console.log('Error completo:', error);

@@ -21,9 +21,16 @@ public class ServicioController {
     
     private ServicioService servicioService;
 
+    @GetMapping("/producto/{producto}")
+    public ResponseEntity<List<ServicioResponse>> getAllServiciosByProduct(@PathVariable Long producto){
+        System.out.println("Producto recibido: " + producto);
+        List<ServicioResponse> servicios = servicioService.getAllServiciosByProduct(producto);
+        return new ResponseEntity<>(servicios, HttpStatus.OK);
+    }
+
     @GetMapping
-    public ResponseEntity<List<Servicio>> getAllServicios() {
-        List<Servicio> servicios = servicioService.getAllServicios();
+    public ResponseEntity<List<ServicioResponse>> getAllServicios() {
+        List<ServicioResponse> servicios = servicioService.getAllServicios();
         return new ResponseEntity<>(servicios, HttpStatus.OK);
     }
 

@@ -36,13 +36,21 @@ public class SesionService {
     public Sesion saveCesion(User user){
         try {
             LocalDateTime finalyAt = LocalDateTime.now().plusMinutes(60);
-            Sesion sesion = Sesion.builder()
-                .createdAt(getTimestamp())
-                .finalyAt(Timestamp.valueOf(finalyAt))
-                .user(user)
-                .build();
-            sesionRepository.save(sesion);
-            return sesion;  
+            Optional<Sesion> seOptional = sesionRepository.findByFinalyAtAfterAndUser(getTimestamp(), user);
+            if(seOptional.isPresent()){
+                Sesion sesion = seOptional.get();
+                sesion.setFinalyAt(Timestamp.valueOf(finalyAt));
+                sesionRepository.save(sesion);
+                return sesion;
+            }else{
+                Sesion sesion = Sesion.builder()
+                    .createdAt(getTimestamp())
+                    .finalyAt(Timestamp.valueOf(finalyAt))
+                    .user(user)
+                    .build();
+                sesionRepository.save(sesion);
+                return sesion;
+            }  
         } catch (Exception e) {
             return null;
         }
@@ -56,12 +64,22 @@ public class SesionService {
     public Sesion updateCesion(User user){
         try {
             LocalDateTime finalyAt = LocalDateTime.now().plusMinutes(60);
-            Sesion cesion = Sesion.builder()
-                .finalyAt(Timestamp.valueOf(finalyAt))
-                .user(user)
-                .build();
-            sesionRepository.save(cesion);
-            return cesion;  
+            Optional<Sesion> seOptional = sesionRepository.findByFinalyAtAfterAndUser(getTimestamp(), user);
+            if(seOptional.isPresent()){
+                Sesion sesion = seOptional.get();
+                sesion.setFinalyAt(Timestamp.valueOf(finalyAt));
+                sesionRepository.save(sesion);
+                return sesion;
+            }else{
+                Sesion sesion = Sesion.builder()
+                    .createdAt(getTimestamp())
+                    .finalyAt(Timestamp.valueOf(finalyAt))
+                    .user(user)
+                    .build();
+                sesionRepository.save(sesion);
+                return sesion;
+            }
+              
         } catch (Exception e) {
             return null;
         }
