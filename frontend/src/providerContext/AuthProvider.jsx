@@ -18,9 +18,10 @@ export const AuthProvider = ({ children }) =>{
     const [accessToken, setAccessToekn] = useState("");
     const [timeOut, setTimeOut] = useState("");
     const endPoint = URL_API_private+"/refresh_token"
+    const [refrestTime, setRefreshTime] = useState(Date.now());
     const lastRefreshTime = useRef({ current: Date.now() });
     const INACTIVITY_TIMEOUT = 31 * 60 * 1000; // 31 minutos en milisegundos
-    const REFRESH_INTERVAL = 10*60*1000 //20 en milisegundos
+    const REFRESH_INTERVAL = 1*60*1000 //20 en milisegundos
 
     function getAccessToken(){
         return accessToken;
@@ -79,19 +80,31 @@ export const AuthProvider = ({ children }) =>{
     }, [timeOut]);
 
     useEffect(() => {
-        const handleUserActivity = async () => {
-            const now = Date.now();
-            if(getAccessToken() && now - lastRefreshTime.current >= REFRESH_INTERVAL){
-                try {
-                    const username  = JSON.parse(localStorage.getItem('user_data')).username;
-                    const response = await axios.post(endPoint, {username}, {headers: {
-                        'Authorization': `Bearer ${getAccessToken()}`,
-                    }},);
-                    saveToken(response.data)
-                } catch (error) {
-                    console.error('Error al obtener un nuevo token:', error);   
-                }
-                lastRefreshTime.current = now;
+        const handleUserActivity = async (e) => {
+            if(accessToken){
+                const now = Date.now();
+                console.log("Actualizar token: " + (now - refrestTime)+" >= " + REFRESH_INTERVAL);
+                if(isAuthenticated && now - refrestTime >= REFRESH_INTERVAL && accessToken){
+                    setRefreshTime(now);
+                    try {
+                        e.preventDefault();
+                        const username  = JSON.parse(localStorage.getItem('user_data')).username;
+                        console.log(username);
+                        console.log(endPoint);
+                        console.log(accessToken);
+                        const response = await axios.post(endPoint, {
+                                username: username,
+                                password: "---------"},
+                            {headers: {
+                                'Authorization': `Bearer ${accessToken}`,
+                        }},);
+                        console.log("Token Actualizado exitosamente: "+ response.data);
+                        saveToken(response.data.token)
+                    } catch (error) {
+                        console.error('Error al obtener un nuevo token:', error);   
+                    }
+                    setRefreshTime(now);
+                }   
             }
         };
     

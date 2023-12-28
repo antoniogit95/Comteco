@@ -53,6 +53,7 @@ public class AuthService {
             cesionService.saveCesion((User) user);
             return ResponseEntity.ok(AuthResponse.builder()
                 .token(token)
+                .message("Token con exito")
                 .build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(AuthResponse.builder()

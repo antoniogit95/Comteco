@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RefreshController {
     
     private AuthService authService;
-    @PostMapping("refresh_token")
-    public ResponseEntity<AuthResponse> refreshToken(@RequestBody String username) {
-        AuthResponse response = authService.refreshToken(username);
+
+    @PostMapping("/refresh_token")
+    public ResponseEntity<AuthResponse> refreshToken(@RequestBody LoginRequest login) {
+        System.out.println("Entrado a refrscar el toquen:  "+login.getUsername());
+        AuthResponse response = authService.refreshToken(login.getUsername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
