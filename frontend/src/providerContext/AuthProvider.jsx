@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) =>{
     const [refrestTime, setRefreshTime] = useState(Date.now());
     const lastRefreshTime = useRef({ current: Date.now() });
     const INACTIVITY_TIMEOUT = 31 * 60 * 1000; // 31 minutos en milisegundos
-    const REFRESH_INTERVAL = 1*60*1000 //20 en milisegundos
+    const REFRESH_INTERVAL = 10*60*1000 //10 en milisegundos
 
     function getAccessToken(){
         return accessToken;
@@ -80,18 +80,17 @@ export const AuthProvider = ({ children }) =>{
     }, [timeOut]);
 
     useEffect(() => {
+        let isRefreshing = false;
         const handleUserActivity = async (e) => {
-            if(accessToken){
+            
+            if(accessToken && !isRefreshing){
                 const now = Date.now();
-                console.log("Actualizar token: " + (now - refrestTime)+" >= " + REFRESH_INTERVAL);
                 if(isAuthenticated && now - refrestTime >= REFRESH_INTERVAL && accessToken){
                     setRefreshTime(now);
+                    isRefreshing = true;
                     try {
                         e.preventDefault();
                         const username  = JSON.parse(localStorage.getItem('user_data')).username;
-                        console.log(username);
-                        console.log(endPoint);
-                        console.log(accessToken);
                         const response = await axios.post(endPoint, {
                                 username: username,
                                 password: "---------"},
@@ -102,8 +101,9 @@ export const AuthProvider = ({ children }) =>{
                         saveToken(response.data.token)
                     } catch (error) {
                         console.error('Error al obtener un nuevo token:', error);   
+                    }finally{
+                        isRefreshing = false; 
                     }
-                    setRefreshTime(now);
                 }   
             }
         };
