@@ -109,6 +109,7 @@ public class AuthService {
         try {
             UserDetails user = userRepository.findByUsername(username).orElseThrow();
             String token = jwtService.getToken(user);
+            System.out.println("------------------------ENTRANDO A ACTUALIZAR LA SESION ...: ");
             cesionService.updateCesion((User) user);
             return AuthResponse.builder()
                 .token(token)
