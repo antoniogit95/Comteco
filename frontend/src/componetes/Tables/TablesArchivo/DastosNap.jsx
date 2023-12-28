@@ -1,18 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { URL_API_private } from '../../../providerContext/EndPoint';
 import './TableArchive.css'
-const ExcelTablenap = () => {
-  const data = [
-    {
-      Actividades: 'Actividad1',
-      Componentes: 'Componente1',
-      'Estado Componentes': 'Activo',
-      'Clase servicio': 'Clase1',
-      'Numero servicio': '123456',
-      'Estado numero servicio': 'Activo',
-      'Serial (MAC ADDRESS)': 'ABC123',
-    },
-    // Puedes agregar más filas según sea necesario
-  ];
+import axios from 'axios';
+
+const ExcelTablenap = (nap) => {
+  const [dataProduct, setDatos] = useState([]);
+  const [rescatarDatos, setRescatarDatos] = useState([])
+  const endPointNap = URL_API_private+"/servicio";
+  const token  = JSON.parse(localStorage.getItem('user_data')).token
+
+  useEffect( () => {
+    getAllDatos();
+}, [])
+
+const config = {
+    headers:{
+        Authorization: `Bearer ${token}`,
+    }
+}
+
+const getAllDatos = async () => {
+    try {
+
+        console.log(endPointNap)
+        const response = await axios.get(endPointNap, config);
+        setDatos(response.data);
+        setRescatarDatos(response.data);
+        console.log("datos rescatados exitosamente")
+    } catch (error) {
+        console.log('Error al obtener datos:', error.response);
+        console.log('Error completo:', error);
+    }
+    
+}
+
+
+
+  console.log("este es la nap recibida :", nap);
+  console.log("este es ek end point: ", endPointNap);
+  console.log("este es el dato: ", dataProduct);
+
 
   return (
     <table className='excel-table'>
