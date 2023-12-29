@@ -10,7 +10,15 @@ export const Reports = () => {
     const [dataTecnico, setDataTecnico] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
-    const [termino, setTermino] = useState('');
+    const [datosTranspuestos, setDatosTranspuestos] = useState([]);
+    const [datos, setDatos] = useState([]);
+    const [datosPlanes, setDatosPlanes] = useState([]);
+    const [rescatarDatos, setRescatarDatos] = useState([])
+    const [select, setSelectd] = useState("");
+    const [buscar, setBuscar] = useState("");
+    const endPointPlanes = URL_API_private+"/plancomercial"
+
+
 
     useEffect(() => {
         getAllDataTecnico();
@@ -115,15 +123,65 @@ export const Reports = () => {
         }
     }
 
+    const filtrar = (terminoBusqueda) => {
+        console.log(terminoBusqueda +" - " + "mostrando algo")
+        if(terminoBusqueda !== ''){
+            console.log("Filtrando...");
+            const resultadoBusqueda = rescatarDatos.filter((elemento) => {
+            });
+            console.log("filtrado con exito");
+            setDatos(resultadoBusqueda);
+            // Transforma los datos para mostrarlos en una tabla transpuesta
+            
+            console.log("poniendo los datos filtrados a la tabla:", datos);//hasta aqui funciona
+            const transpuestos = resultadoBusqueda.reduce((acc, dato) => {
+                Object.keys(dato).forEach(key => {
+                    if (!acc[key]) {
+                        acc[key] = [];
+                    }
+                    // Evita valores duplicados en la misma clave
+                    if (!acc[key].includes(dato[key])) {
+                        acc[key].push(dato[key]);   
+                    }
+                });
+                console.log("exito");
+                return acc;
+        }, {});
+
+        const transpuestosArray = {};
+        Object.keys(transpuestos).forEach(key => {
+            transpuestosArray[key] = Array.from(transpuestos[key]);
+        });
+
+        setDatosTranspuestos(Object.entries(transpuestos));
+      
+        const datosPlanesFiltrados = datosPlanes.filter((datop) => {
+            const velocidadEnDatop = datop.codLab;
+            
+            return resultadoBusqueda.some((dato) => {
+                const primerosCuatro = dato.clase_SERVICIO.slice(0, 4);
+                //console.log('primeros cuatro',primerosCuatro);
+                const velocidadEnDatos = `${dato.cod_PLAN_COMERCIAL}-${primerosCuatro}`;
+                //console.log('velocidad en datos',velocidadEnDatop);
+                return velocidadEnDatos === velocidadEnDatop;
+            });
+        });
+        }
+
+    }
+
+
     return (
         <div>
             <div classname='styleBusquedas'>
                 <input 
                     type="text"
-                    value={termino}
-                    onChange={(e) => setTermino(e.target.value)}
-                    placeholder="Ingrese el término de búsqueda"
+                    placeholder="Ingrese el término de búsqueda"    
+                    onChange={(e) => setBuscar(e.target.value)}
+                    value={buscar}
                 />
+                
+                <>
                 <input 
                     type = 'date'
                     id = 'fecha_Inicio'
@@ -137,8 +195,10 @@ export const Reports = () => {
                     name = 'fecha_Final'
                     //value = {fecha_Final}
                 ></input>
+                </>
+                
 
-                <button className="stylesButoon2" onClick={() => buscarDatos()}>Buscar</button>
+                <button className="stylesButoon2" onClick={ () => filtrar(buscar)}>Buscar</button>
             </div>
             <br></br>
             <div>
@@ -149,7 +209,7 @@ export const Reports = () => {
                     <option value="fdt">FDT</option>
                     <option value="odf">ODF</option>D
                 </select>
-                <button className="stylessButoon" onClick={() => filtrarDatos()}>Buscar</button>
+                <button className="stylesButoon2" onClick={() => filtrarDatos()}>Buscar</button>
             </div> 
         <br></br>
         <div className="styleContentTable">
@@ -165,6 +225,10 @@ export const Reports = () => {
                         </tr>
                     </thead>
                     <tbody className="stylesBody">
+                    {datos.map((data) => (
+                    <ProdcutRow
+                        product={data}
+                    />))}
                     {dataTecnico.map((data) => (
                         <tr className="stylesTr" key={data.id}>
                             <td className="stylesTh-Td">{data.antiguaPosicion}</td>
