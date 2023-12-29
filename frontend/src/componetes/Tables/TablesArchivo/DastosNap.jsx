@@ -58,15 +58,17 @@ const getAllDatos = async () => {
         </tr>
       </thead>
       <tbody className='table-body'>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+        {dataProduct.map((data, index) => (
+          <tr key={index}>
+            <td>{data.actividades}</td>
+            <td>{data.componente}</td>
+            <td>{data.estado}</td>
+            <td>{data.claseServicio}</td>
+            <td>{data.numeroServicio}</td>
+            <td>{data.estado}</td>
+            <td>{data.macAddress}</td>
           </tr>
+        ))}
       </tbody>
     </table>
   );
