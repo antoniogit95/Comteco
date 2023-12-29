@@ -258,5 +258,50 @@ public class DataTecnicoService {
         }
         return responses;
     }
+    /**
+     * @param producto producto a ser buscado en la base de datos.
+     * @return devuelve un lista de todos los datos tecnicos realacioandos al producto.
+     */
+    public List<DatoTecnicoReportResponse> getAllDatoTecnicoByProducto(Long producto) {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAllByProduct(producto);
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                .id(dt.getId())
+                .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                .producto(dt.getProducto())
+                .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                .createdAt(dt.getCreated_at())
+                .updateAt(dt.getUpdate_at())
+                .build();
+            responses.add(dtrr);
+        }
+
+        return responses;
+    }
+
+    /**
+     * @param request un Objeto donde entrar las fechas inicio y final para buscar los datos tecnicos.
+     * @return Todos los datos tecnicos comprendidos en las fechas.
+     */
+    public List<DatoTecnicoReportResponse> getAllDatoTecnicoByIntervaloDate(DataTecnicoRequesBusqueda request) {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                .id(dt.getId())
+                .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                .producto(dt.getProducto())
+                .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                .createdAt(dt.getCreated_at())
+                .updateAt(dt.getUpdate_at())
+                .build();
+            responses.add(dtrr);
+        }
+
+        return responses;
+    }
 
 }
