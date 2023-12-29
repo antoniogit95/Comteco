@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+
 /**
  * Controlador del dato tecnico
  */
@@ -56,27 +57,53 @@ public class DataTecnicoController {
         return dataTecnicoService.saveDataTecnico(dataTecnicoRequest);
     }
     
+    /**
+     * @return Devuelve todas los datos tecnicos que tengan cambios en las posciciones.
+     */
     @GetMapping("/cambios_pos")
     public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosPos(){
         List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosPos();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
     
+    /**
+     * 
+     * @return Devulve todos los datos tecnicos en los cuales se cambio la pocicion nap
+     */
     @GetMapping("/cambios_nap")
     public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosNap(){
         List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosNap();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
+    /**
+     * 
+     * @return Devulve todos los cambios tecnicos en los cuales se cambio las posciiones FDT
+     */
     @GetMapping("/cambios_fdt")
     public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosFd(){
         List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosFdt();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
+    /**
+     * 
+     * @return Devulve todos los cambios de las posiciones ODF
+     */
     @GetMapping("/cambios_odf")
     public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosOdf(){
         List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosOdf();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
+    /**
+     * 
+     * @return Devulve todos los cambios desde la direccion virtul COM-00-00
+     */
+    @GetMapping("/cambios_com")
+    public ResponseEntity<List<DatoTecnicoReportResponse>> getAllCambiosCom() {
+        List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosCom();
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+    
 }

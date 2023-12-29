@@ -118,6 +118,9 @@ public class DataTecnicoService {
         return responses;
     }
 
+    /**
+     * @return Busca todos los cambios que exista en la posicion en todas las direcciones nap de los datos tecnicos
+     */
     public List<DatoTecnicoReportResponse> getAllCambiosPos() {
         List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
         List<DatoTecnicoReportResponse> responses = new ArrayList<>();
@@ -138,6 +141,10 @@ public class DataTecnicoService {
         return responses;
     }
 
+    /**
+     * 
+     * @return Busca en los datos tecnicos todos los cambios en la caja nap;
+     */
     public List<DatoTecnicoReportResponse> getAllCambiosNap() {
         List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
         List<DatoTecnicoReportResponse> responses = new ArrayList<>();
@@ -165,6 +172,9 @@ public class DataTecnicoService {
         return responses;
     }
 
+    /**
+     * @return Busca todos los cambios en los datos tecnicos en la caja FDT
+     */
     public List<DatoTecnicoReportResponse> getAllCambiosFdt() {
         List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
         List<DatoTecnicoReportResponse> responses = new ArrayList<>();
@@ -192,6 +202,10 @@ public class DataTecnicoService {
         return responses;
     }
 
+    /**
+     * 
+     * @return Busca todos los cambios de ubio de direccion ODF.
+     */
     public List<DatoTecnicoReportResponse> getAllCambiosOdf() {
         List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
         List<DatoTecnicoReportResponse> responses = new ArrayList<>();
@@ -201,6 +215,34 @@ public class DataTecnicoService {
                 String anCodOdf = dt.getAntiguaPosicion().getNap().getOdf();
                 String nuCodOdf = dt.getNuevaPosicion().getNap().getOdf();
                 if(!anCodOdf.equals(nuCodOdf)){
+                    DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                    .id(dt.getId())
+                    .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                    .producto(dt.getProducto())
+                    .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                    .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                    .createdAt(dt.getCreated_at())
+                    .updateAt(dt.getUpdate_at())
+                    .build();
+                    responses.add(dtrr);
+                }
+            }
+        }
+        return responses;
+    }
+
+    /**
+     * 
+     * @return Busca todos los cambios desde la Direccion virtual COM-00-00.
+     */
+    public List<DatoTecnicoReportResponse> getAllCambiosCom() {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAll();
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            if(dt.getAntiguaPosicion().getNap().getCod().equals("COM-00-00")){
+                String anCod = dt.getAntiguaPosicion().getNap().getCod();
+                String nuCod = dt.getNuevaPosicion().getNap().getCod();
+                if(!anCod.equals(nuCod)){
                     DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
                     .id(dt.getId())
                     .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())

@@ -10,14 +10,11 @@ export const Reports = () => {
     const [dataTecnico, setDataTecnico] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
-    const [datosTranspuestos, setDatosTranspuestos] = useState([]);
     const [datos, setDatos] = useState([]);
-    const [datosPlanes, setDatosPlanes] = useState([]);
-    const [rescatarDatos, setRescatarDatos] = useState([])
-    const [select, setSelectd] = useState("");
+    const [select, setSelectd] = useState("DATE");
     const [buscar, setBuscar] = useState("");
-    const endPointPlanes = URL_API_private+"/plancomercial"
-
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFinal, setFechaFinal] = useState("");
 
 
     useEffect(() => {
@@ -34,6 +31,7 @@ export const Reports = () => {
         try {
             const response = await axios.get(endPoint, config)
             setDataTecnico(response.data);
+            setDatos(response.data);
             console.log("Datos Tecnicos obtenidos satisfactorimente..")
         } catch (error) {
             console.error(error)
@@ -46,11 +44,6 @@ export const Reports = () => {
         const day = dataObjest.getDate();
         const year = dataObjest.getFullYear();
         return day+"/"+mounth+"/"+year;
-    }
-
-    function getDia(data){
-        const dataObjest = new Date(data);
-        return dataObjest.getDate();
     }
 
     function getHora(data){
@@ -83,7 +76,7 @@ export const Reports = () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
             const response = await axios.get(endPoint+"/cambios_pos", config)
-            setDataTecnico(response.data);
+            setDatos(response.data);
             console.log("Cambios en la posicion obtenidos satisfactorimente..")
         } catch (error) {
             console.error(error)
@@ -94,7 +87,7 @@ export const Reports = () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
             const response = await axios.get(endPoint+"/cambios_nap", config)
-            setDataTecnico(response.data);
+            setDatos(response.data);
             console.log("Cambios en la posicion obtenidos satisfactorimente..")
         } catch (error) {
             console.error(error)
@@ -105,7 +98,7 @@ export const Reports = () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
             const response = await axios.get(endPoint+"/cambios_fdt", config)
-            setDataTecnico(response.data);
+            setDatos(response.data);
             console.log("Cambios en la posicion obtenidos satisfactorimente..")
         } catch (error) {
             console.error(error)
@@ -116,23 +109,68 @@ export const Reports = () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
             const response = await axios.get(endPoint+"/cambios_odf", config)
-            setDataTecnico(response.data);
+            setDatos(response.data);
             console.log("Cambios en la posicion obtenidos satisfactorimente..")
         } catch (error) {
             console.error(error)
         }
     }
+    
+    const filtrar = (searchValue) => {
+        switch (searchValue) {
+            case 'PROD':
+                filtrarProduc();
+                break;
+            case 'DATE':
+                filtrarDate();
+                break
+            default:
+                console.log("No seleccionaste ningun metodo de busqueda")
+                break;
+        }
+    }
 
-    const filtrar = (terminoBusqueda) => {
-        console.log(terminoBusqueda +" - " + "mostrando algo")
-        if(terminoBusqueda !== ''){
-            console.log("Filtrando...");
-            const resultadoBusqueda = rescatarDatos.filter((elemento) => {
+    const filtrarProduc =  () => {
+        if (buscar) {
+            console.log("Buscando por producto: "+buscar)
+            const resultadoBusqueda = dataTecnico.filter((elemento) => {
+                return elemento.producto.toString().toLowerCase().includes(buscar.toLowerCase());
+            });
+            setDatos(resultadoBusqueda);
+          } else {
+            setDatos([]);
+          }
+    }
+    
+    const filtrarDate =  () => {
+
+        console.log("Buscando por fecha: "+fechaInicio+" "+fechaFinal);
+        /**
+        if (searchValue) {
+            console.log("Imprimiedo el termino a buscar: "+searchValue)
+            const resultadoBusqueda = dataTecnico.filter((elemento) => {
+                return elemento.producto.toString().toLowerCase().includes(searchValue.toLowerCase());
+            });
+            setDatos(resultadoBusqueda);
+          } else {
+            setDatos([]);
+          }
+           */
+    }
+
+    /**
+    const filtrar = async (terminoBusqueda) => {
+
+        if(terminoBusqueda){
+            
+            const resultadoBusqueda = dataTecnico.filter((elemento) => {
+                console.log(elemento.producto);
+                elemento.producto.includes(terminoBusqueda);
             });
             console.log("filtrado con exito");
             setDatos(resultadoBusqueda);
-            // Transforma los datos para mostrarlos en una tabla transpuesta
             
+            // Transforma los datos para mostrarlos en una tabla transpuesta
             console.log("poniendo los datos filtrados a la tabla:", datos);//hasta aqui funciona
             const transpuestos = resultadoBusqueda.reduce((acc, dato) => {
                 Object.keys(dato).forEach(key => {
@@ -145,7 +183,7 @@ export const Reports = () => {
                     }
                 });
                 console.log("exito");
-                return acc;
+                return acc; 
         }, {});
 
         const transpuestosArray = {};
@@ -169,38 +207,61 @@ export const Reports = () => {
         }
 
     }
+     */
 
 
     return (
-        <div>
-            <div classname='styleBusquedas'>
+        <div >
+            <div className="stylesEncabezadoAnalista">
+                <select
+                    className="stylesInput"
+                    value={select}
+                    onChange={(e) => setSelectd(e.target.value)}
+                    >
+                    <option value = 'DATE' >Fecha</option>
+                    <option value = 'PROD'>Producto</option>
+                </select>
+                {select === 'PROD' ? (
                 <input 
-                    type="text"
-                    placeholder="Ingrese el término de búsqueda"    
-                    onChange={(e) => setBuscar(e.target.value)}
+                    className="stylesInput"
+                    type='text'
+                    id='buscar'
+                    name='buscar'
+                    placeholder='Elemento de búsqueda'
                     value={buscar}
-                />
-                
+                    onChange={ (e) => setBuscar(e.target.value) }
+                ></input>
+                ) : (
                 <>
                 <input 
+                    className="stylesInput"
                     type = 'date'
-                    id = 'fecha_Inicio'
-                    name = 'fecha_Inicio'
-                    //value = {fecha_Inicio}
-                    ></input>
+                    id = 'fechaInicio'
+                    name = 'fechaInicio'
+                    value = {fechaInicio}
+                    onChange={ (e) => setFechaInicio(e.target.value) }
+                    />
                     
                 <input 
+                    className="stylesInput"
                     type = 'date'
-                    id = 'fecha_Final'
-                    name = 'fecha_Final'
-                    //value = {fecha_Final}
-                ></input>
-                </>
+                    id = 'fechaFinal'
+                    name = 'fechaFinal'
+                    value = {fechaFinal}
+                    onChange={ (e) => setFechaFinal(e.target.value) }
+                    ></input>
+                    
+                    </>
+                )}
+                <button  className='stylesButoon' onClick={ () => filtrar(select)}>Buscar</button>
                 
-
-                <button className="stylesButoon2" onClick={ () => filtrar(buscar)}>Buscar</button>
+                <button className='stylesButoon' onClick={cambiosPosicion}>filtrar pos</button>
+                <button className='stylesButoon' onClick={cambiosOdf}>filtrar odf</button>
+                <button className='stylesButoon' onClick={cambiosFdt}>filtrar fdt</button>
+                <button className='stylesButoon' onClick={cambiosNap}>filtrar nap</button>
+                <button className='stylesButoon'>filtrar virtual</button>
+                <button className='stylesButoon'>mostrar todo</button>
             </div>
-            <br></br>
             <div>
                 <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
                     <option value="nombre">Dato tecnico</option>
@@ -225,11 +286,11 @@ export const Reports = () => {
                         </tr>
                     </thead>
                     <tbody className="stylesBody">
-                    {datos.map((data) => (
+                    {/**datos.map((data) => (
                     <ProdcutRow
                         product={data}
-                    />))}
-                    {dataTecnico.map((data) => (
+                    />))*/}
+                    {datos.map((data) => (
                         <tr className="stylesTr" key={data.id}>
                             <td className="stylesTh-Td">{data.antiguaPosicion}</td>
                             <td className="stylesTh-Td">{data.nuevaPosicion}</td>
