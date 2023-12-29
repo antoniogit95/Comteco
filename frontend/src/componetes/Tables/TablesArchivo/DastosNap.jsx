@@ -45,32 +45,37 @@ const getAllDatos = async () => {
 
 
   return (
-    <table className='excel-table'>
-      <thead className='table-header'>
-        <tr>
-          <th className='white-color'>Actividades</th>
-          <th className='white-color'>Componentes</th>
-          <th className='white-color'>Estado Componentes</th>
-          <th className='white-color'>Clase servicio</th>
-          <th className='white-color'>Numero servicio</th>
-          <th className='white-color'>Estado numero servicio</th>
-          <th className='white-color'>Serial MAC ADDRESS</th>
+
+    <div>
+    <div className='styleContentTable' >
+    <table className='styleTable'>
+      <thead className='stylesHead'>
+        <tr className='stylesHead'>
+          <th className='stylesTh-Td'>Actividades</th>
+          <th className='stylesTh-Td'>Componentes</th>
+          <th className='stylesTh-Td'>Estado Componentes</th>
+          <th className='stylesTh-Td'>Clase servicio</th>
+          <th className='stylesTh-Td'>Numero servicio</th>
+          <th className='stylesTh-Td'>Estado numero servicio</th>
+          <th className='stylesTh-Td'>Serial MAC ADDRESS</th>
         </tr>
       </thead>
-      <tbody className='table-body'>
+      <tbody className='stylesBody'>
         {dataProduct.map((data, index) => (
           <tr key={index}>
-            <td>{data.actividades}</td>
-            <td>{data.componente}</td>
-            <td>{data.estado}</td>
-            <td>{data.claseServicio}</td>
-            <td>{data.numeroServicio}</td>
-            <td>{data.estado}</td>
-            <td>{data.macAddress}</td>
+            <td className='stylesTh-Td'>{data.actividades}</td>
+            <td className='stylesTh-Td'>{data.componente}</td>
+            <td className='stylesTh-Td'>{data.estado}</td>
+            <td className='stylesTh-Td'>{data.claseServicio}</td>
+            <td className='stylesTh-Td'>{data.numeroServicio}</td>
+            <td className='stylesTh-Td'>{data.estado}</td>
+            <td className='stylesTh-Td'>{data.macAddress}</td>
           </tr>
         ))}
       </tbody>
     </table>
+    </div>      
+    </div>
   );
 };
 
