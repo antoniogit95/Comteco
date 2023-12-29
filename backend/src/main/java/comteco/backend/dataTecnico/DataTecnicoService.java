@@ -254,6 +254,7 @@ public class DataTecnicoService {
                     .build();
                     responses.add(dtrr);
                 }
+            }
         }
         return responses;
     }
