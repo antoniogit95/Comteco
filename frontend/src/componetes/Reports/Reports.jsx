@@ -119,10 +119,10 @@ export const Reports = () => {
     const filtrar = (searchValue) => {
         switch (searchValue) {
             case 'PROD':
-                filtrarProduc();
+                getAllDataTecnicoByProduct();
                 break;
             case 'DATE':
-                filtrarDate();
+                getAllDataTecnicoByDate();
                 break
             default:
                 console.log("No seleccionaste ningun metodo de busqueda")
@@ -142,20 +142,32 @@ export const Reports = () => {
           }
     }
     
-    const filtrarDate =  () => {
+    const getAllDataTecnicoByProduct = async() =>{
+        try {
+            const response = await axios.get(endPoint+"/producto/"+buscar, config)
+            setDataTecnico(response.data);
+            setDatos(response.data);
+            console.log("Datos Tecnicos  Por producto obtenidos satisfactormente..")
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const getAllDataTecnicoByDate = async () => {
 
         console.log("Buscando por fecha: "+fechaInicio+" "+fechaFinal);
-        /**
-        if (searchValue) {
-            console.log("Imprimiedo el termino a buscar: "+searchValue)
-            const resultadoBusqueda = dataTecnico.filter((elemento) => {
-                return elemento.producto.toString().toLowerCase().includes(searchValue.toLowerCase());
-            });
-            setDatos(resultadoBusqueda);
-          } else {
-            setDatos([]);
-          }
-           */
+        try {
+            console.log(endPoint+"/date")
+            const response = await axios.post(endPoint + "/date", {
+                fechaInicio: fechaInicio,
+                fechaFinal: fechaFinal
+                },config);
+            setDataTecnico(response.data);
+            setDatos(response.data);
+            console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     /**

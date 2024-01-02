@@ -58,8 +58,8 @@ public class DataTecnicoService {
                     .nuevaPosicion(nuevaPosicion)
                     .antiguaPosicion(antiguaPosicion)
                     .obeservaciones(dataTecnicoRequest.getObservaciones())
-                    .created_at(getTimestamp())
-                    .update_at(getTimestamp())
+                    .createdAt(getTimestamp())
+                    .updateAt(getTimestamp())
                     .build();
                 System.out.println("dato tecnico CREADO");
                 DataTecnico saveDataTecnico = dataTecnicoRepository.save(dataTecnico);
@@ -74,8 +74,8 @@ public class DataTecnicoService {
                     .producto(saveDataTecnico.getProducto())
                     .nuevaPosicion(saveDataTecnico.getNuevaPosicion().getNap().getCod()+"-"+saveDataTecnico.getNuevaPosicion().getCod())
                     .antiguaPosicion(saveDataTecnico.getAntiguaPosicion().getNap().getCod()+"-"+saveDataTecnico.getAntiguaPosicion().getCod())
-                    .createdAt(saveDataTecnico.getCreated_at())
-                    .updateAt(saveDataTecnico.getUpdate_at())
+                    .createdAt(saveDataTecnico.getCreatedAt())
+                    .updateAt(saveDataTecnico.getUpdateAt())
                     .build();
                 return new ResponseEntity<>(dataTecnicoResponse, HttpStatus.CREATED);
             }
@@ -109,8 +109,8 @@ public class DataTecnicoService {
                 .producto(dt.getProducto())
                 .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
-                .createdAt(dt.getCreated_at())
-                .updateAt(dt.getUpdate_at())
+                .createdAt(dt.getCreatedAt())
+                .updateAt(dt.getUpdateAt())
                 .build();
             responses.add(dtrr);
         }
@@ -132,8 +132,8 @@ public class DataTecnicoService {
                 .producto(dt.getProducto())
                 .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
-                .createdAt(dt.getCreated_at())
-                .updateAt(dt.getUpdate_at())
+                .createdAt(dt.getCreatedAt())
+                .updateAt(dt.getUpdateAt())
                 .build();
                 responses.add(dtrr);
             }
@@ -162,8 +162,8 @@ public class DataTecnicoService {
                     .producto(dt.getProducto())
                     .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
-                    .createdAt(dt.getCreated_at())
-                    .updateAt(dt.getUpdate_at())
+                    .createdAt(dt.getCreatedAt())
+                    .updateAt(dt.getUpdateAt())
                     .build();
                     responses.add(dtrr);
                 }
@@ -192,8 +192,8 @@ public class DataTecnicoService {
                     .producto(dt.getProducto())
                     .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
-                    .createdAt(dt.getCreated_at())
-                    .updateAt(dt.getUpdate_at())
+                    .createdAt(dt.getCreatedAt())
+                    .updateAt(dt.getUpdateAt())
                     .build();
                     responses.add(dtrr);
                 }
@@ -221,8 +221,8 @@ public class DataTecnicoService {
                     .producto(dt.getProducto())
                     .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
-                    .createdAt(dt.getCreated_at())
-                    .updateAt(dt.getUpdate_at())
+                    .createdAt(dt.getCreatedAt())
+                    .updateAt(dt.getUpdateAt())
                     .build();
                     responses.add(dtrr);
                 }
@@ -249,13 +249,61 @@ public class DataTecnicoService {
                     .producto(dt.getProducto())
                     .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
-                    .createdAt(dt.getCreated_at())
-                    .updateAt(dt.getUpdate_at())
+                    .createdAt(dt.getCreatedAt())
+                    .updateAt(dt.getUpdateAt())
                     .build();
                     responses.add(dtrr);
                 }
             }
         }
+        return responses;
+    }
+    /**
+     * @param producto producto a ser buscado en la base de datos.
+     * @return devuelve un lista de todos los datos tecnicos realacioandos al producto.
+     */
+    public List<DatoTecnicoReportResponse> getAllDatoTecnicoByProducto(Long producto) {
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAllByProducto(producto);
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                .id(dt.getId())
+                .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                .producto(dt.getProducto())
+                .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                .createdAt(dt.getCreatedAt())
+                .updateAt(dt.getUpdateAt())
+                .build();
+            responses.add(dtrr);
+        }
+
+        return responses;
+    }
+
+    /**
+     * @param request un Objeto donde entrar las fechas inicio y final para buscar los datos tecnicos.
+     * @return Todos los datos tecnicos comprendidos en las fechas.
+     */
+    public List<DatoTecnicoReportResponse> getAllDatoTecnicoByIntervaloDate(DataTecnicoRequesBusqueda request) {
+        Timestamp fechaInicio = new Timestamp(request.getFechaInicio().getTime());
+        Timestamp fechaFinal = new Timestamp(request.getFechaFinalAdd1Day().getTime());
+        System.out.println("FechaInicio: "+fechaInicio+" FechaFinal: "+fechaFinal);
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAllByCreatedAtBetween(fechaInicio, fechaFinal);
+        List<DatoTecnicoReportResponse> responses = new ArrayList<>();
+        for (DataTecnico dt : dataTecnicos) {
+            DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
+                .id(dt.getId())
+                .nombreCompleto(dt.getUser().getPerson().getNombre()+" "+dt.getUser().getPerson().getApellidos())
+                .producto(dt.getProducto())
+                .nuevaPosicion(dt.getNuevaPosicion().getNap().getCod()+"-"+dt.getNuevaPosicion().getCod())
+                .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
+                .createdAt(dt.getCreatedAt())
+                .updateAt(dt.getUpdateAt())
+                .build();
+            responses.add(dtrr);
+        }
+
         return responses;
     }
 
