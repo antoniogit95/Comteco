@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from 'react';
-import axios from 'axios';
+import axios, { toFormData } from 'axios';
 import { URL_API_private } from '../../providerContext/EndPoint';
 import './Reports.css'
 
@@ -72,12 +72,29 @@ export const Reports = () => {
         }
     }
 
-    const cambiosPosicion = async () => {
+    const cambiosPosicion = () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
-            const response = await axios.get(endPoint+"/cambios_pos", config)
-            setDatos(response.data);
-            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+            const response = [];
+            for (let i = 0; i < dataTecnico.length; i++) {
+                const cadena1 = dataTecnico[i].antiguaPosicion;
+                const cadena2 = dataTecnico[i].nuevaPosicion;
+                const antiguaPosicion = cadena1.split("-");
+                const nuevaPosicion = cadena2.split("-")
+                if(antiguaPosicion.length === 4 && nuevaPosicion.length === 4){
+                    const antigNap = antiguaPosicion[0]+"-"+antiguaPosicion[1]+"-"+antiguaPosicion[2];
+                    const nuevoNap = nuevaPosicion[0]+"-"+nuevaPosicion[1]+"-"+nuevaPosicion[2];
+                    if(antigNap === nuevoNap){
+                        if(antiguaPosicion[3] !== nuevaPosicion[3]){
+                            console.log("posiciones diferentes")
+                            response.push(dataTecnico[i]);
+                        }
+                    }else{
+                        console.log("naps desiguales");
+                    }
+                }
+            }
+            setDatos(response);
         } catch (error) {
             console.error(error)
         }
@@ -86,9 +103,26 @@ export const Reports = () => {
     const cambiosNap = async () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
-            const response = await axios.get(endPoint+"/cambios_nap", config)
-            setDatos(response.data);
-            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+            const response = [];
+            for (let i = 0; i < dataTecnico.length; i++) {
+                const cadena1 = dataTecnico[i].antiguaPosicion;
+                const cadena2 = dataTecnico[i].nuevaPosicion;
+                const antiguaPosicion = cadena1.split("-");
+                const nuevaPosicion = cadena2.split("-")
+                if(antiguaPosicion.length === 4 && nuevaPosicion.length === 4){
+                    const antigFdt = antiguaPosicion[0]+"-"+antiguaPosicion[1];
+                    const nuevoFdt = nuevaPosicion[0]+"-"+nuevaPosicion[1];
+                    if(antigFdt === nuevoFdt){
+                        if(antiguaPosicion[2] !== nuevaPosicion[2]){
+                            console.log("posiciones diferentes")
+                            response.push(dataTecnico[i]);
+                        }
+                    }else{
+                        console.log("naps desiguales");
+                    }
+                }
+            }
+            setDatos(response);
         } catch (error) {
             console.error(error)
         }
@@ -97,9 +131,26 @@ export const Reports = () => {
     const cambiosFdt = async () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
-            const response = await axios.get(endPoint+"/cambios_fdt", config)
-            setDatos(response.data);
-            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+            const response = [];
+            for (let i = 0; i < dataTecnico.length; i++) {
+                const cadena1 = dataTecnico[i].antiguaPosicion;
+                const cadena2 = dataTecnico[i].nuevaPosicion;
+                const antiguaPosicion = cadena1.split("-");
+                const nuevaPosicion = cadena2.split("-")
+                if(antiguaPosicion.length === 4 && nuevaPosicion.length === 4){
+                    const antigOdf = antiguaPosicion[0];
+                    const nuevoOdf = nuevaPosicion[0];
+                    if(antigOdf === nuevoOdf){
+                        if(antiguaPosicion[1] !== nuevaPosicion[1]){
+                            console.log("posiciones diferentes")
+                            response.push(dataTecnico[i]);
+                        }
+                    }else{
+                        console.log("naps desiguales");
+                    }
+                }
+            }
+            setDatos(response);
         } catch (error) {
             console.error(error)
         }
@@ -108,9 +159,22 @@ export const Reports = () => {
     const cambiosOdf = async () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
-            const response = await axios.get(endPoint+"/cambios_odf", config)
-            setDatos(response.data);
-            console.log("Cambios en la posicion obtenidos satisfactorimente..")
+            const response = [];
+            for (let i = 0; i < dataTecnico.length; i++) {
+                const cadena1 = dataTecnico[i].antiguaPosicion;
+                const cadena2 = dataTecnico[i].nuevaPosicion;
+                const antiguaPosicion = cadena1.split("-");
+                const nuevaPosicion = cadena2.split("-")
+                if(antiguaPosicion.length === 4 || antiguaPosicion.length === 2){
+                    if(antiguaPosicion[0] !== nuevaPosicion[0]){
+                        console.log("posiciones diferentes")
+                        response.push(dataTecnico[i]);
+                    }else{
+                        console.log("naps desiguales");
+                    }
+                }
+            }
+            setDatos(response);
         } catch (error) {
             console.error(error)
         }
@@ -130,7 +194,7 @@ export const Reports = () => {
         }
     }
 
-    const filtrarProduc =  () => {
+    const filtrarProduc = async () => {
         if (buscar) {
             console.log("Buscando por producto: "+buscar)
             const resultadoBusqueda = dataTecnico.filter((elemento) => {
@@ -169,6 +233,34 @@ export const Reports = () => {
             console.error(error)
         }
     }
+
+    const filtrarDatosOrigneCom = async () => {
+        console.log("Filtrando datos desde el origen COM-00-00-0000")
+        try {
+            const response = [];
+            for (let i = 0; i < dataTecnico.length; i++) {
+                const cadena1 = dataTecnico[i].antiguaPosicion;
+                const cadena2 = dataTecnico[i].nuevaPosicion;
+                const antiguaPosicion = cadena1.split("-");
+                const nuevaPosicion = cadena2.split("-")
+                if(antiguaPosicion.length === 4){
+                    const antigFdt = antiguaPosicion[0]+"-"+antiguaPosicion[1]; 
+                    if(antigFdt === "COM-00"){
+                        if(antiguaPosicion[0] !== nuevaPosicion[0]){
+                            console.log("posiciones diferentes")
+                            response.push(dataTecnico[i]);
+                        }
+                    }else{
+                        console.log("naps desiguales");
+                    }
+                }
+            }
+            setDatos(response);
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
 
     /**
     const filtrar = async (terminoBusqueda) => {
@@ -271,8 +363,8 @@ export const Reports = () => {
                 <button className='stylesButoon' onClick={cambiosOdf}>filtrar odf</button>
                 <button className='stylesButoon' onClick={cambiosFdt}>filtrar fdt</button>
                 <button className='stylesButoon' onClick={cambiosNap}>filtrar nap</button>
-                <button className='stylesButoon'>filtrar virtual</button>
-                <button className='stylesButoon'>mostrar todo</button>
+                <button className='stylesButoon' onClick={filtrarDatosOrigneCom}>filtrar virtual</button>
+                <button className='stylesButoon' onClick={() => setDatos(dataTecnico)}>mostrar todo</button>
             </div>
             <div>
                 <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
