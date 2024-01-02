@@ -100,7 +100,7 @@ export const Reports = () => {
         }
     }
 
-    const cambiosNap = () => {
+    const cambiosNap = async () => {
         console.log("Obteniendo los cambios de la posicion..")
         try {
             const response = [];
@@ -194,7 +194,7 @@ export const Reports = () => {
         }
     }
 
-    const filtrarProduc =  () => {
+    const filtrarProduc = async () => {
         if (buscar) {
             console.log("Buscando por producto: "+buscar)
             const resultadoBusqueda = dataTecnico.filter((elemento) => {
