@@ -111,7 +111,7 @@ public class DataTecnicoController {
      * @param producto id del producto a buscar en la base de datos
      * @return todos los datos tecnicos relacionados a un producto.
      */
-    @PostMapping("/producto/{producto}")
+    @GetMapping("/producto/{producto}")
     public ResponseEntity<List<DatoTecnicoReportResponse>> getAllDatoTecnicoByProducto(@PathVariable Long producto){
         List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllDatoTecnicoByProducto(producto);
         return new ResponseEntity<>(responses, HttpStatus.OK);
