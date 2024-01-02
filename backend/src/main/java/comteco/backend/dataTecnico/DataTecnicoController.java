@@ -105,5 +105,27 @@ public class DataTecnicoController {
         List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllCambiosCom();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
+    /**
+     * 
+     * @param producto id del producto a buscar en la base de datos
+     * @return todos los datos tecnicos relacionados a un producto.
+     */
+    @GetMapping("/producto/{producto}")
+    public ResponseEntity<List<DatoTecnicoReportResponse>> getAllDatoTecnicoByProducto(@PathVariable Long producto){
+        List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllDatoTecnicoByProducto(producto);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @param request recivimos el rango de fechas a buscar los datos tecnicos.
+     * @return todos los datos tecnicos en el rango de fechas seleccionadas.
+     */
+    @PostMapping("/date")
+    public ResponseEntity<List<DatoTecnicoReportResponse>> postMethodName(@RequestBody DataTecnicoRequesBusqueda request) {
+        List<DatoTecnicoReportResponse> responses = dataTecnicoService.getAllDatoTecnicoByIntervaloDate(request);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
     
 }
