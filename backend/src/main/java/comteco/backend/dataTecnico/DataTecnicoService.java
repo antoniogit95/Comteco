@@ -263,7 +263,7 @@ public class DataTecnicoService {
      * @return devuelve un lista de todos los datos tecnicos realacioandos al producto.
      */
     public List<DatoTecnicoReportResponse> getAllDatoTecnicoByProducto(Long producto) {
-        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAllByProduct(producto);
+        List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAllByProducto(producto);
         List<DatoTecnicoReportResponse> responses = new ArrayList<>();
         for (DataTecnico dt : dataTecnicos) {
             DatoTecnicoReportResponse dtrr = DatoTecnicoReportResponse.builder()
@@ -287,7 +287,8 @@ public class DataTecnicoService {
      */
     public List<DatoTecnicoReportResponse> getAllDatoTecnicoByIntervaloDate(DataTecnicoRequesBusqueda request) {
         Timestamp fechaInicio = new Timestamp(request.getFechaInicio().getTime());
-        Timestamp fechaFinal = new Timestamp(request.getFechaFinal().getTime());
+        Timestamp fechaFinal = new Timestamp(request.getFechaFinalAdd1Day().getTime());
+        System.out.println("FechaInicio: "+fechaInicio+" FechaFinal: "+fechaFinal);
         List<DataTecnico> dataTecnicos = dataTecnicoRepository.findAllByCreatedAtBetween(fechaInicio, fechaFinal);
         List<DatoTecnicoReportResponse> responses = new ArrayList<>();
         for (DataTecnico dt : dataTecnicos) {

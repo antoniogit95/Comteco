@@ -1,6 +1,7 @@
 package comteco.backend.dataTecnico;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,4 +20,11 @@ public class DataTecnicoRequesBusqueda {
     private Date fechaInicio;
     private Date fechaFinal;
 
+    public Date getFechaFinalAdd1Day(){
+        Date aux = fechaFinal;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(aux);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        return new Date(calendar.getTimeInMillis());
+    }
 }

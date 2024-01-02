@@ -16,7 +16,7 @@ public interface DataTecnicoRepository extends JpaRepository<DataTecnico, Long>{
      * @param producto producto a ser buscado en la base de datos
      * @return todos los datos tecnicos que esten relacionados con el producto
      */
-    List<DataTecnico> findAllByProduct(Long producto);
+    List<DataTecnico> findAllByProducto(Long producto);
 
     /**
      * Busca todos los datos tecnicos en las fechas seleccionadas.
