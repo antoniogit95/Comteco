@@ -22,6 +22,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Enttidad de la tabla orden_dia
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -36,10 +39,16 @@ public class OrdenDia {
     private Timestamp fecha;
     private String ubicacion;
 
+    /*
+     *Relacion la La tabla Solicitud donde una orden dia solo tiene una solicitud 
+     */
     @OneToOne
     @JoinColumn(name = "id_solicitud")
     private Solicitud solicitud;
     
+    /*
+     * Relacion con la tabla trabajo que una orden dia solo tiene un trabajo
+     */
     @OneToOne
     @JoinColumn(name = "id_trabajo")
     private Trabajo trabajo;
@@ -51,20 +60,33 @@ public class OrdenDia {
     private boolean estadoOt; //estado_ot
     private String orden;
 
+    /*
+     * Relacion con la tabla posicion que asu ves tiene relacion con las posiciones nap
+     * que un orden dia solo puede estar asociado a una posicion de las rutas nap
+     */
     @OneToOne
     @JoinColumn(name = "id_posicion")
     private Posicion posicion;
 
     private String actividad;
 
+    /*
+     * Relacion con la tabla vendedor donde una orden dia solo puede tener un vendedor.
+     */
     @OneToOne
     @JoinColumn(name = "id_vendedor")
     private Vendedor vendedor;
 
+    /*
+     * Relacion con la tabla Cliente donde una orden dia solo pueda tener a un cliente.
+     */
     @OneToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
+    /*
+     * Relacion con la talba de Servicion donde una orden dia tenga muchos servicios.
+     */
     @OneToMany(mappedBy = "ordenDia", cascade = CascadeType.ALL)
     private List<Servicio> servicio;
 }
