@@ -21,6 +21,12 @@ public class AuthController {
 
     private final AuthService authService;
 
+
+    @GetMapping
+    public ResponseEntity<String> pruebaGet(){
+        return new ResponseEntity<>("mensaje desde back end", HttpStatus.OK);
+    }
+    
     /**
      * Inicia sesión de un usuario.
      *
@@ -29,11 +35,6 @@ public class AuthController {
      * @return Una respuesta que contiene la información de autenticación del usuario 
      * si el inicio de sesión es exitoso que estan dentro la clase AuthResponse.
      */
-    
-    @GetMapping
-    public ResponseEntity<String> pruebaGet(){
-        return new ResponseEntity<>("mensaje desde back end", HttpStatus.OK);
-    }
 
     @PostMapping(value = "login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request){
