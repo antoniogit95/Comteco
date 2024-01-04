@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entidad Nap a ser creada en la base de datos
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -24,6 +27,7 @@ public class Nap {
     private String fdt;
     private String nap;
 
+    // para que en la columna cod, que significa el codigo de la ruta nap sea unico
     @Column(unique = true)
     private String cod;
     
