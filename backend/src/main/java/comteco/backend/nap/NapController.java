@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,17 +52,6 @@ public class NapController {
     public ResponseEntity<Nap> saveNAP(@RequestBody Nap nap) {
         Nap savedNAP = napService.saveNAP(nap);
         return new ResponseEntity<>(savedNAP, HttpStatus.CREATED);
-    }
-
-    /**
-     * 
-     * @param id de la nap a ser borrada
-     * @return no retorna nada.
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNAP(@PathVariable Long id) {
-        napService.deleteNAP(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
