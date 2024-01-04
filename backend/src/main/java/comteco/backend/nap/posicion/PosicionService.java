@@ -13,6 +13,9 @@ import comteco.backend.nap.Nap;
 import comteco.backend.nap.NapService;
 import lombok.AllArgsConstructor;
 
+/**
+ * Servicios de la clase Posicion
+ */
 @Service
 @AllArgsConstructor
 public class PosicionService {
@@ -21,18 +24,36 @@ public class PosicionService {
 
     private NapService napService;
 
+    /**
+     * Lista todas las posicioes
+     * @return Una Lista con todas las posicione registradas en la base de datos.
+     */
     public List<Posicion> getAllPosiciones() {
         return posicionRepository.findAll();
     }
 
+    /**
+     * 
+     * @param id de una Posicion a ser Buscada.
+     * @return Un Objeto de tipo Optional que puede o no tener a una Posicion.
+     */
     public Optional<Posicion> getPosicionById(Long id) {
         return posicionRepository.findById(id);
     }
 
+    /**
+     * 
+     * @param posicion a ser guardada en la base de datos
+     * @return la misma posicion ya creada.
+     */
     public Posicion savePosicion(Posicion posicion) {
         return posicionRepository.save(posicion);
     }
 
+    /**
+     * 
+     * @param id de la posicion a ser borrada.
+     */
     public void deletePosicion(Long id) {
         posicionRepository.deleteById(id);
     }

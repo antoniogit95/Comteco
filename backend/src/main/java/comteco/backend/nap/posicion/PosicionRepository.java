@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 import comteco.backend.nap.Nap;
 import java.util.Optional;
 
-
+/**
+ * Repositorio de la Clase posicion que hace conexion con la base de datos por JPA
+ */
 @Repository
 public interface PosicionRepository extends JpaRepository<Posicion, Long>{
     
