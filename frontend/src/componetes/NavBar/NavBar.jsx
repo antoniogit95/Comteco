@@ -13,6 +13,7 @@ export const NavBar = () => {
     const userRole = JSON.parse(localStorage.getItem('user_data')).role;
     const isAdmin = userRole === 'ADMIN';
     const isSoporte = userRole === 'SOPORTE';
+    const isEquipos = userRole === 'EQUIPOS';
     const { deletToken } = useAuth();
     const navigate = useNavigate();
     const auth = useAuth();
@@ -79,7 +80,7 @@ export const NavBar = () => {
                 to="/home">Home</NavLink></li>
             )}
             
-            {(isAdmin) && ( <li className="stylesLi">
+            {(isAdmin || isEquipos) && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
                 to="/equipos">Equipos</NavLink></li>
             )}
