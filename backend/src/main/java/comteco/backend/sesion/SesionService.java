@@ -176,9 +176,16 @@ public class SesionService {
             return null;
         }
     }
-    public Sesion obtenerUltimaConexion(String username) {
+
+    /**
+     * 
+     * @param id del usuario a obtener su ultima conexion
+     * @return la ultima sesion que se obtuvo del usuario
+     */
+    public Sesion obtenerUltimaConexion(Long id) {
         try {
-            Optional<User> user = userRepository.findByUsername(username);
+            Person person = personService.getPersonById(id);
+            Optional<User> user = userRepository.findByPerson(person);
             Optional<List<Sesion>> optionalCesion = sesionRepository.findAllByUser(user.get());
             if(optionalCesion.isPresent()){
                 int tamanio = optionalCesion.get().size();

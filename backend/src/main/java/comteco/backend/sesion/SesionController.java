@@ -67,9 +67,9 @@ public class SesionController {
      * @param loginRequest obgeto donde iniciamos el usuario para posteriormente cerrar la cesion;
      * @return la cesion de la ultima conexion
      */
-    @GetMapping("/ultima")
-    public ResponseEntity<Sesion> getUltimaConexion(@RequestBody LoginRequest loginRequest) {        
-        Sesion sesion = cesionService.obtenerUltimaConexion(loginRequest.getUsername()); 
+    @GetMapping("/ultima/{id}")
+    public ResponseEntity<Sesion> getUltimaConexion(@PathVariable Long id) {        
+        Sesion sesion = cesionService.obtenerUltimaConexion(id); 
         return sesion != null ? new ResponseEntity<>(sesion, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 

@@ -14,11 +14,14 @@ export const PersonRow = ({person, onShowConnections, onShowInformation}) =>{
     const endPointActive = URL_API_private+"/user/active/"+person.id_person;
     const endPointDesactive = URL_API_private+"/user/desactive/"+person.id_person;
     const endPointCesion = URL_API_private+"/cesion/actives/"+person.id_person;
+    const endPointUltimaConexion = URL_API_private+"/cesion/ultima/"+person.id_person;
     const token = JSON.parse(localStorage.getItem('user_data')).token;
+    const [ultimaConexion, setUltimaConexion] = useState("")
     
     useEffect(()=>{
         onIsOnline();
         isAcepeted();
+        getSesionByIdUser();
     },[])
 
     const config = {
@@ -27,6 +30,14 @@ export const PersonRow = ({person, onShowConnections, onShowInformation}) =>{
         },
     };
 
+    const getSesionByIdUser = async () => {
+        try {
+            const response = await axios.get(endPointUltimaConexion, config)
+            setUltimaConexion(response.data.updateAt);
+        } catch (error) {
+            console.log("error: " +error)
+        }  
+    }
     const onIsOnline = async () => {
         try {
             const response = await axios.get(endPointCesion, config)
@@ -87,7 +98,7 @@ export const PersonRow = ({person, onShowConnections, onShowInformation}) =>{
                         <FcCancel/> 
                         <label>Desactivado</label>
                 </> )}</td>
-            <td className='stylesTh-Td'>{isOnline? "": "2023/11/07 11:10"}</td>
+            <td className='stylesTh-Td'>{isOnline? "": ultimaConexion }</td>
             <td className='stylesTh-Td'>
                 <button className='stylesButoon' onClick={() => onShowConnections(person)}>Ver</button>
             </td>
