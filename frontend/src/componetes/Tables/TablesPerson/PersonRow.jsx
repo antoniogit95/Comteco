@@ -33,7 +33,12 @@ export const PersonRow = ({person, onShowConnections, onShowInformation}) =>{
     const getSesionByIdUser = async () => {
         try {
             const response = await axios.get(endPointUltimaConexion, config)
-            setUltimaConexion(response.data.updateAt);
+            const dataObjest = new Date(response.data.finalyAt);
+            const year = dataObjest.getFullYear();
+            const mounth =  dataObjest.getMonth() +1;
+            const day = dataObjest.getDate();
+            const hour = dataObjest.getHours()+":"+dataObjest.getMinutes().toString().padStart(2, '0');;
+            setUltimaConexion(year+ "/"+ mounth + "/" + day +"  "+hour);
         } catch (error) {
             console.log("error: " +error)
         }  
