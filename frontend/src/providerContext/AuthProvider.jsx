@@ -36,14 +36,16 @@ export const AuthProvider = ({ children }) =>{
     };
     
     function deletToken(){
+        serrarSesion(event);
         setAccessToekn("");
-        serrarSesion();
         localStorage.removeItem('user_data');
         setIsAuthenticated(false);
     }
 
-    const serrarSesion = async () => {
+    const serrarSesion = async (e) => {
+        e.preventDefault();
         try {
+            const username  = JSON.parse(localStorage.getItem('user_data')).username;
             const response = await axios.post(endPointClose, {
                 username: username,
                 password: "---------"},
@@ -119,7 +121,7 @@ export const AuthProvider = ({ children }) =>{
                         console.error('Error al obtener un nuevo token:', error);   
                     }finally{
                         isRefreshing = false; 
-                    }error
+                    }
                 }   
             }
         };

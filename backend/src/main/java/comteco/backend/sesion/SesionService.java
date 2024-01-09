@@ -176,4 +176,18 @@ public class SesionService {
             return null;
         }
     }
+    public Sesion obtenerUltimaConexion(String username) {
+        try {
+            Optional<User> user = userRepository.findByUsername(username);
+            Optional<List<Sesion>> optionalCesion = sesionRepository.findAllByUser(user.get());
+            if(optionalCesion.isPresent()){
+                int tamanio = optionalCesion.get().size();
+                return optionalCesion.get().get(tamanio-1);
+            }else{
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
