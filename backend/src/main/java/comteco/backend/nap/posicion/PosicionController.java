@@ -72,4 +72,16 @@ public class PosicionController {
         Posicion savedPosicion = posicionService.savePosicion(posicion);
         return new ResponseEntity<>(savedPosicion, HttpStatus.CREATED);
     }
+
+    /**
+     * 
+     * @param nap codigo de la Nap a ser buscada y mostrada para las posiciones
+     * @return un lista de posiciones que corresponden a la caja nap.
+     */
+    @GetMapping("/byNap/{nap}")
+    public ResponseEntity<List<Posicion>> getAllPosByNap(@PathVariable Long nap) {
+        List<Posicion> posicions = posicionService.getAllPosicionesByNap(nap);
+        return new ResponseEntity<>(posicions, HttpStatus.OK);
+    }
+    
 }

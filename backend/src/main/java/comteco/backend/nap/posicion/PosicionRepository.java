@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import comteco.backend.nap.Nap;
+
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,4 +29,10 @@ public interface PosicionRepository extends JpaRepository<Posicion, Long>{
      * @return retornara un Obgeto de tipo Optional con contiene una posicion o null.
      */
     Optional<Posicion> findByCodAndNap(String cod, Nap nap);
+
+    /**
+     * @param nap nap a ser buscada en la base de datos
+     * @return una lista de todas las posiciones relacionadas a la nap.
+     */
+    List<Posicion> findAllByNap(Nap nap);
 }

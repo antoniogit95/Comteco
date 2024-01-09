@@ -5,7 +5,7 @@ import axios from "axios";
 
 export const TablesPos = ({id_nap}) => {
     const [poss, setPoss] = useState([]);
-    const endPointPos = URL_API_private+"/pos/bynap/"+id_nap;
+    const endPointPos = URL_API_private+"/naps/pos/byNap/"+id_nap;
     const token  = JSON.parse(localStorage.getItem('user_data')).token;
 
     useEffect(() => {

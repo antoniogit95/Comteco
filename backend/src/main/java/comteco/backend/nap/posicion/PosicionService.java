@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import comteco.backend.nap.Nap;
+import comteco.backend.nap.NapRepository;
 import comteco.backend.nap.NapService;
 import lombok.AllArgsConstructor;
 
@@ -21,7 +22,7 @@ import lombok.AllArgsConstructor;
 public class PosicionService {
     
     private PosicionRepository posicionRepository;
-
+    private NapRepository napRepository;
     private NapService napService;
 
     /**
@@ -219,5 +220,26 @@ public class PosicionService {
         pos.getNap().setDescripcion(descripcion);
         System.out.println("imprmiendo la posicion"+ pos.getCod());
         return posicionRepository.save(pos);
+    }
+
+    /**
+     * 
+     * @param nap id de la nap a aser buscada en la base de datos
+     * @return una lista de todas las posiciones relacionadas a la nap.
+     */
+    public List<Posicion> getAllPosicionesByNap(Long nap) {
+        try {
+            Optional<Nap> napOptional = napRepository.findById(nap);
+            if (napOptional.isPresent()) {
+                Nap nap2 = napOptional.get();
+                List<Posicion> posicions = posicionRepository.findAllByNap(nap2);
+                return posicions;
+            }{
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
     }
 }
