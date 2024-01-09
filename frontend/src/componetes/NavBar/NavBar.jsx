@@ -75,7 +75,7 @@ export const NavBar = () => {
             <GiHamburgerMenu className="stylesIcon"/>
         </button>
         <ul className={isNavExpanded? "stylesUl-expanded": "stylesUl"}>
-            {(isAdmin || isSoporte) && ( <li className="stylesLi">
+            {(isAdmin || isSoporte || isEquipos) && ( <li className="stylesLi">
                 <NavLink className={({ isActive }) => (isActive ? 'stylesActive' : 'stylesA')}
                 to="/home">Home</NavLink></li>
             )}

@@ -142,4 +142,38 @@ public class SesionService {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    /**
+     * 
+     * @param username usuario para Cerrar Su Sesion
+     * @return la sesion la fecha de sesion cerrada.
+     */
+    public Sesion cerrarSesionByUser(String username) {
+        try {
+            Optional<User> userOptional = userRepository.findByUsername(username);
+            if(userOptional.isPresent()){
+                User user = userOptional.get();
+                LocalDateTime finalyAt = LocalDateTime.now();
+                Optional<Sesion> seOptional = sesionRepository.findByFinalyAtAfterAndUser(getTimestamp(), user);
+                if(seOptional.isPresent()){
+                    Sesion sesion = seOptional.get();
+                    sesion.setFinalyAt(Timestamp.valueOf(finalyAt));
+                    sesionRepository.save(sesion);
+                    return sesion;
+                }else{
+                    Sesion sesion = Sesion.builder()
+                        .createdAt(getTimestamp())
+                        .finalyAt(Timestamp.valueOf(finalyAt))
+                        .user(user)
+                        .build();
+                    sesionRepository.save(sesion);
+                    return sesion;
+                }
+            }else{
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
