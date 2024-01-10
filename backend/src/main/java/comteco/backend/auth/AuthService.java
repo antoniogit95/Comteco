@@ -184,4 +184,28 @@ public class AuthService {
         }
         return request;
     }
+
+    /**
+     * Gurdar la nueva contraseña
+     * @param request donde estan todos los datos unicos de un usuario como ser: email, ci, item y la contraseña
+     * @return un String especificando que error existe o no.
+     */
+    public ForgenPasswordRequest saveNewPasswordByEmail(ForgenPasswordRequest request) {
+        Optional<User> userOptionar = userRepository.findByUsername(request.getEmail());
+        if(userOptionar.isPresent()){
+            User user = userOptionar.get();
+            Person person = user.getPerson();
+            if(person.getCedulaIdentidad().equals(request.getCi()) &&
+            person.getItem().equals(request.getItem())){
+                request.setMessage("SIN ERROR");
+                user.setPassword(request.getPassword());
+                userRepository.save(user);
+            }else{
+                request.setMessage("Las credenciales no corresponden al Email");
+            }
+        }else{
+            request.setMessage("El Email ingresado no esta registrado");
+        }
+        return request;
+    }
 }

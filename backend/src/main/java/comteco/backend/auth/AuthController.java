@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -115,9 +116,9 @@ public class AuthController {
      * @param request donde esta los datos de ci, item , el correo y la contraseña que se dese cambiar
      * @return un objeto de tipo boleano si existe o no. 
      */
-    @PostMapping("/forgen_password")
+    @PutMapping("/forgen_password")
     public ResponseEntity<ForgenPasswordRequest> saveNewPasswordByEmail(@RequestBody ForgenPasswordRequest request){
-        ForgenPasswordRequest response = authService.existDataByForgenPassword(request);
+        ForgenPasswordRequest response = authService.saveNewPasswordByEmail(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

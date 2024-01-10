@@ -3,6 +3,7 @@ import { URL_API_public } from "../../../providerContext/EndPoint";
 import { useNavigate } from "react-router-dom";
 import { Formik, Field } from "formik";
 import {ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';  
 import 'react-toastify/dist/ReactToastify.css';
 import './FormsForgenPassword.css'
 
@@ -27,12 +28,13 @@ export const FromsForgenPassword = () => {
                         ci : data.ci,
                         item : data.item,
                         email: data.email,
-                    })
-                    if(response.data.message === "SIN ERROR"){
-                        setIsValidate(false);
-                    }else{
-                        adminErrros(error.response.data.message);
                     }
+                );
+                if(response.data.message === "SIN ERROR"){
+                    setIsValidate(false);
+                }else{
+                    adminErrros(response.data.message);
+                }
 
             } catch (e) {
                 console.error(e)
@@ -121,27 +123,17 @@ export const FromsForgenPassword = () => {
 
                 onSubmit={ (valores) => {
                     const store = async (e) => {
-                        console.log(valores)
                         e.preventDefault()
                         try {
                             await axios.put(endPoint, {
-                                username: valores.email,
-                                password: valores.password,
-                                celula_identidad: valores.ci,
+                                ci: valores.ci,
                                 item: valores.item,
+                                email: valores.email,
+                                password: valores.password
                             });
-                            toast.success('Usuario registrado con éxito', {
-                                position: 'top-right',
-                                autoClose: 3000,      
-                              });
                             navigate('/home');    
                         } catch (error) {
                             console.log(error)
-                            console.log("mensaje")
-                            toast.error(error.code, {
-                                position: 'top-right', 
-                                autoClose: 3000,  
-                            });
                         }
                         
                     }
