@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Controlador de la clase posicion
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/naps/pos")
@@ -23,6 +25,11 @@ public class PosicionController {
 
     private PosicionService posicionService;
 
+    /**
+     * 
+     * @param file donde se encuntran todas las rutas naps y posiciones con sus codigos respectivos
+     * @return un String donde se lista el estado al momento de gurdar las rutas naps
+     */
     @PostMapping("/save_file")
     public ResponseEntity<String> saveNapsFile(@RequestParam("file") MultipartFile file) {
         if(file != null){;
@@ -33,12 +40,21 @@ public class PosicionController {
         }
     }
 
+    /**
+     * 
+     * @return una Lista de todas las posiciones registradas 
+     */
     @GetMapping
     public ResponseEntity<List<Posicion>> getAllPosiciones() {
         List<Posicion> posiciones = posicionService.getAllPosiciones();
         return new ResponseEntity<>(posiciones, HttpStatus.OK);
     }
 
+    /**
+     * 
+     * @param id de la posicion a ser buscada y retornada
+     * @return una posicion si existe caso contrario no retorna nada.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Posicion> getPosicionById(@PathVariable Long id) {
         return posicionService.getPosicionById(id)
@@ -46,15 +62,26 @@ public class PosicionController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    /**
+     * 
+     * @param posicion a ser gurdada en la base de datos
+     * @return la misma posicion pero ya creada.
+     */
     @PostMapping
     public ResponseEntity<Posicion> savePosicion(@RequestBody Posicion posicion) {
         Posicion savedPosicion = posicionService.savePosicion(posicion);
         return new ResponseEntity<>(savedPosicion, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePosicion(@PathVariable Long id) {
-        posicionService.deletePosicion(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    /**
+     * 
+     * @param nap codigo de la Nap a ser buscada y mostrada para las posiciones
+     * @return un lista de posiciones que corresponden a la caja nap.
+     */
+    @GetMapping("/byNap/{nap}")
+    public ResponseEntity<List<Posicion>> getAllPosByNap(@PathVariable Long nap) {
+        List<Posicion> posicions = posicionService.getAllPosicionesByNap(nap);
+        return new ResponseEntity<>(posicions, HttpStatus.OK);
     }
+    
 }

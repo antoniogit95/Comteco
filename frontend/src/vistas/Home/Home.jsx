@@ -15,6 +15,8 @@ export const Home = () => {
                 return buttonsAdmin();
             case "SOPORTE":
                 return buttonsSoporte();
+            case "EQUIPOS":
+                return buttonsEquipos();
             default:
                 return sinTrabajo();
                 break;
@@ -27,6 +29,12 @@ export const Home = () => {
         </>)
     }
 
+    function buttonsEquipos(){
+        return (<div className="stylesContentButtonsBig">
+            <Button name="Equipos" link="/equipos"/>
+        </div>)
+    }
+    
     function buttonsAdmin(){
         return (<div className="stylesContentButtonsBig">
             <Button name="Personal" link="/personal"/>

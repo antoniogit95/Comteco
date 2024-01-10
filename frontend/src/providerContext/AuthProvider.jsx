@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) =>{
     const [accessToken, setAccessToekn] = useState("");
     const [timeOut, setTimeOut] = useState("");
     const endPoint = URL_API_private+"/refresh_token"
+    const endPointClose = URL_API_private+"/cesion/close"
     const [refrestTime, setRefreshTime] = useState(Date.now());
     const lastRefreshTime = useRef({ current: Date.now() });
     const INACTIVITY_TIMEOUT = 31 * 60 * 1000; // 31 minutos en milisegundos
@@ -35,9 +36,26 @@ export const AuthProvider = ({ children }) =>{
     };
     
     function deletToken(){
+        serrarSesion(event);
         setAccessToekn("");
         localStorage.removeItem('user_data');
         setIsAuthenticated(false);
+    }
+
+    const serrarSesion = async (e) => {
+        e.preventDefault();
+        try {
+            const username  = JSON.parse(localStorage.getItem('user_data')).username;
+            const response = await axios.post(endPointClose, {
+                username: username,
+                password: "---------"},
+            {headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }},);
+            console.log("Sesion Cerrada exitosamente")
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     function parseJwt(token) {
@@ -113,7 +131,7 @@ export const AuthProvider = ({ children }) =>{
         }, INACTIVITY_TIMEOUT);
     
         document.addEventListener('mousemove', handleUserActivity);
-        document.addEventListener('keypress', handleUserActivity);
+        document.addEventListener('error', handleUserActivity);
     
         return () => {
             clearTimeout(logoutOnInactivity);

@@ -10,29 +10,51 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import comteco.backend.nap.Nap;
+import comteco.backend.nap.NapRepository;
 import comteco.backend.nap.NapService;
 import lombok.AllArgsConstructor;
 
+/**
+ * Servicios de la clase Posicion
+ */
 @Service
 @AllArgsConstructor
 public class PosicionService {
     
     private PosicionRepository posicionRepository;
-
+    private NapRepository napRepository;
     private NapService napService;
 
+    /**
+     * Lista todas las posicioes
+     * @return Una Lista con todas las posicione registradas en la base de datos.
+     */
     public List<Posicion> getAllPosiciones() {
         return posicionRepository.findAll();
     }
 
+    /**
+     * 
+     * @param id de una Posicion a ser Buscada.
+     * @return Un Objeto de tipo Optional que puede o no tener a una Posicion.
+     */
     public Optional<Posicion> getPosicionById(Long id) {
         return posicionRepository.findById(id);
     }
 
+    /**
+     * 
+     * @param posicion a ser guardada en la base de datos
+     * @return la misma posicion ya creada.
+     */
     public Posicion savePosicion(Posicion posicion) {
         return posicionRepository.save(posicion);
     }
 
+    /**
+     * 
+     * @param id de la posicion a ser borrada.
+     */
     public void deletePosicion(Long id) {
         posicionRepository.deleteById(id);
     }
@@ -198,5 +220,26 @@ public class PosicionService {
         pos.getNap().setDescripcion(descripcion);
         System.out.println("imprmiendo la posicion"+ pos.getCod());
         return posicionRepository.save(pos);
+    }
+
+    /**
+     * 
+     * @param nap id de la nap a aser buscada en la base de datos
+     * @return una lista de todas las posiciones relacionadas a la nap.
+     */
+    public List<Posicion> getAllPosicionesByNap(Long nap) {
+        try {
+            Optional<Nap> napOptional = napRepository.findById(nap);
+            if (napOptional.isPresent()) {
+                Nap nap2 = napOptional.get();
+                List<Posicion> posicions = posicionRepository.findAllByNap(nap2);
+                return posicions;
+            }{
+                return null;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+            return null;
+        }
     }
 }

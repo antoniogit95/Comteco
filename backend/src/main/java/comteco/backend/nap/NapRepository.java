@@ -5,6 +5,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repositorio que hace conxion con la base de datos por JPA
+ */
 @Repository
 public interface NapRepository extends JpaRepository<Nap, Long>{
 

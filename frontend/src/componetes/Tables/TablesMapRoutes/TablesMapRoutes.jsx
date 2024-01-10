@@ -2,16 +2,16 @@ import './TablesMapRoutes.css'
 import { useEffect, useState } from "react";
 import { URL_API_private } from "../../../providerContext/EndPoint";
 import axios from "axios";
-import { TablesFdt } from './TablesFdt';
+import { TablesPos } from './TablesPos';
 
 export const TablesMapRoutes = () => {
-    const [odfs, setOdfs] = useState([]);
-    const endPointOdf = URL_API_private+"/odf";
+    const [naps, setNaps] = useState([]);
+    const endPoint = URL_API_private+"/naps";
     const [expandedRow, setExpandedRow] = useState([]);
     const token  = JSON.parse(localStorage.getItem('user_data')).token;
 
     useEffect(() => {
-        getAllOdfs();
+        getAllNaps();
     }, []);
 
     const config = {
@@ -20,20 +20,21 @@ export const TablesMapRoutes = () => {
         }
     }
 
-    const getAllOdfs = async () => {
+    const getAllNaps = async () => {
         try {
-            const response = await axios.get(endPointOdf, config);
-            setOdfs(response.data);
+            const response = await axios.get(endPoint, config);
+            setNaps(response.data);
+            console.log("Naps obtenidos exitosamente")
         } catch (error) {
             console.error("Error del servidor: "+error.response);
         }
     }
     
-    const handleRowToggle = (odf) => {
-        if (expandedRow === odf.id_odf) {
+    const handleRowToggle = (nap) => {
+        if (expandedRow === nap.id) {
             setExpandedRow(null);
         } else {
-            setExpandedRow(odf.id_odf); 
+            setExpandedRow(nap.id); 
         }
     }
 
@@ -49,22 +50,23 @@ export const TablesMapRoutes = () => {
                     </tr>
                 </thead>
                 <tbody className='stylesBody'>
-                   {odfs.map((odf) => (
+                   {naps.map((nap) => (
                     <>
-                        <tr className = 'stylesTr' key={odf.id_odf} onClick={() => handleRowToggle(odf)}>
-                            <td className='stylesTh-Td'>{odf.id_odf}</td>
-                            <td className='stylesTh-Td'>{odf.codigo}</td>
-                            <td className='stylesTh-Td'>{odf.descripcion}</td>
-                            <td className='stylesTh-Td'>{odf.nombre}</td>
+                        <tr className = 'stylesTr' key={nap.id} onClick={() => handleRowToggle(nap)}>
+                            <td className='stylesTh-Td'>{nap.id}</td>
+                            <td className='stylesTh-Td'>{nap.cod}</td>
+                            <td className='stylesTh-Td'>{nap.descripcion}</td>
+                            <td className='stylesTh-Td'>{nap.ubicacion}</td>
                         </tr>
-                        {expandedRow === odf.id_odf && (
+                        {expandedRow === nap.id && (
                             <tr>
                                 <td colSpan="4">
                                     <div className='strylesContentOterTable'>
-                                        <TablesFdt id_odf= {odf.id_odf}/>
+                                        <TablesPos id_nap= {nap.id}/>
                                     </div>
                                 </td>
                             </tr>
+                            
                         )}
                     </>
                     

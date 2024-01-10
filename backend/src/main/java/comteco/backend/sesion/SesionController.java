@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import comteco.backend.auth.LoginRequest;
 import comteco.backend.person.Person;
 import comteco.backend.person.PersonService;
 import comteco.backend.user.User;
 import comteco.backend.user.UserRepository;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 /**
 * Controlador REST para la gestión de cesiones.
@@ -47,6 +51,27 @@ public class SesionController {
         }
     }
     
+    /**
+     * 
+     * @param loginRequest obgeto donde iniciamos el usuario para posteriormente cerrar la cesion;
+     * @return la cesion modificada.
+     */
+    @PostMapping("/close")
+    public ResponseEntity<Sesion> CerrarSesionByUser(@RequestBody LoginRequest loginRequest) {        
+        Sesion sesion = cesionService.cerrarSesionByUser(loginRequest.getUsername()); 
+        return sesion != null ? new ResponseEntity<>(sesion, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+    
+    /**
+     * 
+     * @param loginRequest obgeto donde iniciamos el usuario para posteriormente cerrar la cesion;
+     * @return la cesion de la ultima conexion
+     */
+    @GetMapping("/ultima/{id}")
+    public ResponseEntity<Sesion> getUltimaConexion(@PathVariable Long id) {        
+        Sesion sesion = cesionService.obtenerUltimaConexion(id); 
+        return sesion != null ? new ResponseEntity<>(sesion, HttpStatus.OK) : new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
 
     /**
      * Devuelve una lista de cesion por el id_persona.

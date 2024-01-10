@@ -31,6 +31,9 @@ import comteco.backend.ordenDia.vendedor.Vendedor;
 import comteco.backend.ordenDia.vendedor.VendedorRepository;
 import lombok.AllArgsConstructor;
 
+/**
+ * Servicio de la clase OrdenDia
+ */
 @Service
 @AllArgsConstructor
 public class OrdenDiaService {
@@ -44,30 +47,56 @@ public class OrdenDiaService {
     private VendedorRepository vendedorRepository;
     private PosicionService posicionService;
 
+    /**
+     * @return debulve todas las ordenes del dia.
+     */
     public List<OrdenDia> getAllOrdenDias() {
         return ordenDiaRepository.findAll();
     }
 
+    /**
+     * 
+     * @param id de la orden dia a buscar
+     * @return un objeto de tipo Otional que puede o no tener una orden dia.
+     */
     public Optional<OrdenDia> getOrdenDiaById(Long id) {
         return ordenDiaRepository.findById(id);
     }
 
+    /**
+     * 
+     * @param ordenDia a ser gurdada en la base de datos
+     * @return la misma orden dia una vez guardada
+     */
     public OrdenDia saveOrdenDia(OrdenDia ordenDia) {
         return ordenDiaRepository.save(ordenDia);
     }
 
+    /**
+     * 
+     * @param id de la orden dia a ser borrada.
+     */
     public void deleteOrdenDia(Long id) {
         ordenDiaRepository.deleteById(id);
     }
 
+    /**
+     * Guardar una orden dia en formato de String
+     * @param ordenDiaString en formato de String que contiene todos los campos de una orden dia,
+     * @return un String con los datos mensionados
+     */
     public String saveOrdenDia(String ordenDiaString){
-        String partes[] = ordenDiaString.split(";");
-        if(partes.length == 29){
+        String partes[] = ordenDiaString.split(";"); //dividimos la orden dia en 29 partes por el ;
+        if(partes.length == 29){ //preguntamos si tiene un longitud = 29
 
             Long productId = Long.parseLong(partes[12] != null ? partes[12]: "0");
             System.err.println("IMPRIMIR EL ID DEL PRODUCOT");
             Optional<OrdenDia> oDOptional = getOprdenDiaByProducto(productId);
 
+            /*
+             * Preguntamos si el producto existe en la base de datos, en caso que exista para no guardar doble,
+             * solo guardar su Servicio que cada orden dia tiene servicios distintos.
+             */
             if(oDOptional.isPresent()){
                 System.out.println("POSICIION YA EXISTE");
                 OrdenDia ordenDia = oDOptional.get();
@@ -161,7 +190,7 @@ public class OrdenDiaService {
                 System.out.println("servicio creado");
             }
          }     
-        return null;
+        return "OrdenDiaRegistrado.";
     }
 
     /**
@@ -198,6 +227,11 @@ public class OrdenDiaService {
 
     }
 
+    /**
+     * 
+     * @param date formato de la fecha en String 
+     * @return un objetod e tipo Timestamp que obtiene la fecha
+     */
     private Timestamp getFecha(String date){
         try {
             SimpleDateFormat formatFecha = new SimpleDateFormat("dd/MM/yyyy");
@@ -208,6 +242,10 @@ public class OrdenDiaService {
         }
     }
 
+    /**
+     * 
+     * @return todas las Ordenes dia en formato resumido 
+     */
     public List<OrdenDiaResponse> getOrdenDiaResumido() {
         try {
             List<OrdenDia> ordenDias = ordenDiaRepository.findAll();
@@ -229,6 +267,11 @@ public class OrdenDiaService {
         }
     }
 
+    /**
+     * 
+     * @param producto a ser buscado en la base de datos
+     * @return todos los ordenes del dia dela base de datos relaciados al producto
+     */
     public List<OrdenDiaResponseByProducto> getOrdenDiaByProducto(Long producto) {
         List<OrdenDia> ordenDias = ordenDiaRepository.findAllByProducto(producto);
         List<OrdenDiaResponseByProducto> response = new ArrayList<>();

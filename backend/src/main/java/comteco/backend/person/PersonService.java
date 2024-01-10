@@ -76,7 +76,7 @@ public class PersonService {
             Optional<Person> personOptional = personRepository.findById(id);
             Person person = personOptional.get();
             person.setStatus(true);
-            person.setUpdate_at(getTimestamp());
+            person.setUpdateAt(getTimestamp());
             personRepository.save(person);
             Optional<User> userOptional = userRepository.findByPerson(person);
             User user = userOptional.get();
