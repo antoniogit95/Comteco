@@ -62,7 +62,7 @@ public class User implements UserDetails {
      * Relación uno a uno con la entidad Person. Asocia al usuario con una persona.
      */
     @OneToOne
-    @JoinColumn(name = "id_person", referencedColumnName = "id_person")
+    @JoinColumn(name = "id_person", referencedColumnName = "id")
     private Person person;
 
     @Override
