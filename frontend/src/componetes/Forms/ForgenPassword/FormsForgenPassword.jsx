@@ -8,7 +8,7 @@ import './FormsForgenPassword.css'
 
 export const FromsForgenPassword = () => {
     
-    const endPoint = URL_API_public+"/forgenPassword";
+    const endPoint = URL_API_public+"/forgen_password";
     const endPointP = URL_API_public;
     const [isValidate, setIsValidate] = useState(true);
     const navigate = useNavigate();
