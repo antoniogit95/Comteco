@@ -14,4 +14,5 @@ public class ForgenPasswordRequest {
     private String item;
     private String email;
     private String password;
+    private String message;
 }   

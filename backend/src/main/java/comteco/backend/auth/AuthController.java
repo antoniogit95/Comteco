@@ -105,8 +105,8 @@ public class AuthController {
      * @return un objeto de tipo boleano si existe o no. 
      */
     @PostMapping("/checkData")
-    public ResponseEntity<String> checkData(@RequestBody ForgenPasswordRequest request){
-        String response = authService.existDataByForgenPassword(request);
+    public ResponseEntity<ForgenPasswordRequest> checkData(@RequestBody ForgenPasswordRequest request){
+        ForgenPasswordRequest response = authService.existDataByForgenPassword(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -116,8 +116,8 @@ public class AuthController {
      * @return un objeto de tipo boleano si existe o no. 
      */
     @PostMapping("/forgen_password")
-    public ResponseEntity<String> saveNewPasswordByEmail(@RequestBody ForgenPasswordRequest request){
-        String response = authService.existDataByForgenPassword(request);
+    public ResponseEntity<ForgenPasswordRequest> saveNewPasswordByEmail(@RequestBody ForgenPasswordRequest request){
+        ForgenPasswordRequest response = authService.existDataByForgenPassword(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

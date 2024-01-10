@@ -28,11 +28,15 @@ export const FromsForgenPassword = () => {
                         item : data.item,
                         email: data.email,
                     })
-                return response.data;
+                    if(response.data.message === "SIN ERROR"){
+                        setIsValidate(false);
+                    }else{
+                        adminErrros(error.response.data.message);
+                    }
+
             } catch (e) {
                 console.error(e)
                 adminErrros(error.response.data.message);
-                return true;
             }
         }else{
             adminErrros("debe llenar todos los campos");

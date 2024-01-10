@@ -169,18 +169,19 @@ public class AuthService {
      * @param request donde estan todos los datos unicos de un usuario como ser: email, ci, item.
      * @return un String especificando que error existe o no.
      */
-    public String existDataByForgenPassword(ForgenPasswordRequest request) {
+    public ForgenPasswordRequest existDataByForgenPassword(ForgenPasswordRequest request) {
         Optional<User> userOptionar = userRepository.findByUsername(request.getEmail());
         if(userOptionar.isPresent()){
             Person person = userOptionar.get().getPerson();
             if(person.getCedulaIdentidad().equals(request.getCi()) &&
             person.getItem().equals(request.getItem())){
-                return "SIN ERROR";
+                request.setMessage("SIN ERROR");
             }else{
-                return "Las credenciales no corresponden al Email";
+                request.setMessage("Las credenciales no corresponden al Email");
             }
         }else{
-            return "El Email ingresado no esta registrado";
+            request.setMessage("El Email ingresado no esta registrado");
         }
+        return request;
     }
 }
