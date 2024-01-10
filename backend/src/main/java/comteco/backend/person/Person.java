@@ -28,10 +28,10 @@ public class Person {
     */
     @Id
     @GeneratedValue
-    private Long id_person;
+    private Long id;
 
     @Column(unique = true) //permite que solo se registre un carnet de identidad.
-    private String celula_identidad;
+    private String cedulaIdentidad;
     
     private String nombre;
     private String apellidos;
@@ -47,7 +47,7 @@ public class Person {
     
     private String telefono;
     private boolean status;
-    private Timestamp created_at;
-    private Timestamp update_at;
+    private Timestamp createdAt;
+    private Timestamp updateAt;
 
 }

@@ -62,7 +62,7 @@ public class AuthController {
 
     /**
      * 
-     * @param username a buscar si existe o no
+     * @param request donde esta el usarme a buscar si existe o no
      * @return un objeto de tipo boleano si existe false, 
      */
     @PostMapping("/checkusername")
@@ -70,6 +70,32 @@ public class AuthController {
         System.out.println(request.getUsername());
         Boolean existeUsername = authService.existUsernme(request.getUsername());
         return existeUsername ? new ResponseEntity<>(true, HttpStatus.OK) : 
+            new ResponseEntity<>(false, HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @param request donde esta el ci a buscar si existe o no
+     * @return un objeto de tipo boleano si existe false, 
+     */
+    @PostMapping("/checkci")
+    public ResponseEntity<Boolean> checkCiAviable(@RequestBody LoginRequest request){
+        System.out.println(request.getUsername());
+        Boolean existeCi = authService.existCi(request.getUsername());
+        return existeCi ? new ResponseEntity<>(true, HttpStatus.OK) : 
+            new ResponseEntity<>(false, HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @param request donde esta el Item a buscar si existe o no
+     * @return un objeto de tipo boleano si existe false, 
+     */
+    @PostMapping("/checkitem")
+    public ResponseEntity<Boolean> checkItemAviable(@RequestBody LoginRequest request){
+        System.out.println(request.getUsername());
+        Boolean existeItem = authService.existItem(request.getUsername());
+        return existeItem ? new ResponseEntity<>(true, HttpStatus.OK) : 
             new ResponseEntity<>(false, HttpStatus.OK);
     }
 }

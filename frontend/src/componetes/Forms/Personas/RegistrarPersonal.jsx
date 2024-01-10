@@ -19,11 +19,31 @@ export const RegistrarPersonal = () => {
     }
 
     const ciExistente = async (dato) =>{
-        return false;
+        try {
+            const response = await axios.post(endPointP+"/checkci", 
+                {
+                    username : dato,
+                    password : ""
+                })
+            return response.data;
+        } catch (e) {
+            console.error(e)
+            return true;
+        }
     }
 
     const numInterExistente = async (dato) => {
-        return false;
+        try {
+            const response = await axios.post(endPointP+"/checkitem", 
+                {
+                    username : dato,
+                    password : ""
+                })
+            return response.data;
+        } catch (e) {
+            console.error(e)
+            return true;
+        }
     }
 
     const emailExistente = async (dato) => {

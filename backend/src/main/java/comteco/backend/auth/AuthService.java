@@ -73,7 +73,7 @@ public class AuthService {
      */
     public  AuthResponse register(RegisterRequest request){
         Person person = Person.builder()
-                .celula_identidad(request.getCelula_identidad())
+                .cedulaIdentidad(request.getCelula_identidad())
                 .nombre(request.getNombre())
                 .apellidos(request.getApellidos())
                 .item(request.getItem())
@@ -81,8 +81,8 @@ public class AuthService {
                 .email(request.getEmail())
                 .telefono(request.getTelefono())
                 .status(false)
-                .created_at(getTimestamp())
-                .update_at(getTimestamp())
+                .createdAt(getTimestamp())
+                .updateAt(getTimestamp())
                 .build();
         personRepository.save(person);
         User user = User.builder()
@@ -133,6 +133,33 @@ public class AuthService {
         if(userOptional.isPresent()){
             return true;
         }else{
+            return false;
+        }
+    }
+
+    /**
+     * @param ci para preguntar si existe o no en la base de datos
+     * @return un objeto de tipo boolenano.
+     */
+    public Boolean existCi(String ci) {
+        Optional<Person> pOptional = personRepository.findByCedulaIdentidad(ci);
+        if (pOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @param itempara preguntar si existe o no en la base de datos
+     * @return un objeto de tipo boolenano.
+     */
+    public Boolean existItem(String item) {
+        Optional<Person> pOptional = personRepository.findByItem(item);
+        if (pOptional.isPresent()) {
+            return true;
+        } else {
             return false;
         }
     }
