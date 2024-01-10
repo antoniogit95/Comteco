@@ -49,8 +49,8 @@ export const TablesPerson = () => {
 
     const handleValidateUser = async () => {
         try {
-            const response = await axios.put(endPointValidate+selectedPersonInform.id_person, {
-                id_person: selectedPersonInform.id_person,
+            const response = await axios.put(endPointValidate+selectedPersonInform.id, {
+                id_person: selectedPersonInform.id,
             }, config);
             console.log(response.data);
         } catch (error) {

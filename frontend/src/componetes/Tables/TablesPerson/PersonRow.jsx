@@ -10,11 +10,11 @@ export const PersonRow = ({person, onShowConnections, onShowInformation}) =>{
     }
     const [isOnline, setIsOnline] = useState(false);
     const [acepted, setAcepted] = useState(false);
-    const endPoint = URL_API_private+"/user/isValidate/"+person.id_person;
-    const endPointActive = URL_API_private+"/user/active/"+person.id_person;
-    const endPointDesactive = URL_API_private+"/user/desactive/"+person.id_person;
-    const endPointCesion = URL_API_private+"/cesion/actives/"+person.id_person;
-    const endPointUltimaConexion = URL_API_private+"/cesion/ultima/"+person.id_person;
+    const endPoint = URL_API_private+"/user/isValidate/"+person.id;
+    const endPointActive = URL_API_private+"/user/active/"+person.id;
+    const endPointDesactive = URL_API_private+"/user/desactive/"+person.id;
+    const endPointCesion = URL_API_private+"/cesion/actives/"+person.id;
+    const endPointUltimaConexion = URL_API_private+"/cesion/ultima/"+person.id;
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [ultimaConexion, setUltimaConexion] = useState("")
     
