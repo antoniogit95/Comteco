@@ -16,6 +16,7 @@ import comteco.backend.person.PersonService;
 
 import lombok.AllArgsConstructor;
 
+
 /**
  * Controlador REST para la gestión de usuarios.
  * todas las rutas estan el contexto auth api/v1/user 
@@ -49,6 +50,11 @@ public class UserController {
         }
     }
 
+
+    /**
+     * @param id_person a ser bloqueda y no poder inisiar sesion
+     * @return un mensaje de que fue desactivado o bloqueado.
+     */
     @PutMapping("/desactive/{id_person}")
     public ResponseEntity<String> desactiveUsuarioPorIdPersona(@PathVariable Long id_person) {
         Person person = personService.getPersonById(id_person);

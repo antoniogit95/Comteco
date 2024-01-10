@@ -44,7 +44,7 @@ public class User implements UserDetails {
     /**
      * Nombre de usuario del usuario. Debe ser único en el sistema.
      */
-    @Column(nullable = false)
+    @Column(unique = true)
     private String username; 
     private String password; //contraseña encriptada
     private boolean status; //Estado del usuario si tiene o no permisos de autentificacion

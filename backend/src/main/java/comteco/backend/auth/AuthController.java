@@ -58,4 +58,18 @@ public class AuthController {
     public ResponseEntity<String> registerGet(){
         return new ResponseEntity<>("registro exitoso", HttpStatus.OK);
     }
+
+
+    /**
+     * 
+     * @param username a buscar si existe o no
+     * @return un objeto de tipo boleano si existe false, 
+     */
+    @PostMapping("/checkusername")
+    public ResponseEntity<Boolean> checkUsernameAviable(@RequestBody LoginRequest request){
+        System.out.println(request.getUsername());
+        Boolean existeUsername = authService.existUsernme(request.getUsername());
+        return existeUsername ? new ResponseEntity<>(true, HttpStatus.OK) : 
+            new ResponseEntity<>(false, HttpStatus.OK);
+    }
 }

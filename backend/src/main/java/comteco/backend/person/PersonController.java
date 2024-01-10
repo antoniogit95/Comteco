@@ -93,4 +93,6 @@ public class PersonController {
     public ResponseEntity<String> putActivePersonAdnUSer(@PathVariable Long id) {
         return personService.ActivePersonAndUser(id);
     }
+
+    
 }

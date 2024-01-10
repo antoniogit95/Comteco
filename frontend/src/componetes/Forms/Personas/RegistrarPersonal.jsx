@@ -10,28 +10,34 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export const RegistrarPersonal = () => {
 
-    const [personas, setPersonas] = useState( [] );
     const endPoint = URL_API_public+"/register";
+    const endPointP = URL_API_public;
     const navigate = useNavigate();
 
     function handleClick (){
         navigate("/");
     }
 
-    function ciExistente(dato){
+    const ciExistente = async (dato) =>{
         return false;
     }
 
-    function numInterExistente(dato){
+    const numInterExistente = async (dato) => {
         return false;
     }
 
-    function telefonoExistente(dato){
-        return false
-    }
-
-    function emailExistente(dato){
-        return false;
+    const emailExistente = async (dato) => {
+        try {
+            const response = await axios.post(endPointP+"/checkusername", 
+                {
+                    username : dato,
+                    password : ""
+                })
+            return response.data;
+        } catch (e) {
+            console.error(e)
+            return true;
+        }
     }
 
     const sugesRole = [
@@ -57,7 +63,7 @@ export const RegistrarPersonal = () => {
                     confirmar_password: '',  
                 }}
 
-                validate={(valores) => {
+                validate={async (valores) => {
                     let errores = {};
 
                     //validacion Celula de Identidad
@@ -65,7 +71,7 @@ export const RegistrarPersonal = () => {
                         errores.ci = 'el campo Celula de Intentidad es requerido obligatoriamente';
                     }else if(!/^[0-9\s]{1,9}$/.test(valores.ci)){
                         errores.ci = 'no es un numero';
-                    }else if(ciExistente(valores.ci)){
+                    }else if( await ciExistente(valores.ci)){
                         errores.ci = 'el numero de carnet ya fue registrado';
                     }
 
@@ -74,7 +80,7 @@ export const RegistrarPersonal = () => {
                         errores.item = 'el campo numero de item es requerido obligatoriamente';
                     }else if(!/^[0-9\s]{1,9}$/.test(valores.item)){
                         errores.item = 'no es un numero';
-                    }else if(numInterExistente(valores.item)){
+                    }else if( await numInterExistente(valores.item)){
                         errores.item = 'el numero de interno ya fue registrado';
                     }
 
@@ -97,8 +103,6 @@ export const RegistrarPersonal = () => {
                         errores.telefono = 'el campo Telefono es requerido obligatoriamente';
                     }else if(!/^[0-9\s]{1,10}$/.test(valores.telefono)){
                         errores.telefono = 'el campo no pude tener letras o caracteres especiales';
-                    }else if(telefonoExistente(valores.telefono)){
-                        errores.telefono = 'el numero de telefono ya fue registrado';
                     }
 
                     //validacion de fecha de nacimiento
@@ -111,7 +115,7 @@ export const RegistrarPersonal = () => {
                         errores.email = 'el campo Correo Electronico es requerido obligatoriamente';
                     }else if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
                         errores.email = 'el campo solo puede tener letras, numeros, gion y guion bajo';
-                    }else if(emailExistente(valores.email)){
+                    }else if( await emailExistente(valores.email)){
                         errores.email = 'el correo electronico ya fue registrado';
                     }
 

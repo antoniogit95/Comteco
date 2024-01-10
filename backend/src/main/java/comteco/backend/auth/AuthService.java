@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -119,6 +120,20 @@ public class AuthService {
             return AuthResponse.builder()
                 .message("Error:" +e)
                 .build();
+        }
+    }
+
+    /**
+     * 
+     * @param username para saber si existe o no
+     * @return un obgeto de tipo booleanno
+     */
+    public Boolean existUsernme(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if(userOptional.isPresent()){
+            return true;
+        }else{
+            return false;
         }
     }
 }
