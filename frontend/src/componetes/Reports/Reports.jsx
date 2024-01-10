@@ -261,59 +261,6 @@ export const Reports = () => {
         }
     }
 
-
-    /**
-    const filtrar = async (terminoBusqueda) => {
-
-        if(terminoBusqueda){
-            
-            const resultadoBusqueda = dataTecnico.filter((elemento) => {
-                console.log(elemento.producto);
-                elemento.producto.includes(terminoBusqueda);
-            });
-            console.log("filtrado con exito");
-            setDatos(resultadoBusqueda);
-            
-            // Transforma los datos para mostrarlos en una tabla transpuesta
-            console.log("poniendo los datos filtrados a la tabla:", datos);//hasta aqui funciona
-            const transpuestos = resultadoBusqueda.reduce((acc, dato) => {
-                Object.keys(dato).forEach(key => {
-                    if (!acc[key]) {
-                        acc[key] = [];
-                    }
-                    // Evita valores duplicados en la misma clave
-                    if (!acc[key].includes(dato[key])) {
-                        acc[key].push(dato[key]);   
-                    }
-                });
-                console.log("exito");
-                return acc; 
-        }, {});
-
-        const transpuestosArray = {};
-        Object.keys(transpuestos).forEach(key => {
-            transpuestosArray[key] = Array.from(transpuestos[key]);
-        });
-
-        setDatosTranspuestos(Object.entries(transpuestos));
-      
-        const datosPlanesFiltrados = datosPlanes.filter((datop) => {
-            const velocidadEnDatop = datop.codLab;
-            
-            return resultadoBusqueda.some((dato) => {
-                const primerosCuatro = dato.clase_SERVICIO.slice(0, 4);
-                //console.log('primeros cuatro',primerosCuatro);
-                const velocidadEnDatos = `${dato.cod_PLAN_COMERCIAL}-${primerosCuatro}`;
-                //console.log('velocidad en datos',velocidadEnDatop);
-                return velocidadEnDatos === velocidadEnDatop;
-            });
-        });
-        }
-
-    }
-     */
-
-
     return (
         <div >
             <div className="stylesEncabezadoAnalista">
@@ -366,18 +313,7 @@ export const Reports = () => {
                 <button className='stylesButoon' onClick={filtrarDatosOrigneCom}>filtrar virtual</button>
                 <button className='stylesButoon' onClick={() => setDatos(dataTecnico)}>mostrar todo</button>
             </div>
-            <div>
-                <select value={filtro} onChange={(e) => setFiltro(e.target.value)}>
-                    <option value="nombre">Dato tecnico</option>
-                    <option value="posicicion">Posicion</option>
-                    <option value="nap">NAP</option>
-                    <option value="fdt">FDT</option>
-                    <option value="odf">ODF</option>D
-                </select>
-                <button className="stylesButoon2" onClick={() => filtrarDatos()}>Buscar</button>
-            </div> 
-        <br></br>
-        <div className="styleContentTable">
+            <div className="styleContentTable">
                 <table className="styleTable">
                     <thead className="stylesHead">
                         <tr className="stylesHead">
