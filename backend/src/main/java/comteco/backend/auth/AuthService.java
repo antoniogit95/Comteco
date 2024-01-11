@@ -101,7 +101,7 @@ public class AuthService {
                 .build();
     }
 
-    private Timestamp getTimestamp(){
+    public Timestamp getTimestamp(){
         LocalDateTime now = LocalDateTime.now();
         return Timestamp.valueOf(now);
     }
@@ -198,7 +198,7 @@ public class AuthService {
             if(person.getCedulaIdentidad().equals(request.getCi()) &&
             person.getItem().equals(request.getItem())){
                 request.setMessage("SIN ERROR");
-                user.setPassword(request.getPassword());
+                user.setPassword(passwordEncoder.encode(request.getPassword()));
                 userRepository.save(user);
             }else{
                 request.setMessage("Las credenciales no corresponden al Email");
