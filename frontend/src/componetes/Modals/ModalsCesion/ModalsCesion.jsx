@@ -25,7 +25,7 @@ export const ModalsCesion = ({ person, show, onHide }) => {
     const getAllCesionPerson = async () => {
         try {
             console.log(endPoint)
-            const response = await axios.get(endPoint+person.id_person, config);
+            const response = await axios.get(endPoint+person.id, config);
             setSecion(response.data);
         } catch (error) {
             console.error(error)

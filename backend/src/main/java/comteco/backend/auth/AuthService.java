@@ -101,7 +101,7 @@ public class AuthService {
                 .build();
     }
 
-    private Timestamp getTimestamp(){
+    public Timestamp getTimestamp(){
         LocalDateTime now = LocalDateTime.now();
         return Timestamp.valueOf(now);
     }
@@ -161,6 +161,51 @@ public class AuthService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * Preguntar si el usuario ingresado si existe o no
+     * @param request donde estan todos los datos unicos de un usuario como ser: email, ci, item.
+     * @return un String especificando que error existe o no.
+     */
+    public ForgenPasswordRequest existDataByForgenPassword(ForgenPasswordRequest request) {
+        Optional<User> userOptionar = userRepository.findByUsername(request.getEmail());
+        if(userOptionar.isPresent()){
+            Person person = userOptionar.get().getPerson();
+            if(person.getItem().equals(request.getItem())){
+                request.setMessage("SIN ERROR");
+            }else{
+                request.setMessage("Las credenciales no corresponden al Email");
+            }
+        }else{
+            request.setMessage("El Email ingresado no esta registrado");
+        }
+        return request;
+    }
+
+    /**
+     * Gurdar la nueva contraseña
+     * @param request donde estan todos los datos unicos de un usuario como ser: email, ci, item y la contraseña
+     * @return un String especificando que error existe o no.
+     */
+    public ResponseEntity<ForgenPasswordRequest> saveNewPasswordByEmail(ForgenPasswordRequest request) {
+        Optional<User> userOptionar = userRepository.findByUsername(request.getEmail());
+        if(userOptionar.isPresent()){
+            User user = userOptionar.get();
+            Person person = user.getPerson();
+            if(person.getItem().equals(request.getItem())){
+                request.setMessage("SIN ERROR");
+                user.setPassword(passwordEncoder.encode(request.getPassword()));
+                userRepository.save(user);
+                return new ResponseEntity<>(request, HttpStatus.OK); 
+            }else{
+                request.setMessage("Las credenciales no corresponden al Email");
+                return new ResponseEntity<>(request, HttpStatus.NOT_FOUND);
+            }
+        }else{
+            request.setMessage("El Email ingresado no esta registrado");
+            return new ResponseEntity<>(request, HttpStatus.NOT_FOUND);
         }
     }
 }
