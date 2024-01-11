@@ -60,7 +60,7 @@ const getAllDatos = async () => {
           <th className='stylesTh-Td'>Serial MAC ADDRESS</th>
         </tr>
       </thead>
-      <tbody className='stylesBody'>
+      <tbody className='table-body-desp2'>
         {dataProduct.map((data, index) => (
           <tr key={index}>
             <td className='stylesTh-Td'>{data.actividades}</td>
