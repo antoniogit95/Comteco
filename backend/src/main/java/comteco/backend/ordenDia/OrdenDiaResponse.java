@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * clase para utilizar como respuesta de una consulta dada.
+ */
 @Data
 @Builder
 @AllArgsConstructor

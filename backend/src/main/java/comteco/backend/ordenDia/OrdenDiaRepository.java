@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import comteco.backend.nap.posicion.Posicion;
 
+/*
+ * Conexion con la Base de Datos en la entidad orden_dia 
+ */
 @Repository
 public interface OrdenDiaRepository extends JpaRepository<OrdenDia, Long>{
 

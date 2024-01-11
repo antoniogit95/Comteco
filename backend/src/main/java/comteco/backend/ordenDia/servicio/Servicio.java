@@ -11,7 +11,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * Entidad Servicio de que poseen las ordenes del dia
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,6 +31,9 @@ public class Servicio {
     private String estado;
     private String areaServicio;
 
+    /**
+     * Relacion de Muchos a 1 donde muhos serviciso esten relacionados a una orden dia
+     */
     @ManyToOne
     @JoinColumn(name = "id_orden_dia", nullable = false)
     private OrdenDia ordenDia;

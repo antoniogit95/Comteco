@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,7 +73,7 @@ public class AuthService {
      */
     public  AuthResponse register(RegisterRequest request){
         Person person = Person.builder()
-                .celula_identidad(request.getCelula_identidad())
+                .cedulaIdentidad(request.getCelula_identidad())
                 .nombre(request.getNombre())
                 .apellidos(request.getApellidos())
                 .item(request.getItem())
@@ -80,8 +81,8 @@ public class AuthService {
                 .email(request.getEmail())
                 .telefono(request.getTelefono())
                 .status(false)
-                .created_at(getTimestamp())
-                .update_at(getTimestamp())
+                .createdAt(getTimestamp())
+                .updateAt(getTimestamp())
                 .build();
         personRepository.save(person);
         User user = User.builder()
@@ -119,6 +120,47 @@ public class AuthService {
             return AuthResponse.builder()
                 .message("Error:" +e)
                 .build();
+        }
+    }
+
+    /**
+     * 
+     * @param username para saber si existe o no
+     * @return un obgeto de tipo booleanno
+     */
+    public Boolean existUsernme(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if(userOptional.isPresent()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @param ci para preguntar si existe o no en la base de datos
+     * @return un objeto de tipo boolenano.
+     */
+    public Boolean existCi(String ci) {
+        Optional<Person> pOptional = personRepository.findByCedulaIdentidad(ci);
+        if (pOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @param itempara preguntar si existe o no en la base de datos
+     * @return un objeto de tipo boolenano.
+     */
+    public Boolean existItem(String item) {
+        Optional<Person> pOptional = personRepository.findByItem(item);
+        if (pOptional.isPresent()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

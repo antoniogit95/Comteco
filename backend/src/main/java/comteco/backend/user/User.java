@@ -44,7 +44,7 @@ public class User implements UserDetails {
     /**
      * Nombre de usuario del usuario. Debe ser único en el sistema.
      */
-    @Column(nullable = false)
+    @Column(unique = true)
     private String username; 
     private String password; //contraseña encriptada
     private boolean status; //Estado del usuario si tiene o no permisos de autentificacion
@@ -62,7 +62,7 @@ public class User implements UserDetails {
      * Relación uno a uno con la entidad Person. Asocia al usuario con una persona.
      */
     @OneToOne
-    @JoinColumn(name = "id_person", referencedColumnName = "id_person")
+    @JoinColumn(name = "id_person", referencedColumnName = "id")
     private Person person;
 
     @Override

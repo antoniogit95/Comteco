@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 
+/**
+ * Servicios de la clase Nap
+ */
 @Service
 @AllArgsConstructor
 public class NapService {
@@ -13,18 +16,36 @@ public class NapService {
     private NapRepository napRepository;
 
 
+    /**
+     * Lista todas las Naps
+     * @return
+     */
     public List<Nap> getAllNAPs() {
         return napRepository.findAll();
     }
 
+    /**
+     * 
+     * @param id Nap a ser buscada en la base de datos
+     * @return un Objeto de tipo Optional que puede o no tener una NAp
+     */
     public Optional<Nap> getNAPById(Long id) {
         return napRepository.findById(id);
     }
 
+    /**
+     * 
+     * @param napa a ser guardada en la base de datos
+     * @return la misma nap creada.
+     */
     public Nap saveNAP(Nap nap) {
         return napRepository.save(nap);
     }
 
+    /**
+     * 
+     * @param id a ser Borrada.
+     */
     public void deleteNAP(Long id) {
         napRepository.deleteById(id);
     }
