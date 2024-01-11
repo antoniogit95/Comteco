@@ -118,7 +118,6 @@ public class AuthController {
      */
     @PutMapping("/forgen_password")
     public ResponseEntity<ForgenPasswordRequest> saveNewPasswordByEmail(@RequestBody ForgenPasswordRequest request){
-        ForgenPasswordRequest response = authService.saveNewPasswordByEmail(request);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return authService.saveNewPasswordByEmail(request);
     }
 }

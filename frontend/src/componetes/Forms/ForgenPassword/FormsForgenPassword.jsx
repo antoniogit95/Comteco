@@ -21,11 +21,11 @@ export const FromsForgenPassword = () => {
     }
 
     const validar = async (data) =>{
-        if(data.ci !== '' && data.item !== '' && data.email !== ''){
+        if(data.item !== '' && data.email !== ''){
             try {
                 const response = await axios.post(endPointP+"/checkData", 
                     {
-                        ci : data.ci,
+                        ci : '',
                         item : data.item,
                         email: data.email,
                     }
@@ -84,11 +84,13 @@ export const FromsForgenPassword = () => {
                     let errores = {};
 
                     //validacion Celula de Identidad
+                    /** 
                     if(!valores.ci){
                         errores.ci = 'el campo Celula de Intentidad es requerido obligatoriamente';
                     }else if(!/^[0-9\s]{1,9}$/.test(valores.ci)){
                         errores.ci = 'no es un numero';
                     }
+                    */
 
                     //validacion de item
                     if(!valores.item){
@@ -100,8 +102,6 @@ export const FromsForgenPassword = () => {
                     //validacion correo electronio
                     if(!valores.email){
                         errores.email = 'el campo Correo Electronico es requerido obligatoriamente';
-                    }else if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
-                        errores.email = 'el campo solo puede tener letras, numeros, gion y guion bajo';
                     }
 
                     //validacion para contraseña
@@ -125,15 +125,22 @@ export const FromsForgenPassword = () => {
                     const store = async (e) => {
                         e.preventDefault()
                         try {
-                            await axios.put(endPoint, {
-                                ci: valores.ci,
+                            const response = await axios.put(endPoint, {
+                                ci: '',
                                 item: valores.item,
                                 email: valores.email,
                                 password: valores.password
                             });
+                            console.log(response.data);
+                            if(response.data.message === "SIN ERROR"){
+                            }else{
+                                adminErrros(response.data.message);
+                            }
                             navigate('/home');    
                         } catch (error) {
                             console.log(error)
+                            adminErrros(error.response.data.message);
+
                         }
                         
                     }
@@ -147,6 +154,7 @@ export const FromsForgenPassword = () => {
                         <div className={exisError? 'stylesErrosGeneral': ''}>
                         <label >{error}</label>
                         </div>
+                        {/**
                     <div>
                         <label htmlFor='ci'>Celula de Identidad</label>
                         <input 
@@ -161,6 +169,7 @@ export const FromsForgenPassword = () => {
                         />
                         {touched.ci && errors.ci && <div className='styleErrores'>{errors.ci}</div>}
                     </div>
+                     */}
                     <div>
                         <label htmlFor='item'>Numero de Item</label>
                         <Field 
@@ -189,20 +198,6 @@ export const FromsForgenPassword = () => {
                         />
                         {touched.email && errors.email && <div className='styleErrores'>{errors.email}</div>}
                     </div>
-                    {isValidate? <>
-                        <br />
-                        <div className='stylesContenedorButton'>
-                            <button className='stylesButoon' type="button" onClick={() => validar(values)}>
-                                Validar
-                            </button>
-                        </div>
-                        <br />
-                        <div className='stylesContenedorButton'>
-                            <button className='stylesButoon' type="button" onClick={handleClick}>
-                                Cancelar
-                            </button>
-                        </div>
-                    </>: <>
                         <div>
                             <label htmlFor='password'>Contraseña</label>
                             <input 
@@ -243,9 +238,7 @@ export const FromsForgenPassword = () => {
                             <button className='stylesButoon' type="button" onClick={handleClick}>
                                 Cancelar
                             </button>
-                        </div>    
-                    </>}
-                    
+                        </div>                        
                 </form>
                 )}
             </Formik>
