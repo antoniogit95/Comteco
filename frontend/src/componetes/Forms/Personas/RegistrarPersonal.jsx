@@ -18,6 +18,7 @@ export const RegistrarPersonal = () => {
         navigate("/");
     }
 
+    /**
     const ciExistente = async (dato) =>{
         try {
             const response = await axios.post(endPointP+"/checkci", 
@@ -31,6 +32,7 @@ export const RegistrarPersonal = () => {
             return true;
         }
     }
+     */
 
     const numInterExistente = async (dato) => {
         try {
@@ -46,7 +48,7 @@ export const RegistrarPersonal = () => {
         }
     }
 
-    const emailExistente = async (dato) => {
+    const emailExistente = async (dato) => {//se cambio de email a username
         try {
             const response = await axios.post(endPointP+"/checkusername", 
                 {
@@ -87,6 +89,7 @@ export const RegistrarPersonal = () => {
                     let errores = {};
 
                     //validacion Celula de Identidad
+                    /**
                     if(!valores.ci){
                         errores.ci = 'el campo Celula de Intentidad es requerido obligatoriamente';
                     }else if(!/^[0-9\s]{1,9}$/.test(valores.ci)){
@@ -94,6 +97,7 @@ export const RegistrarPersonal = () => {
                     }else if( await ciExistente(valores.ci)){
                         errores.ci = 'el numero de carnet ya fue registrado';
                     }
+                     */
 
                     //validacion de item
                     if(!valores.item){
@@ -130,11 +134,11 @@ export const RegistrarPersonal = () => {
                         errores.fecha_nacimiento = 'el campo Fecha de nacimiento es obligatoriamente';
                     }
 
-                    //validacion correo electronio
+                    //validacion correo electronio o username
                     if(!valores.email){
                         errores.email = 'el campo Correo Electronico es requerido obligatoriamente';
-                    }else if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
-                        errores.email = 'el campo solo puede tener letras, numeros, gion y guion bajo';
+                    }else if(valores.email.length < 6){
+                        errores.email = 'debe tener un longitud minima de 6 caracteres';
                     }else if( await emailExistente(valores.email)){
                         errores.email = 'el correo electronico ya fue registrado';
                     }
@@ -167,7 +171,7 @@ export const RegistrarPersonal = () => {
                                 password: valores.password,
                                 nombre: valores.nombre.toUpperCase(),
                                 apellidos: valores.apellidos.toUpperCase(),
-                                celula_identidad: valores.ci,
+                                celula_identidad: "",
                                 item: valores.item,
                                 fecha_nacimiento: valores.fecha_nacimiento,
                                 email: valores.email,
@@ -213,6 +217,7 @@ export const RegistrarPersonal = () => {
                         />
                         {touched.item && errors.item && <div className='styleErrores'>{errors.item}</div>}
                     </div>
+                    {/**
                     <div>
                         <label htmlFor='ci'>Celula de Identidad</label>
                         <input 
@@ -227,6 +232,7 @@ export const RegistrarPersonal = () => {
                         />
                         {touched.ci && errors.ci && <div className='styleErrores'>{errors.ci}</div>}
                     </div>
+                     */}
                     <div>
                         <label htmlFor='nombre'>nombres</label>
                         <input 
