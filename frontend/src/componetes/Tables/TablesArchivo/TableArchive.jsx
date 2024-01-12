@@ -41,19 +41,20 @@ export const  TableArchive = () => {
         if(fechaActual){
             console.log("Buscando por fecha: "+fechaActual+" "+fechaActual);
             try {
-                console.log(endPoint+"/date")
-                const response = await axios.post(endPoint + "/date", {
+                console.log(endPointByDate);
+                const response = await axios.post(endPointByDate, {
                     fechaInicio: fechaActual,
                     fechaFinal: fechaActual
                     },config);
-                setDataTecnico(response.data);
+                setRescatarDatos(response.data);
                 setDatos(response.data);
-                console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
+                console.log("Orden Dia Por Fechas obtenidos satisfactormente..")
             } catch (error) {
                 console.error(error)
             }
         }
     }
+
     const getAllDatos = async () => {
         try {
 
