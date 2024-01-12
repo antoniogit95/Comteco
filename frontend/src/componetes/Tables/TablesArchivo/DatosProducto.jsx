@@ -114,7 +114,7 @@ const ExcelTable = ({ producto }) => {
           <th className='stylesTh-Td'>Direccion</th>
         </tr>
       </thead>
-      <tbody className='table-body'>
+      <tbody className='table-body-desp1'>
         {dataProduct.length > 0 && (
           <tr className='stylesTr'>
             <td>

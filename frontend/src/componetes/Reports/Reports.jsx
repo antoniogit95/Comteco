@@ -45,7 +45,7 @@ export const Reports = () => {
                     fechaFinal: fechaActual
                     },config);
                 setDataTecnico(response.data);
-                setDatos(response.data);
+                setDatos(response.data.reverse());
                 console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
             } catch (error) {
                 console.error(error)
@@ -57,7 +57,7 @@ export const Reports = () => {
         try {
             const response = await axios.get(endPoint, config)
             setDataTecnico(response.data);
-            setDatos(response.data);
+            setDatos(response.data.reverse());
             console.log("Datos Tecnicos obtenidos satisfactorimente..")
         } catch (error) {
             console.error(error)
@@ -120,7 +120,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -148,7 +148,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -176,7 +176,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -200,7 +200,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -236,7 +236,7 @@ export const Reports = () => {
         try {
             const response = await axios.get(endPoint+"/producto/"+buscar, config)
             setDataTecnico(response.data);
-            setDatos(response.data);
+            setDatos(response.data.reverse());
             console.log("Datos Tecnicos  Por producto obtenidos satisfactormente..")
         } catch (error) {
             console.error(error)
@@ -282,7 +282,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
