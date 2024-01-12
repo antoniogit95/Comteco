@@ -4,6 +4,7 @@ import './TableArchive.css'
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import TablaAdicional from './DatosProducto';
 import { ProdcutRow } from './ProductRow';
+import { format } from 'date-fns';
 
 export const  TableArchive = () => {
     const [datos, setDatos] = useState([]);
@@ -21,14 +22,36 @@ export const  TableArchive = () => {
     const [showAdditionalTable, setShowAdditionalTable] = useState(false);
     const [productoSeleccionado, setProductoSeleccionado] = useState('');
     const [selectedRowPosition, setSelectedRowPosition] = useState(null);
+    const endPointByDate = URL_API_private+"/orden_dia/date"
 
     useEffect( () => {
-        getAllDatos();
+        //getAllDatos();
+        getAllDataTecnicoByDate();
     }, [])
 
     const config = {
         headers:{
             Authorization: `Bearer ${token}`,
+        }
+    }
+
+    const getAllDataTecnicoByDate = async () => {
+        const fechaActual = format(new Date(), 'yyyy-MM-dd');
+        console.log("Imprimeido las fechas: "+fechaActual + "  "+fechaActual );
+        if(fechaActual){
+            console.log("Buscando por fecha: "+fechaActual+" "+fechaActual);
+            try {
+                console.log(endPointByDate);
+                const response = await axios.post(endPointByDate, {
+                    fechaInicio: fechaActual,
+                    fechaFinal: fechaActual
+                    },config);
+                setRescatarDatos(response.data);
+                setDatos(response.data);
+                console.log("Orden Dia Por Fechas obtenidos satisfactormente..")
+            } catch (error) {
+                console.error(error)
+            }
         }
     }
 
