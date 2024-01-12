@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from 'react';
 import axios, { toFormData } from 'axios';
 import { URL_API_private } from '../../providerContext/EndPoint';
+import { format } from 'date-fns';
 import './Reports.css'
 
 export const Reports = () => {
@@ -19,6 +20,10 @@ export const Reports = () => {
 
     useEffect(() => {
         getAllDataTecnico();
+        const fechaActual = format(new Date(), 'yyyy-MM-dd');
+        console.log(fechaActual);
+        setFechaInicio(fechaActual);
+        setFechaFinal(fechaActual);
     }, [])
 
     const config = {
