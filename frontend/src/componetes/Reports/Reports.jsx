@@ -45,7 +45,7 @@ export const Reports = () => {
                     fechaFinal: fechaActual
                     },config);
                 setDataTecnico(response.data);
-                setDatos(response.data);
+                setDatos(response.data.reverse());
                 console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
             } catch (error) {
                 console.error(error)
