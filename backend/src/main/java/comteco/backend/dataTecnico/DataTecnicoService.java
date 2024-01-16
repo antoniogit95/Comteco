@@ -60,6 +60,7 @@ public class DataTecnicoService {
                     .obeservaciones(dataTecnicoRequest.getObservaciones())
                     .createdAt(getTimestamp())
                     .updateAt(getTimestamp())
+                    .status(false)
                     .build();
                 System.out.println("dato tecnico CREADO");
                 DataTecnico saveDataTecnico = dataTecnicoRepository.save(dataTecnico);
