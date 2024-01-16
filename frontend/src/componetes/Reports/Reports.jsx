@@ -288,6 +288,10 @@ export const Reports = () => {
         }
     }
 
+    const handleChangeCheckbox = async (data) => {
+        console.log("cambiar a true: "+data.producto);
+    }
+
     return (
         <div >
             <div className="stylesEncabezadoAnalista">
@@ -350,14 +354,10 @@ export const Reports = () => {
                         <th className="stylesTh-Td">Hora</th>
                         <th className="stylesTh-Td">Analista</th>
                         <th className="stylesTh-Td">Observaciones</th>
-                        <th className="stylesTh-Td"></th>
+                        <th className="stylesTh-Td">Validar</th>
                         </tr>
                     </thead>
                     <tbody className="stylesBody">
-                    {/**datos.map((data) => (
-                    <ProdcutRow
-                        product={data}
-                    />))*/}
                     {datos.map((data) => (
                         <tr className="stylesTr" key={data.id}>
                             <td className="stylesTh-Td">{data.antiguaPosicion}</td>
@@ -366,7 +366,14 @@ export const Reports = () => {
                             <td className="stylesTh-Td">{getHora(data.createdAt)}</td>
                             <td className="stylesTh-Td">{data.nombreCompleto}</td>
                             <td className="stylesTh-Td">{"Sin Observaciones"}</td>
-                            <td className="stylesTh-Td"><input type="checkbox" /></td>
+                            <td className="stylesTh-Td">
+                                <input 
+                                    className="stylesInputCheckBox"
+                                    type="checkbox"
+                                    name={`checkbox-${data.id}`}
+                                    checked={data.status || false}
+                                    onChange={() => handleChangeCheckbox(data)} />
+                            </td>
                         </tr>
                     ))}
                     </tbody>

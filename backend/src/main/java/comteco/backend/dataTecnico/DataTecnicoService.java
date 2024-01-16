@@ -308,4 +308,25 @@ public class DataTecnicoService {
         return responses;
     }
 
+    /**
+     * permite Validar los Datos tecnicod mediante el id
+     * @param id del dato tecnico a ser validado
+     * @return true si fue validado, false si no se pudo validar.
+     */
+    public Boolean validateDatoTecnicoById(Long id) {
+        try {
+            Optional<DataTecnico> dataTecnicoOptional = dataTecnicoRepository.findById(id);
+            if(dataTecnicoOptional.isPresent()){
+                DataTecnico dataTecnico = dataTecnicoOptional.get();
+                dataTecnico.setStatus(true);
+                dataTecnicoRepository.save(dataTecnico);
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
