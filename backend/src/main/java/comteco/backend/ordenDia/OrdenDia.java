@@ -57,7 +57,7 @@ public class OrdenDia {
     private Long producto;
 
     private String contrato;
-    private boolean estadoOt; //estado_ot
+    private boolean estadoOt; //estado_ot --> asiciado al nuevo dato si fue cambiado
     private String orden;
 
     /*

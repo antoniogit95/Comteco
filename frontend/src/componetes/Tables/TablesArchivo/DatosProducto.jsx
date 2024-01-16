@@ -20,6 +20,7 @@ const ExcelTable = ({ producto }) => {
   const endPointDtaProduct = URL_API_private+"/orden_dia/producto/"+producto
   const endPointDataTecnico = URL_API_private +"/data_tecnico"
   const [dataProduct, setDataProdcut] = useState([]);
+  const [isLLenado, setIsLlenado] = useState(true);
 
   useEffect(() => {
     getAlLCods();
@@ -74,6 +75,7 @@ const ExcelTable = ({ producto }) => {
       console.log("Respuesta del Servidor: ", response.data);
       console.log("Registro Tecnico Registrado exitosamente.");
       toast.success("Registro Tecnico Registrado exitosamente");
+      setIsLlenado(false);
     }catch (error) {
       if(error.response.data){
         console.error("Error del Servidor: "+ error.response.data.message);
@@ -128,7 +130,8 @@ const ExcelTable = ({ producto }) => {
             <td className='stylesTh-Td'>{dataProduct[0].nap}</td>
             <td className='stylesTh-Td' >{dataProduct[0].posicion}</td>
             <td className='stylesTh-Td' >
-            <input
+              {isLLenado? (<>
+                <input
               type="text"
               value={texto}
               onChange={(e) => {
@@ -145,6 +148,8 @@ const ExcelTable = ({ producto }) => {
                   ))}
                 </datalist>
                 <button className='stylesButoon' onClick={() => guardarDato(event)}>Guardar</button>
+              </>):"ya fue llenado"}
+            
             </td>
             <td className='stylesTh-Td' >{dataProduct[0].datoTecnico}</td>
             <td className='stylesTh-Td' >{dataProduct[0].zona}</td>

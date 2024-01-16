@@ -292,7 +292,7 @@ export const Reports = () => {
         <div >
             <div className="stylesEncabezadoAnalista">
                 <select
-                    className="stylesInput"
+                    className="stylesInput2"
                     value={select}
                     onChange={(e) => setSelectd(e.target.value)}
                     >
@@ -301,7 +301,7 @@ export const Reports = () => {
                 </select>
                 {select === 'PROD' ? (
                 <input 
-                    className="stylesInput"
+                    className="stylesInput2"
                     type='text'
                     id='buscar'
                     name='buscar'
@@ -312,7 +312,7 @@ export const Reports = () => {
                 ) : (
                 <>
                 <input 
-                    className="stylesInput"
+                    className="stylesInput2"
                     type = 'date'
                     id = 'fechaInicio'
                     name = 'fechaInicio'
@@ -321,7 +321,7 @@ export const Reports = () => {
                     />
                     
                 <input 
-                    className="stylesInput"
+                    className="stylesInput2"
                     type = 'date'
                     id = 'fechaFinal'
                     name = 'fechaFinal'
@@ -331,8 +331,8 @@ export const Reports = () => {
                     
                     </>
                 )}
+
                 <button  className='stylesButoon' onClick={ () => filtrar(select)}>Buscar</button>
-                
                 <button className='stylesButoon' onClick={cambiosPosicion}>filtrar pos</button>
                 <button className='stylesButoon' onClick={cambiosOdf}>filtrar odf</button>
                 <button className='stylesButoon' onClick={cambiosFdt}>filtrar fdt</button>
@@ -350,6 +350,7 @@ export const Reports = () => {
                         <th className="stylesTh-Td">Hora</th>
                         <th className="stylesTh-Td">Analista</th>
                         <th className="stylesTh-Td">Observaciones</th>
+                        <th className="stylesTh-Td"></th>
                         </tr>
                     </thead>
                     <tbody className="stylesBody">
@@ -365,6 +366,7 @@ export const Reports = () => {
                             <td className="stylesTh-Td">{getHora(data.createdAt)}</td>
                             <td className="stylesTh-Td">{data.nombreCompleto}</td>
                             <td className="stylesTh-Td">{"Sin Observaciones"}</td>
+                            <td className="stylesTh-Td"><input type="checkbox" /></td>
                         </tr>
                     ))}
                     </tbody>
