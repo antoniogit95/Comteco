@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useState } from 'react';
 import axios, { toFormData } from 'axios';
 import { URL_API_private } from '../../providerContext/EndPoint';
+import { format } from 'date-fns';
 import './Reports.css'
 
 export const Reports = () => {
@@ -18,7 +19,12 @@ export const Reports = () => {
 
 
     useEffect(() => {
-        getAllDataTecnico();
+        //getAllDataTecnico();  //obtiene todos los datos tecnicos
+        const fechaActual = format(new Date(), 'yyyy-MM-dd');
+        console.log(fechaActual);
+        setFechaInicio(fechaActual);
+        setFechaFinal(fechaActual);
+        getAllDataTecnicoByDateActualy();  //obtiene todos los datos tecnicos del dia
     }, [])
 
     const config = {
@@ -27,11 +33,31 @@ export const Reports = () => {
         },
     };
 
+    const getAllDataTecnicoByDateActualy = async () => {
+        const fechaActual = format(new Date(), 'yyyy-MM-dd');
+        console.log("Imprimeido las fechas: "+fechaActual + "  "+fechaActual );
+        if(fechaActual){
+            console.log("Buscando por fecha: "+fechaActual+" "+fechaActual);
+            try {
+                console.log(endPoint+"/date")
+                const response = await axios.post(endPoint + "/date", {
+                    fechaInicio: fechaActual,
+                    fechaFinal: fechaActual
+                    },config);
+                setDataTecnico(response.data);
+                setDatos(response.data.reverse());
+                console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    }
+
     const getAllDataTecnico = async() =>{
         try {
             const response = await axios.get(endPoint, config)
             setDataTecnico(response.data);
-            setDatos(response.data);
+            setDatos(response.data.reverse());
             console.log("Datos Tecnicos obtenidos satisfactorimente..")
         } catch (error) {
             console.error(error)
@@ -94,7 +120,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -122,7 +148,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -150,7 +176,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -174,7 +200,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -210,7 +236,7 @@ export const Reports = () => {
         try {
             const response = await axios.get(endPoint+"/producto/"+buscar, config)
             setDataTecnico(response.data);
-            setDatos(response.data);
+            setDatos(response.data.reverse());
             console.log("Datos Tecnicos  Por producto obtenidos satisfactormente..")
         } catch (error) {
             console.error(error)
@@ -218,19 +244,20 @@ export const Reports = () => {
     }
 
     const getAllDataTecnicoByDate = async () => {
-
-        console.log("Buscando por fecha: "+fechaInicio+" "+fechaFinal);
-        try {
-            console.log(endPoint+"/date")
-            const response = await axios.post(endPoint + "/date", {
-                fechaInicio: fechaInicio,
-                fechaFinal: fechaFinal
-                },config);
-            setDataTecnico(response.data);
-            setDatos(response.data);
-            console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
-        } catch (error) {
-            console.error(error)
+        if(fechaInicio){
+            console.log("Buscando por fecha: "+fechaInicio+" "+fechaFinal);
+            try {
+                console.log(endPoint+"/date")
+                const response = await axios.post(endPoint + "/date", {
+                    fechaInicio: fechaInicio,
+                    fechaFinal: fechaFinal
+                    },config);
+                setDataTecnico(response.data);
+                setDatos(response.data);
+                console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
+            } catch (error) {
+                console.error(error)
+            }
         }
     }
 
@@ -255,7 +282,7 @@ export const Reports = () => {
                     }
                 }
             }
-            setDatos(response);
+            setDatos(response.reverse());
         } catch (error) {
             console.error(error)
         }
@@ -311,7 +338,7 @@ export const Reports = () => {
                 <button className='stylesButoon' onClick={cambiosFdt}>filtrar fdt</button>
                 <button className='stylesButoon' onClick={cambiosNap}>filtrar nap</button>
                 <button className='stylesButoon' onClick={filtrarDatosOrigneCom}>filtrar virtual</button>
-                <button className='stylesButoon' onClick={() => setDatos(dataTecnico)}>mostrar todo</button>
+                <button className='stylesButoon' onClick={() => getAllDataTecnico()}>mostrar todo</button>
             </div>
             <div className="styleContentTable">
                 <table className="styleTable">

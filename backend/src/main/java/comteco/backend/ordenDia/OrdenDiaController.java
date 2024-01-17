@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import comteco.backend.dataTecnico.DataTecnicoRequesBusqueda;
 import lombok.AllArgsConstructor;
 
 /**
@@ -142,5 +143,16 @@ public class OrdenDiaController {
     @PutMapping("/{id}")
     public ResponseEntity<OrdenDia> editOrdenDia(@PathVariable String id, @RequestBody OrdenDia ordenDia) { 
         return new ResponseEntity<>(ordenDia, HttpStatus.OK);
+    }
+
+    /**
+     * 
+     * @param request recibimos el rango de fechas a buscar los datos tecnicos.
+     * @return todas las ordenes del dia en la fecha seleccionada.
+     */
+    @PostMapping("/date")
+    public ResponseEntity<List<OrdenDiaResponse>> getOrdenDiaByDate(@RequestBody DataTecnicoRequesBusqueda request) {
+        List<OrdenDiaResponse> responses = ordenDiaService.getAllDatoTecnicoByIntervaloDate(request);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 }

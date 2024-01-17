@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import comteco.backend.dataTecnico.DataTecnicoRequesBusqueda;
 import comteco.backend.nap.posicion.Posicion;
 import comteco.backend.nap.posicion.PosicionService;
 import comteco.backend.ordenDia.cliente.Cliente;
@@ -86,7 +87,7 @@ public class OrdenDiaService {
      * @return un String con los datos mensionados
      */
     public String saveOrdenDia(String ordenDiaString){
-        String partes[] = ordenDiaString.split(";"); //dividimos la orden dia en 29 partes por el ;
+        String partes[] = ordenDiaString.split("[,;|]"); //dividimos la orden dia en 29 partes por el ;
         if(partes.length == 29){ //preguntamos si tiene un longitud = 29
 
             Long productId = Long.parseLong(partes[12] != null ? partes[12]: "0");
@@ -287,5 +288,35 @@ public class OrdenDiaService {
             response.add(oByProducto);
         }
         return response;
+    }
+
+    /**
+     * @param request un Objeto donde entrar las fechas inicio y final para buscar los datos tecnicos.
+     * @return Todos las Ordenes del dia en las fechas comprendidas.
+     */
+    public List<OrdenDiaResponse> getAllDatoTecnicoByIntervaloDate(DataTecnicoRequesBusqueda request) {
+        try {
+            Timestamp fechaInicio = new Timestamp(request.getFechaInicio().getTime());
+            Timestamp fechaFinal = new Timestamp(request.getFechaFinalAdd1Day().getTime());
+            System.out.println("FechaInicio: "+fechaInicio+" FechaFinal: "+fechaFinal);
+            List<OrdenDia> ordenDias = ordenDiaRepository.findAllByFechaBetween(fechaInicio, fechaFinal);
+            List<OrdenDiaResponse> responses = new ArrayList<>();
+            for (OrdenDia ordenDia : ordenDias) {
+                OrdenDiaResponse res = OrdenDiaResponse.builder()
+                    .producto(ordenDia.getProducto()+"")
+                    .planComercial(ordenDia.getSolicitud().getPlanComercial().getPlanCorto())
+                    .fecha(ordenDia.getFecha())
+                    .tipoTramite(ordenDia.getSolicitud().getTipoSolicitud())
+                    .tipoTrabajo(ordenDia.getTrabajo().getTipoTrabajo())
+                    .tipoCliente(ordenDia.getCliente().getTipoCliente())
+                    .build();
+                responses.add(res);
+            }
+            return responses;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        
     }
 }

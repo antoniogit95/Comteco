@@ -1,5 +1,6 @@
 package comteco.backend.ordenDia;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,5 +35,13 @@ public interface OrdenDiaRepository extends JpaRepository<OrdenDia, Long>{
      * @return debulve una orden del dia en caso de tener con esa posicion,
      */
     Optional<OrdenDia> findByPosicion(Posicion nuevaPosicion);
+
+    /**
+     * 
+     * @param fechaInicio a iniciar la busqueda de las ordenes del dia
+     * @param fechaFinal a finalizar la busqueda de las ordenes del dia
+     * @return todas las ordenenes del dia en las fechas comprendidas.
+     */
+    List<OrdenDia> findAllByFechaBetween(Timestamp fechaInicio, Timestamp fechaFinal);
    
 }
