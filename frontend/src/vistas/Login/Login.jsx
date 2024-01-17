@@ -1,4 +1,6 @@
-import React from "react";
+import React from "react";  
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import './Login.css'
 import { useState } from "react";
 import { Formik } from "formik";
@@ -12,6 +14,7 @@ import axios from "axios";
 
 export const Login = () => {
     const [login, setLogin] = useState();
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const endPoint = URL_API_public+"/login";
     const [error, setError] = useState("");
@@ -35,7 +38,7 @@ export const Login = () => {
                 break;
             case "ERR_NETWORK":
                 setError("no hay conexion con el servidor");
-                break;
+                break;  
             case "":
                     setError("no hay conexion con el servidor");
                     break;
@@ -75,6 +78,7 @@ export const Login = () => {
                 }}
 
                 onSubmit={ (valores) => {
+                    setLoading(true);
                     const store = async (e) => {
                         e.preventDefault()  
                         console.log(endPoint)
@@ -93,7 +97,7 @@ export const Login = () => {
                             }else{
                                 adminErrros(error.response.data.message);
                             }
-                                
+                            setLoading(false);        
                         }
                         
                     }
@@ -136,8 +140,8 @@ export const Login = () => {
                     </div>                   
                     <br></br>
                     <div className="stylesContenedorButton">
-                        <button  className='stylesButoonLogin' type="submit">
-                            Iniciar Sesión
+                        <button  className='stylesButoonLogin' type="submit" disabled={loading}>
+                        {loading ? <FaSpinner className="loadingIcon"/> : "Iniciar Sesión"}
                         </button>
                     </div>
                     <div className="styleLinks">
