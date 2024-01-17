@@ -135,8 +135,8 @@ public class DataTecnicoController {
      * @param id del dato tecnico a ser validado
      * @return true si fue validado correctamene y false si no fue validado.
      */
-    @PutMapping("validar/{id}")
-    public ResponseEntity<Boolean> validateDatoTecnicoById(@PathVariable Long id) {
+    @PutMapping("/validar/{id}")
+    public ResponseEntity<Boolean> validateDatoTecnicoById(@PathVariable Long id, @RequestBody DatoTecnicoReportResponse request) {
         Boolean response = dataTecnicoService.validateDatoTecnicoById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

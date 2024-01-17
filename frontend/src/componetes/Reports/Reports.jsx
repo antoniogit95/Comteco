@@ -8,6 +8,7 @@ import './Reports.css'
 export const Reports = () => {
    
     const endPoint = URL_API_private+"/data_tecnico";
+    const endPointVal = URL_API_private+"/data_tecnico/validar/";
     const [dataTecnico, setDataTecnico] = useState([]);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
@@ -288,8 +289,16 @@ export const Reports = () => {
         }
     }
 
-    const handleChangeCheckbox = async (data) => {
-        console.log("cambiar a true: "+data.producto);
+    const handleChangeCheckbox = async (data, index) => {
+        try {
+            const response = await axios.put(endPointVal+data.id, data, config);
+            console.log(response.data);
+            const nuevosDatos = [...datos];
+            nuevosDatos[index].status = true;
+            setDataTecnico(nuevosDatos);
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -358,7 +367,7 @@ export const Reports = () => {
                         </tr>
                     </thead>
                     <tbody className="stylesBody">
-                    {datos.map((data) => (
+                    {datos.map((data, index) => (
                         <tr className="stylesTr" key={data.id}>
                             <td className="stylesTh-Td">{data.antiguaPosicion}</td>
                             <td className="stylesTh-Td">{data.nuevaPosicion}</td>
@@ -370,9 +379,9 @@ export const Reports = () => {
                                 <input 
                                     className="stylesInputCheckBox"
                                     type="checkbox"
-                                    name={`checkbox-${data.id}`}
+                                    name={`checkbox-${index}`}
                                     checked={data.status || false}
-                                    onChange={() => handleChangeCheckbox(data)} />
+                                    onChange={() => handleChangeCheckbox(data, index)} />
                             </td>
                         </tr>
                     ))}

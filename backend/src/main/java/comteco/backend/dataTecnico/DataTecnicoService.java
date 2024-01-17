@@ -14,6 +14,7 @@ import comteco.backend.nap.posicion.Posicion;
 import comteco.backend.nap.posicion.PosicionService;
 import comteco.backend.ordenDia.OrdenDia;
 import comteco.backend.ordenDia.OrdenDiaRepository;
+import comteco.backend.ordenDia.OrdenDiaService;
 import comteco.backend.user.User;
 import comteco.backend.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class DataTecnicoService {
     private UserRepository userRepository;
     private PosicionService posicionService;
     private OrdenDiaRepository ordenDiaRepository;
+    private OrdenDiaService ordenDiaService;
 
     public Optional<DataTecnico> getDataTecnicoById(Long id) {
         return dataTecnicoRepository.findById(id);
@@ -112,6 +114,7 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
             responses.add(dtrr);
         }
@@ -135,6 +138,7 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
                 responses.add(dtrr);
             }
@@ -165,6 +169,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -195,6 +200,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -224,6 +230,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -252,6 +259,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -275,6 +283,7 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
             responses.add(dtrr);
         }
@@ -301,6 +310,7 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
             responses.add(dtrr);
         }
@@ -320,6 +330,7 @@ public class DataTecnicoService {
                 DataTecnico dataTecnico = dataTecnicoOptional.get();
                 dataTecnico.setStatus(true);
                 dataTecnicoRepository.save(dataTecnico);
+                ordenDiaService.validateDatoTecnico(dataTecnico.getProducto());
                 return true;
             }else{
                 return false;

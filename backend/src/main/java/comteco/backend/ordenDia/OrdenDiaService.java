@@ -319,4 +319,9 @@ public class OrdenDiaService {
         }
         
     }
+
+    public void validateDatoTecnico(Long producto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'validateDatoTecnico'");
+    }
 }
