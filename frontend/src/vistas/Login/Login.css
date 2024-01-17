@@ -1,3 +1,16 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingIcon {
+  animation: spin 1s linear infinite;
+}
+
 .stylesLoginContainer {
     width: 300px;
     margin: 0 auto;
