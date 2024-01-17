@@ -45,7 +45,6 @@ export const Home = () => {
     
     function buttonsSoporte(){
         return (<div className="stylesContentButtonsBig">
-            <Button name="Registrar" link="/registrar"/>
             <Button name="Reportes" link="/reportes"/>
         </div>)
     }
