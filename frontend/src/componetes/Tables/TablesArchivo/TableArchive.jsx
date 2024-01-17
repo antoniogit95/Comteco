@@ -22,11 +22,17 @@ export const  TableArchive = () => {
     const [showAdditionalTable, setShowAdditionalTable] = useState(false);
     const [productoSeleccionado, setProductoSeleccionado] = useState('');
     const [selectedRowPosition, setSelectedRowPosition] = useState(null);
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFinal, setFechaFinal] = useState("");
     const endPointByDate = URL_API_private+"/orden_dia/date"
 
     useEffect( () => {
-        //getAllDatos();
-        getAllDataTecnicoByDate();
+        getAllDatos();
+        const fechaActual = format(new Date(), 'yyyy-MM-dd');
+        console.log(fechaActual);
+        setFechaInicio(fechaActual);
+        setFechaFinal(fechaActual);
+        //getAllDataTecnicoByDate();
     }, [])
 
     const config = {
@@ -136,42 +142,45 @@ export const  TableArchive = () => {
     return (
 
       <div className='stylesTableArchiveJose'>
-        <div>
-          <select 
-              value={select}
-              onChange={(e) => setSelectd(e.target.value)}
+        <div className='stylesEncabezadoAnalista'>
+            <select 
+                className='stylesInput2'
+                value={select}
+                onChange={(e) => setSelectd(e.target.value)}
               >
               <option value = 'fecha_CREACION' >Fecha</option>
               <option value = 'producto'>Producto</option>
-          </select>
-          {select === 'producto' ? (
-          <input 
-              type='text'
-              id='buscar'
-              name='buscar'
-              placeholder='Elemento de búsqueda'
-              value={buscar}
-              onChange={ (e) => setBuscar(e.target.value) }
-          ></input>
-          ) : (
-          <>
-          <input 
-            type = 'date'
-            id = 'fecha_Inicio'
-            name = 'fecha_Inicio'
-            //value = {fecha_Inicio}
+        </select>
+        {select === 'producto' ? (
+            <input 
+                className='stylesInput2'
+                type='text'
+                id='buscar'
+                name='buscar'
+                placeholder='Elemento de búsqueda'
+                value={buscar}
+                onChange={ (e) => setBuscar(e.target.value) }
+            ></input>
+        ) : ( <>
+            <input
+                className='stylesInput2'
+                type = 'date'
+                id = 'fechaInicio'
+                name = 'fechaInicio'
+                value = {fechaInicio}
             ></input>
             
-          <input 
-            type = 'date'
-            id = 'fecha_Final'
-            name = 'fecha_Final'
-            //value = {fecha_Final}
+            <input 
+                className='stylesInput2'
+                type = 'date'
+                id = 'fecha_Final'
+                name = 'fecha_Final'
+                value = {fechaFinal}
             ></input>
             
             </>
           )}
-          <button  className='stylesButoon2' onClick={ () => filtrar(buscar, select)}>Buscar</button>
+          <button  className='stylesButoon' onClick={ () => filtrar(buscar, select)}>Buscar</button>
           <br></br>
         </div>
         <div className='styleContentTable' >
