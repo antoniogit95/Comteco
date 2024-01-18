@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { URL_API_private } from '../../../providerContext/EndPoint';
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import './TableArchive.css'
 import axios from 'axios';
 
 const ExcelTablenap = ({product, nap}) => {
   const [dataProduct, setDatos] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [rescatarDatos, setRescatarDatos] = useState([])
   const endPointNap = URL_API_private+"/servicio/producto/"+product;
   const token  = JSON.parse(localStorage.getItem('user_data')).token
@@ -20,6 +23,7 @@ const config = {
 }
 
 const getAllDatos = async () => {
+    setLoading(true)
     try {
 
         console.log("Entpoint:  "+endPointNap);
@@ -30,9 +34,11 @@ const getAllDatos = async () => {
         setRescatarDatos(response.data);
         console.log("datos rescatados exitosamente")
         console.log(response.data)
+        setLoading(false)
     } catch (error) {
         console.log('Error al obtener datos:', error.response);
         console.log('Error completo:', error);
+        setLoading(false)
     }
     
 }
@@ -44,7 +50,12 @@ const getAllDatos = async () => {
   console.log("este es el dato: ", dataProduct);
 
 
-  return (
+  return (<>
+        {loading && (
+            <div className="loading-spinner">
+                <FaSpinner className="spinner-icon" />
+            </div>
+        )}
 
     <div>
     <div className='styleContentTable' >
@@ -76,7 +87,7 @@ const getAllDatos = async () => {
     </table>
     </div>      
     </div>
-  );
+  </>);
 };
 
 export default ExcelTablenap;

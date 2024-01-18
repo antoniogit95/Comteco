@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import TablaAdicional from './DastosNap';
 import axios from 'axios';
 import './TableArchive.css'
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import botonmas from "../../../imagenes/botonmas.png"
 import botonmenos from "../../../imagenes/botonmenos.png"
 import { URL_API_private } from '../../../providerContext/EndPoint';
@@ -35,6 +37,7 @@ const ExcelTable = ({ producto }) => {
   }
 
   const getProductos = async () => {
+    setLoading(true)
     try {
       console.log(endPointDtaProduct+" "+config.headers)
       const response = await axios.get(endPointDtaProduct, config);
@@ -42,17 +45,22 @@ const ExcelTable = ({ producto }) => {
       setIsLlenado(response.data[0].status)
       console.log(dataProduct);
       console.log("Products Recuperados exitosamente")
+      setLoading(false)
   } catch (error) {
       console.error("Error del servidor: "+error.response);
+      setLoading(false)
   }
   }
   const getAlLCods = async () => {
+    setLoading(true);
     try {
         const response = await axios.get(endPoint, config);
         setNapsCod(response.data);
         console.log("NAPs Recuperados exitosamente")
+        setLoading(false);
     } catch (error) {
         console.error("Error del servidor: "+error.response);
+        setLoading(false)
     }
   }
   
@@ -105,8 +113,12 @@ const ExcelTable = ({ producto }) => {
     setSugesNapsCod([]); // Oculta la lista de sugerencias después de hacer clic
   };
   //const napSet = new Set(datosTablaAdicional.map((dato) => dato.nap));
-
   return (<>
+        {loading && (
+            <div className="loading-spinner">
+                <FaSpinner className="spinner-icon" />
+            </div>
+        )}
     <div className='styleContentTable'>
     <table className='styleTable'>
       <thead className='stylesHead'>
@@ -152,9 +164,11 @@ const ExcelTable = ({ producto }) => {
                     <option key={nap.id} value={nap.cod} onClick={() => handleSuggestionClick(nap.cod)} />
                   ))}
                 </datalist>
-                <button className='stylesButoon' onClick={() => guardarDato(event)}>
-                  {loading ? <FaSpinner className="loadingIcon"/> : "Guardar"}
+                <button className='stylesButoon' onClick={() => guardarDato(event)} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Guardar"}
                 </button>
+              </>)}
+            
             </td>
             <td className='stylesTh-Td' >{dataProduct[0].datoTecnico}</td>
             <td className='stylesTh-Td' >{dataProduct[0].zona}</td>

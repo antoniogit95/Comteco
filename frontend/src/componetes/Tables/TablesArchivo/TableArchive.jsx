@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import './TableArchive.css'
 import { URL_API_private } from '../../../providerContext/EndPoint';
 import TablaAdicional from './DatosProducto';
@@ -9,7 +11,8 @@ import { format } from 'date-fns';
 export const  TableArchive = () => {
     const [datos, setDatos] = useState([]);
     const [datosPlanes, setDatosPlanes] = useState([]);
-    const [rescatarDatos, setRescatarDatos] = useState([])
+    const [rescatarDatos, setRescatarDatos] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [select, setSelectd] = useState("");
     const [buscar, setBuscar] = useState("");
     const endPoint = URL_API_private+"/orden_dia/resumido"
@@ -42,6 +45,7 @@ export const  TableArchive = () => {
     }
 
     const getAllDataTecnicoByDate = async () => {
+        setLoading(true)
         const fechaActual = format(new Date(), 'yyyy-MM-dd');
         console.log("Imprimeido las fechas: "+fechaActual + "  "+fechaActual );
         if(fechaActual){
@@ -55,23 +59,27 @@ export const  TableArchive = () => {
                 setRescatarDatos(response.data);
                 setDatos(response.data);
                 console.log("Orden Dia Por Fechas obtenidos satisfactormente..")
+                setLoading(false)
             } catch (error) {
                 console.error(error)
+                setLoading(false)
             }
         }
     }
 
     const getAllDatos = async () => {
+        setLoading(true)
         try {
-
             console.log(endPoint)
             const response = await axios.get(endPoint, config);
             setDatos(response.data);
             setRescatarDatos(response.data);
             console.log("datos rescatados exitosamente")
+            setLoading(false)
         } catch (error) {
             console.log('Error al obtener datos:', error.response);
             console.log('Error completo:', error);
+            setLoading(false)
         }
         
     }
@@ -139,7 +147,12 @@ export const  TableArchive = () => {
 
     }
 
-    return (
+    return (<>
+        {loading && (
+            <div className="loading-spinner">
+                <FaSpinner className="spinner-icon" />
+            </div>
+        )}
 
       <div className='stylesTableArchiveJose'>
         <div className='stylesEncabezadoAnalista'>
@@ -206,5 +219,5 @@ export const  TableArchive = () => {
             </table>
         </div>
       </div>
-    );
+    </>);
 }

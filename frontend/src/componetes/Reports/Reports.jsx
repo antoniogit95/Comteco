@@ -332,18 +332,6 @@ export const Reports = () => {
         }
     }
 
-    const handleChangeCheckbox = async (data, index) => {
-        try {
-            const response = await axios.put(endPointVal+data.id, data, config);
-            console.log(response.data);
-            const nuevosDatos = [...datos];
-            nuevosDatos[index].status = true;
-            setDataTecnico(nuevosDatos);
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     return (<>
         {loading && (
             <div className="loading-spinner">
