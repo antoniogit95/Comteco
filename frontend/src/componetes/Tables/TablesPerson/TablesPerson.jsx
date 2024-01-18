@@ -1,6 +1,7 @@
-
 import { URL_API_private } from "../../../providerContext/EndPoint"
 import './TablesPerson.css'
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import { useState,useEffect } from "react";
 import axios from "axios";
 import { PersonRow } from "./PersonRow";
@@ -9,9 +10,11 @@ import { ModalPerson } from "../../Modals/ModalsPerson/ModalsPerson";
 
 export const TablesPerson = () => {
 
+    
     const endPoint = URL_API_private + "/person";
     const endPointValidate = URL_API_private + "/person/activate/"
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [showModalCesion, setShowModalCesion] = useState(false);
     const [showModalInformation, setShowModalInformation] = useState(false);
@@ -69,15 +72,23 @@ export const TablesPerson = () => {
     }
 
     const getALLPerson = async () => {
+        setLoading(true);
         try {
             const response = await axios.get(endPoint, config);
             setData(response.data)
+            setLoading(false);
         } catch (error) {
-            console.log("Error : " +error)   
+            console.log("Error : " +error)
+            setLoading(false);
         }
     }
 
     return(<>
+        {loading && (
+            <div className="loading-spinner">
+                <FaSpinner className="spinner-icon" />
+            </div>
+        )}
         <div className="styleContentTable">
             <table className="styleTable">
                 <thead className="stylesHead">

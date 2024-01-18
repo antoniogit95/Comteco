@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from 'react';
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import axios, { toFormData } from 'axios';
 import { URL_API_private } from '../../providerContext/EndPoint';
 import { format } from 'date-fns';
@@ -12,6 +14,7 @@ export const Reports = () => {
     const token = JSON.parse(localStorage.getItem('user_data')).token;
     const [filtro, setFiltro] = useState('nombre'); 
     const [datos, setDatos] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [select, setSelectd] = useState("DATE");
     const [buscar, setBuscar] = useState("");
     const [fechaInicio, setFechaInicio] = useState("");
@@ -34,6 +37,7 @@ export const Reports = () => {
     };
 
     const getAllDataTecnicoByDateActualy = async () => {
+        setLoading(true);
         const fechaActual = format(new Date(), 'yyyy-MM-dd');
         console.log("Imprimeido las fechas: "+fechaActual + "  "+fechaActual );
         if(fechaActual){
@@ -47,20 +51,25 @@ export const Reports = () => {
                 setDataTecnico(response.data);
                 setDatos(response.data.reverse());
                 console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
+                setLoading(false);
             } catch (error) {
                 console.error(error)
+                setLoading(false);
             }
         }
     }
 
     const getAllDataTecnico = async() =>{
+        setLoading(true);
         try {
             const response = await axios.get(endPoint, config)
             setDataTecnico(response.data);
             setDatos(response.data.reverse());
             console.log("Datos Tecnicos obtenidos satisfactorimente..")
+            setLoading(false);
         } catch (error) {
             console.error(error)
+            setLoading(false);
         }
     }
     
@@ -100,6 +109,7 @@ export const Reports = () => {
 
     const cambiosPosicion = () => {
         console.log("Obteniendo los cambios de la posicion..")
+        setLoading(true);
         try {
             const response = [];
             for (let i = 0; i < dataTecnico.length; i++) {
@@ -121,12 +131,15 @@ export const Reports = () => {
                 }
             }
             setDatos(response.reverse());
+            setLoading(false);
         } catch (error) {
             console.error(error)
+            setLoading(false);
         }
     }
 
     const cambiosNap = async () => {
+        setLoading(true);
         console.log("Obteniendo los cambios de la posicion..")
         try {
             const response = [];
@@ -149,13 +162,16 @@ export const Reports = () => {
                 }
             }
             setDatos(response.reverse());
+            setLoading(false);
         } catch (error) {
             console.error(error)
+            setLoading(false);
         }
     }
 
     const cambiosFdt = async () => {
         console.log("Obteniendo los cambios de la posicion..")
+        setLoading(true);
         try {
             const response = [];
             for (let i = 0; i < dataTecnico.length; i++) {
@@ -177,13 +193,16 @@ export const Reports = () => {
                 }
             }
             setDatos(response.reverse());
+            setLoading(false);
         } catch (error) {
             console.error(error)
+            setLoading(false);
         }
     }
 
     const cambiosOdf = async () => {
         console.log("Obteniendo los cambios de la posicion..")
+        setLoading(true);
         try {
             const response = [];
             for (let i = 0; i < dataTecnico.length; i++) {
@@ -201,8 +220,10 @@ export const Reports = () => {
                 }
             }
             setDatos(response.reverse());
+            setLoading(false);
         } catch (error) {
             console.error(error)
+            setLoading(false);
         }
     }
     
@@ -233,17 +254,21 @@ export const Reports = () => {
     }
     
     const getAllDataTecnicoByProduct = async() =>{
+        setLoading(true);
         try {
             const response = await axios.get(endPoint+"/producto/"+buscar, config)
             setDataTecnico(response.data);
             setDatos(response.data.reverse());
             console.log("Datos Tecnicos  Por producto obtenidos satisfactormente..")
+            setLoading(false);
         } catch (error) {
             console.error(error)
+            setLoading(false);
         }
     }
 
     const getAllDataTecnicoByDate = async () => {
+        setLoading(true);
         if(fechaInicio){
             console.log("Buscando por fecha: "+fechaInicio+" "+fechaFinal);
             try {
@@ -255,14 +280,17 @@ export const Reports = () => {
                 setDataTecnico(response.data);
                 setDatos(response.data);
                 console.log("Datos Tecnicos  Por Fechas obtenidos satisfactormente..")
+                setLoading(false);
             } catch (error) {
                 console.error(error)
+                setLoading(false);
             }
-        }
+        }setLoading(false);
     }
 
     const filtrarDatosOrigneCom = async () => {
         console.log("Filtrando datos desde el origen COM-00-00-0000")
+        setLoading(true)
         try {
             const response = [];
             for (let i = 0; i < dataTecnico.length; i++) {
@@ -283,12 +311,19 @@ export const Reports = () => {
                 }
             }
             setDatos(response.reverse());
+            setLoading(false);
         } catch (error) {
             console.error(error)
+            setLoading(false);
         }
     }
 
-    return (
+    return (<>
+        {loading && (
+            <div className="loading-spinner">
+                <FaSpinner className="spinner-icon" />
+            </div>
+        )}
         <div >
             <div className="stylesEncabezadoAnalista">
                 <select
@@ -331,14 +366,25 @@ export const Reports = () => {
                     
                     </>
                 )}
-                <button  className='stylesButoon' onClick={ () => filtrar(select)}>Buscar</button>
-                
-                <button className='stylesButoon' onClick={cambiosPosicion}>filtrar pos</button>
-                <button className='stylesButoon' onClick={cambiosOdf}>filtrar odf</button>
-                <button className='stylesButoon' onClick={cambiosFdt}>filtrar fdt</button>
-                <button className='stylesButoon' onClick={cambiosNap}>filtrar nap</button>
-                <button className='stylesButoon' onClick={filtrarDatosOrigneCom}>filtrar virtual</button>
-                <button className='stylesButoon' onClick={() => getAllDataTecnico()}>mostrar todo</button>
+                <button  className='stylesButoon' onClick={ () => filtrar(select)} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Buscar"}
+                </button>
+                <button className='stylesButoon' onClick={cambiosPosicion} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Filtrar Posicion"}
+                </button>
+                <button className='stylesButoon' onClick={cambiosOdf} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Filtrar ODF"}
+                </button>
+                <button className='stylesButoon' onClick={cambiosFdt} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Filtrar FDT"}
+                </button>
+                <button className='stylesButoon' onClick={cambiosNap} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Filtrar NAP"}</button>
+                <button className='stylesButoon' onClick={filtrarDatosOrigneCom} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Filtrar Virtual"}
+                </button>
+                <button className='stylesButoon' onClick={() => getAllDataTecnico()} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Mostrar Todo"}</button>
             </div>
             <div className="styleContentTable">
                 <table className="styleTable">
@@ -373,5 +419,5 @@ export const Reports = () => {
         </div>
         <br></br>
       </div>  
-    );
+    </>);
 };

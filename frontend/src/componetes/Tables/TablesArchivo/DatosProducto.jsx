@@ -9,6 +9,7 @@ import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ExcelTable = ({ producto }) => {
+  const [loading, setLoading] = useState(false);
   const [showAdditionalTable, setShowAdditionalTable] = useState(false);
   const [imagenClicada, setImagenClicada] = useState(false);
   const [texto, setTexto] = useState('');
@@ -60,6 +61,7 @@ const ExcelTable = ({ producto }) => {
   };
 
   const guardarDato = async (e) => {
+    setLoading(true);
     e.preventDefault()  
     try {
       const response = await axios.post(endPointDataTecnico, {
@@ -74,11 +76,13 @@ const ExcelTable = ({ producto }) => {
       console.log("Respuesta del Servidor: ", response.data);
       console.log("Registro Tecnico Registrado exitosamente.");
       toast.success("Registro Tecnico Registrado exitosamente");
+      setLoading(false);
     }catch (error) {
       if(error.response.data){
         console.error("Error del Servidor: "+ error.response.data.message);
         toast.error(`Error del Servidor: ${error.response.data.message}`);
       }
+      setLoading(false);
     }
   };
 
@@ -99,7 +103,7 @@ const ExcelTable = ({ producto }) => {
   };
   //const napSet = new Set(datosTablaAdicional.map((dato) => dato.nap));
 
-  return (
+  return (<>
     <div className='styleContentTable'>
     <table className='styleTable'>
       <thead className='stylesHead'>
@@ -144,7 +148,9 @@ const ExcelTable = ({ producto }) => {
                     <option key={nap.id} value={nap.cod} onClick={() => handleSuggestionClick(nap.cod)} />
                   ))}
                 </datalist>
-                <button className='stylesButoon' onClick={() => guardarDato(event)}>Guardar</button>
+                <button className='stylesButoon' onClick={() => guardarDato(event)}>
+                  {loading ? <FaSpinner className="loadingIcon"/> : "Guardar"}
+                </button>
             </td>
             <td className='stylesTh-Td' >{dataProduct[0].datoTecnico}</td>
             <td className='stylesTh-Td' >{dataProduct[0].zona}</td>
@@ -157,7 +163,7 @@ const ExcelTable = ({ producto }) => {
     {showAdditionalTable && <TablaAdicional nap={dataProduct[0].nap} product={producto}/>}
     <ToastContainer/>
     </div>
-  );
+  </>);
 };
 
 export default ExcelTable;
