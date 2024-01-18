@@ -14,6 +14,7 @@ import comteco.backend.nap.posicion.Posicion;
 import comteco.backend.nap.posicion.PosicionService;
 import comteco.backend.ordenDia.OrdenDia;
 import comteco.backend.ordenDia.OrdenDiaRepository;
+import comteco.backend.ordenDia.OrdenDiaService;
 import comteco.backend.user.User;
 import comteco.backend.user.UserRepository;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class DataTecnicoService {
     private UserRepository userRepository;
     private PosicionService posicionService;
     private OrdenDiaRepository ordenDiaRepository;
+    private OrdenDiaService ordenDiaService;
 
     public Optional<DataTecnico> getDataTecnicoById(Long id) {
         return dataTecnicoRepository.findById(id);
@@ -60,6 +62,7 @@ public class DataTecnicoService {
                     .obeservaciones(dataTecnicoRequest.getObservaciones())
                     .createdAt(getTimestamp())
                     .updateAt(getTimestamp())
+                    .status(false)
                     .build();
                 System.out.println("dato tecnico CREADO");
                 DataTecnico saveDataTecnico = dataTecnicoRepository.save(dataTecnico);
@@ -111,6 +114,7 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
             responses.add(dtrr);
         }
@@ -134,6 +138,7 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
                 responses.add(dtrr);
             }
@@ -164,6 +169,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -194,6 +200,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -223,6 +230,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -251,6 +259,7 @@ public class DataTecnicoService {
                     .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                     .createdAt(dt.getCreatedAt())
                     .updateAt(dt.getUpdateAt())
+                    .status(dt.isStatus())
                     .build();
                     responses.add(dtrr);
                 }
@@ -274,6 +283,7 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
             responses.add(dtrr);
         }
@@ -300,11 +310,34 @@ public class DataTecnicoService {
                 .antiguaPosicion(dt.getAntiguaPosicion().getNap().getCod()+"-"+dt.getAntiguaPosicion().getCod())
                 .createdAt(dt.getCreatedAt())
                 .updateAt(dt.getUpdateAt())
+                .status(dt.isStatus())
                 .build();
             responses.add(dtrr);
         }
 
         return responses;
+    }
+
+    /**
+     * permite Validar los Datos tecnicod mediante el id
+     * @param id del dato tecnico a ser validado
+     * @return true si fue validado, false si no se pudo validar.
+     */
+    public Boolean validateDatoTecnicoById(Long id) {
+        try {
+            Optional<DataTecnico> dataTecnicoOptional = dataTecnicoRepository.findById(id);
+            if(dataTecnicoOptional.isPresent()){
+                DataTecnico dataTecnico = dataTecnicoOptional.get();
+                dataTecnico.setStatus(true);
+                dataTecnicoRepository.save(dataTecnico);
+                ordenDiaService.validateDatoTecnico(dataTecnico.getProducto());
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

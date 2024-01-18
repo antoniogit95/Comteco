@@ -20,4 +20,5 @@ public class DatoTecnicoReportResponse {
     private String nuevaPosicion;
     private Timestamp createdAt;
     private Timestamp updateAt;
+    private boolean status;
 }

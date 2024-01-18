@@ -21,6 +21,7 @@ const ExcelTable = ({ producto }) => {
   const endPointDtaProduct = URL_API_private+"/orden_dia/producto/"+producto
   const endPointDataTecnico = URL_API_private +"/data_tecnico"
   const [dataProduct, setDataProdcut] = useState([]);
+  const [isLLenado, setIsLlenado] = useState(false);
 
   useEffect(() => {
     getAlLCods();
@@ -38,6 +39,7 @@ const ExcelTable = ({ producto }) => {
       console.log(endPointDtaProduct+" "+config.headers)
       const response = await axios.get(endPointDtaProduct, config);
       setDataProdcut(response.data);
+      setIsLlenado(response.data[0].status)
       console.log(dataProduct);
       console.log("Products Recuperados exitosamente")
   } catch (error) {
@@ -77,6 +79,7 @@ const ExcelTable = ({ producto }) => {
       console.log("Registro Tecnico Registrado exitosamente.");
       toast.success("Registro Tecnico Registrado exitosamente");
       setLoading(false);
+      setIsLlenado(true);
     }catch (error) {
       if(error.response.data){
         console.error("Error del Servidor: "+ error.response.data.message);
@@ -132,7 +135,8 @@ const ExcelTable = ({ producto }) => {
             <td className='stylesTh-Td'>{dataProduct[0].nap}</td>
             <td className='stylesTh-Td' >{dataProduct[0].posicion}</td>
             <td className='stylesTh-Td' >
-            <input
+              {isLLenado? "Ya fue llenado": (<>
+                <input
               type="text"
               value={texto}
               onChange={(e) => {

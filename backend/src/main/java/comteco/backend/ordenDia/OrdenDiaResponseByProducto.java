@@ -19,4 +19,5 @@ public class OrdenDiaResponseByProducto {
     private String zona;
     private String ubicacion;
     private String direccion;
+    private boolean status;
 }

@@ -52,6 +52,7 @@ public class DataTecnico {
     private Posicion antiguaPosicion;
 
     private String obeservaciones;
+    private boolean status;
     private Timestamp createdAt;
     private Timestamp updateAt;
 }

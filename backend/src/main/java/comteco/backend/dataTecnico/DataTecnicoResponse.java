@@ -24,6 +24,7 @@ public class DataTecnicoResponse {
     private String antiguaPosicion;
     private String obeservaciones;
     private Timestamp createdAt;
-    private Timestamp updateAt;   
+    private Timestamp updateAt;
+    private boolean status;  
     private String message; //poner algun error
 }

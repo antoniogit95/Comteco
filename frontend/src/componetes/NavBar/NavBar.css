@@ -81,10 +81,12 @@
     padding: 5px;
     border-radius: 10px;
     transition: .3s ;
+    border: 2px solid transparent;
 }
 
 .stylesA:hover{
     background-color: rgb(223, 31, 31);
+    border-color: white;
 }
 
 .stylesActive{
@@ -94,6 +96,9 @@
     margin-right: 1rem;
     padding: .4rem 1rem; 
     border-radius: 10px;
+    border:3px solid white;
+    
+    
 }
 
 .stylesButoonNavBar{
@@ -108,7 +113,7 @@
 }
 
 .stylesButoonNavBar:hover {
-    background-color: red;
+    background-color: rgb(255, 0, 0);
 }
 
 @media screen and (max-width: 768px) {

@@ -283,6 +283,7 @@ public class OrdenDiaService {
                 .datoTecnico(ordenDia.getPosicion().getNap().getCod()+"-"+ordenDia.getPosicion().getCod())
                 .zona(ordenDia.getUbicacion())
                 .ubicacion("sin ubicacion geografica")
+                .status(ordenDia.isEstadoOt())
                 //.direccion(ordenDia.getDireccion())
                 .build();
             response.add(oByProducto);
@@ -318,5 +319,26 @@ public class OrdenDiaService {
             return null;
         }
         
+    }
+
+    /**
+     * Validar los datos tecnicos por medio del producto.
+     * @param producto a ser validado y no poder cambiar el dato tecnico
+     */
+    public Boolean validateDatoTecnico(Long producto) {
+        try {
+            Optional<OrdenDia> ordenDiaOptional = ordenDiaRepository.findByProducto(producto);
+            if(ordenDiaOptional.isPresent()){
+                OrdenDia ordenDia = ordenDiaOptional.get();
+                ordenDia.setEstadoOt(true);
+                ordenDiaRepository.save(ordenDia);
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 }

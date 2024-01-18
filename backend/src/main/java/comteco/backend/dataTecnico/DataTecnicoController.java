@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -128,4 +130,14 @@ public class DataTecnicoController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
     
+    /**
+     * Validar un dato tecnico para que no se pueda editar
+     * @param id del dato tecnico a ser validado
+     * @return true si fue validado correctamene y false si no fue validado.
+     */
+    @PutMapping("/validar/{id}")
+    public ResponseEntity<Boolean> validateDatoTecnicoById(@PathVariable Long id, @RequestBody DatoTecnicoReportResponse request) {
+        Boolean response = dataTecnicoService.validateDatoTecnicoById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
