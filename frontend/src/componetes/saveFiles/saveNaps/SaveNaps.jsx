@@ -6,6 +6,7 @@ import './SaveNaps.css'
 
 export const SaveNaps = () => {
     const [archivo, setArchivo] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [dragging, setDragging] = useState(false);
     const [archivoNombre, setArchivoNombre] = useState('');
     const endPoint = URL_API_private + "/naps/pos/save_file";
@@ -49,6 +50,7 @@ export const SaveNaps = () => {
     };
 
     const subirArchivo = async () => {
+        setLoading(true);
         if (archivo) {
             const formData = new FormData();
             formData.append('file', archivo);
@@ -63,14 +65,17 @@ export const SaveNaps = () => {
                 alert('Archivo cargado con éxito.');
                 setArchivo(null);
                 setArchivoNombre('');
+                setLoading(false);
             } catch (error) {
                 console.log('Error al cargar el archivo:', error.response);
+                setLoading(false);
             }
         } else {
             toast.error('Por favor, selecciona un archivo antes de guardar.', {
                 position: 'top-right',
                 autoClose: 3000,
             });
+            setLoading(false);
         }
     };
 

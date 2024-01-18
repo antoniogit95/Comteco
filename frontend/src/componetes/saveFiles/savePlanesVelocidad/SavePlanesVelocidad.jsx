@@ -6,6 +6,7 @@ import './SavePlanesVelocidad.css'
 
 export const SavePlanesVelocidad = () => {
     const [archivo, setArchivo] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [dragging, setDragging] = useState(false);
     const [archivoNombre, setArchivoNombre] = useState('');
     const endPoint = URL_API_private + "/plancomercial/savefile";
@@ -49,6 +50,7 @@ export const SavePlanesVelocidad = () => {
     };
 
     const subirArchivo = async () => {
+        setLoading(true);
         if (archivo) {
             const formData = new FormData();
             formData.append('archive', archivo);
@@ -63,14 +65,17 @@ export const SavePlanesVelocidad = () => {
                 alert('Archivo cargado con éxito.');
                 setArchivo(null);
                 setArchivoNombre('');
+                setLoading(false);
             } catch (error) {
                 console.log('Error al cargar el archivo:', error.response);
+                setLoading(false);
             }
         } else {
             toast.error('Por favor, selecciona un archivo antes de guardar.', {
                 position: 'top-right',
                 autoClose: 3000,
             });
+            setLoading(false);
         }
     };
 
@@ -107,8 +112,8 @@ export const SavePlanesVelocidad = () => {
                 Seleccionar Archivo
             </button>   
             <br></br>
-                <button className="stylesButoon" onClick={subirArchivo}>
-                    Subir Archivo
+                <button className='stylesButoon' onClick={subirArchivo} disabled={loading}>
+                    {loading ? <FaSpinner className="loadingIcon"/> : "Subir Archivo"}
                 </button>
                 <br></br>
             

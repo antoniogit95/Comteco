@@ -6,6 +6,7 @@ import '../saveNaps/SaveNaps.css'
 
 export const SaveDataOrdenDia = () => {
     const [file, setFile] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [archivo, setArchivo] = useState(null);
     const endPoint = URL_API_private+"/orden_dia/save_file"
     const token = JSON.parse(localStorage.getItem('user_data')).token;
@@ -50,7 +51,9 @@ export const SaveDataOrdenDia = () => {
     };
 
     const subirArchivo = async () => {
+        setLoading(true);
         if (!archivo) {
+            setLoading(false);
             // Muestra un mensaje de error si no se ha seleccionado ningún archivo
             toast.error('Por favor, selecciona un archivo antes de guardar.', {
                 position: 'top-right',
@@ -73,12 +76,14 @@ export const SaveDataOrdenDia = () => {
                 autoClose: 3000,      
               });
             console.log(response.code);
+            setLoading(false);
         } catch (error) {
             console.error('Error al cargar el archivo:', error.message);
             toast.error(error.code, {
                 position: 'top-right', 
                 autoClose: 3000,  
             });
+            setLoading(false);
         }
     }
 
@@ -116,7 +121,9 @@ export const SaveDataOrdenDia = () => {
                 Seleccionar Archivo
             </button>   
             <br></br>
-            <button className='stylesButoon' onClick={subirArchivo}>Guardar</button>
+            <button className='stylesButoon' onClick={subirArchivo} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Subir Archivo"}
+            </button>
             <br></br>
             {archivoNombre && (
                 <p>

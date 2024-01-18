@@ -1,12 +1,15 @@
 import './TablesMapRoutes.css'
 import { useEffect, useState } from "react";
 import { URL_API_private } from "../../../providerContext/EndPoint";
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa'; 
 import axios from "axios";
 import { TablesPos } from './TablesPos';
 
 export const TablesMapRoutes = () => {
     const [naps, setNaps] = useState([]);
     const endPoint = URL_API_private+"/naps";
+    const [loading, setLoading] = useState(false);
     const [expandedRow, setExpandedRow] = useState([]);
     const token  = JSON.parse(localStorage.getItem('user_data')).token;
 
@@ -21,12 +24,15 @@ export const TablesMapRoutes = () => {
     }
 
     const getAllNaps = async () => {
-        try {
+        setLoading(true);
+            try {
             const response = await axios.get(endPoint, config);
             setNaps(response.data);
             console.log("Naps obtenidos exitosamente")
+            setLoading(false);
         } catch (error) {
             console.error("Error del servidor: "+error.response);
+            setLoading(false);
         }
     }
     
@@ -39,6 +45,11 @@ export const TablesMapRoutes = () => {
     }
 
     return (<>
+        {loading && (
+            <div className="loading-spinner">
+                <FaSpinner className="spinner-icon" />
+            </div>
+        )}
         <div className='styleContentTable'>
             <table className="styleTable">
                 <thead className='stylesHead'>

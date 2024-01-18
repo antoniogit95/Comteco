@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import TablaAdicional from './DastosNap';
 import axios from 'axios';
 import './TableArchive.css'
+import 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import botonmas from "../../../imagenes/botonmas.png"
 import botonmenos from "../../../imagenes/botonmenos.png"
 import { URL_API_private } from '../../../providerContext/EndPoint';
@@ -9,6 +11,7 @@ import {ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ExcelTable = ({ producto }) => {
+  const [loading, setLoading] = useState(false);
   const [showAdditionalTable, setShowAdditionalTable] = useState(false);
   const [imagenClicada, setImagenClicada] = useState(false);
   const [texto, setTexto] = useState('');
@@ -34,6 +37,7 @@ const ExcelTable = ({ producto }) => {
   }
 
   const getProductos = async () => {
+    setLoading(true)
     try {
       console.log(endPointDtaProduct+" "+config.headers)
       const response = await axios.get(endPointDtaProduct, config);
@@ -41,17 +45,22 @@ const ExcelTable = ({ producto }) => {
       setIsLlenado(response.data[0].status)
       console.log(dataProduct);
       console.log("Products Recuperados exitosamente")
+      setLoading(false)
   } catch (error) {
       console.error("Error del servidor: "+error.response);
+      setLoading(false)
   }
   }
   const getAlLCods = async () => {
+    setLoading(true);
     try {
         const response = await axios.get(endPoint, config);
         setNapsCod(response.data);
         console.log("NAPs Recuperados exitosamente")
+        setLoading(false);
     } catch (error) {
         console.error("Error del servidor: "+error.response);
+        setLoading(false)
     }
   }
   
@@ -62,6 +71,7 @@ const ExcelTable = ({ producto }) => {
   };
 
   const guardarDato = async (e) => {
+    setLoading(true);
     e.preventDefault()  
     try {
       const response = await axios.post(endPointDataTecnico, {
@@ -76,12 +86,14 @@ const ExcelTable = ({ producto }) => {
       console.log("Respuesta del Servidor: ", response.data);
       console.log("Registro Tecnico Registrado exitosamente.");
       toast.success("Registro Tecnico Registrado exitosamente");
+      setLoading(false);
       setIsLlenado(true);
     }catch (error) {
       if(error.response.data){
         console.error("Error del Servidor: "+ error.response.data.message);
         toast.error(`Error del Servidor: ${error.response.data.message}`);
       }
+      setLoading(false);
     }
   };
 
@@ -101,8 +113,12 @@ const ExcelTable = ({ producto }) => {
     setSugesNapsCod([]); // Oculta la lista de sugerencias después de hacer clic
   };
   //const napSet = new Set(datosTablaAdicional.map((dato) => dato.nap));
-
-  return (
+  return (<>
+        {loading && (
+            <div className="loading-spinner">
+                <FaSpinner className="spinner-icon" />
+            </div>
+        )}
     <div className='styleContentTable'>
     <table className='styleTable'>
       <thead className='stylesHead'>
@@ -148,7 +164,9 @@ const ExcelTable = ({ producto }) => {
                     <option key={nap.id} value={nap.cod} onClick={() => handleSuggestionClick(nap.cod)} />
                   ))}
                 </datalist>
-                <button className='stylesButoon' onClick={() => guardarDato(event)}>Guardar</button>
+                <button className='stylesButoon' onClick={() => guardarDato(event)} disabled={loading}>
+                {loading ? <FaSpinner className="loadingIcon"/> : "Guardar"}
+                </button>
               </>)}
             
             </td>
@@ -163,7 +181,7 @@ const ExcelTable = ({ producto }) => {
     {showAdditionalTable && <TablaAdicional nap={dataProduct[0].nap} product={producto}/>}
     <ToastContainer/>
     </div>
-  );
+  </>);
 };
 
 export default ExcelTable;
